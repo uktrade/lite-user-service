@@ -1,0 +1,107 @@
+import java.text.SimpleDateFormat
+
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+}
+
+plugins {
+  id 'java'
+  id 'application'
+  id 'com.github.johnrengelman.shadow' version '1.2.4'
+}
+
+apply plugin: 'maven-publish'
+
+group 'uk.gov.bis.lite'
+
+if (project.hasProperty('projVersion')) {
+  project.version = project.projVersion
+} else {
+  SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMdd.HHmmss")
+  sdf.setTimeZone(new SimpleTimeZone(SimpleTimeZone.UTC_TIME, "UTC"))
+  project.version = sdf.format(new Date()) + "-SNAPSHOT"
+}
+
+mainClassName = "uk.gov.bis.lite.user.UserServiceApplication"
+
+ext.dropwizardVersion = '1.1.4'
+
+repositories {
+  mavenCentral()
+  maven {
+    name "snapshots"
+    url "http://nexus.mgmt.licensing.service.trade.gov.uk.test/repository/maven-snapshots/"
+  }
+  maven {
+    name "releases"
+    url "http://nexus.mgmt.licensing.service.trade.gov.uk.test/repository/maven-releases/"
+  }
+}
+
+dependencies {
+  compile "io.dropwizard:dropwizard-core:$dropwizardVersion"
+  compile "io.dropwizard:dropwizard-db:$dropwizardVersion"
+  compile "io.dropwizard:dropwizard-jdbi:$dropwizardVersion"
+  compile "io.dropwizard:dropwizard-auth:$dropwizardVersion"
+  compile "io.dropwizard:dropwizard-client:$dropwizardVersion"
+  compile 'ru.vyarus:dropwizard-guicey:4.1.0'
+  compile 'net.logstash.logback:logstash-logback-encoder:4.10'
+  compile 'ch.qos.logback.contrib:logback-jackson:0.1.5'
+
+  // Lite dependencies
+  compile 'uk.gov.bis.lite:spire-client:1.5'
+  compile 'uk.gov.bis.lite:jersey-correlation-id:1.0'
+  compile 'uk.gov.bis.lite:json-console-appender:1.1'
+  compile 'uk.gov.bis.lite:readiness-metric:1.0'
+
+  testCompile "io.dropwizard:dropwizard-testing:$dropwizardVersion"
+  testCompile 'junit:junit:4.12'
+  //  testCompile 'org.mockito:mockito-core:1.10.19'
+  testCompile 'org.assertj:assertj-core:3.8.0'
+}
+
+shadowJar {
+  classifier = ''
+  mergeServiceFiles()
+}
+
+jar {
+  manifest {
+    attributes 'Main-Class': mainClassName
+  }
+}
+
+build {
+  dependsOn shadowJar
+}
+
+run { args 'server', 'src/main/resources/config.yaml' }
+
+
+publishing {
+  repositories {
+    maven {
+      name "snapshots"
+      url "http://nexus.mgmt.licensing.service.trade.gov.uk.test/repository/maven-snapshots/"
+    }
+    maven {
+      name "releases"
+      url "http://nexus.mgmt.licensing.service.trade.gov.uk.test/repository/maven-releases/"
+    }
+    maven {
+      name "lite-builds"
+      url "http://nexus.mgmt.licensing.service.trade.gov.uk.test/repository/lite-builds/"
+    }
+  }
+}
+
+publishing {
+  publications {
+    service(MavenPublication) {
+      artifactId 'user-service'
+      from components.shadow
+    }
+  }
+}
