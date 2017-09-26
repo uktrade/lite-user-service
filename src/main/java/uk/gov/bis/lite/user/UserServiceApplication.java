@@ -16,6 +16,7 @@ import uk.gov.bis.lite.user.config.GuiceModule;
 import uk.gov.bis.lite.user.config.UserServiceConfiguration;
 import uk.gov.bis.lite.common.jersey.filter.ContainerCorrelationIdFilter;
 import uk.gov.bis.lite.user.config.auth.SimpleAuthenticator;
+import uk.gov.bis.lite.user.resource.UserPrivilegesResource;
 
 public class UserServiceApplication extends Application<UserServiceConfiguration> {
 
@@ -40,6 +41,7 @@ public class UserServiceApplication extends Application<UserServiceConfiguration
     guiceBundle = new GuiceBundle.Builder<UserServiceConfiguration>()
         .modules(module)
         .installers(ResourceInstaller.class, ManagedInstaller.class)
+        .extensions(UserPrivilegesResource.class)
         .build();
     bootstrap.addBundle(guiceBundle);
   }
