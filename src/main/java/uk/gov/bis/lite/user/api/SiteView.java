@@ -5,11 +5,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SiteView {
   private final String siteId;
-  private final String role;
+  private final Role role;
 
   @JsonCreator
   public SiteView(@JsonProperty("siteId") String siteId,
-                  @JsonProperty("role") String role) {
+                  @JsonProperty("role") Role role) {
     this.siteId = siteId;
     this.role = role;
   }
@@ -18,7 +18,7 @@ public class SiteView {
     return siteId;
   }
 
-  public String getRole() {
+  public Role getRole() {
     return role;
   }
 }

@@ -8,6 +8,7 @@ import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.Rule;
 import org.junit.Test;
 import uk.gov.bis.lite.user.api.CustomerView;
+import uk.gov.bis.lite.user.api.Role;
 import uk.gov.bis.lite.user.api.SiteView;
 import uk.gov.bis.lite.user.api.UserPrivilegesView;
 import uk.gov.bis.lite.user.resource.UserPrivilegesResource;
@@ -32,8 +33,8 @@ public class UserPrivilegesResourceTest {
   public void testUserPrivs() throws Exception {
     UserPrivilegesView userPrivs = UserPrivilegesView.builder()
         .setUserAccountType("APPLICANT")
-        .addCustomer(new CustomerView("SITE123", "ADMIN"))
-        .addSite(new SiteView("SITE123", "PREPARER"))
+        .addCustomer(new CustomerView("CUSTOMER123", Role.ADMIN))
+        .addSite(new SiteView("SITE123", Role.PREPARER))
         .build();
 
     when(userPrivilegesService.getUserPrivileges("1")).thenReturn(Optional.of(userPrivs));
@@ -52,12 +53,12 @@ public class UserPrivilegesResourceTest {
     assertThat(result.getSites().size()).isEqualTo(1);
 
     CustomerView customer = result.getCustomers().get(0);
-    assertThat(customer.getCustomerId()).isEqualTo("SITE123");
-    assertThat(customer.getRole()).isEqualTo("ADMIN");
+    assertThat(customer.getCustomerId()).isEqualTo("CUSTOMER123");
+    assertThat(customer.getRole()).isEqualTo(Role.ADMIN);
 
     SiteView site = result.getSites().get(0);
     assertThat(site.getSiteId()).isEqualTo("SITE123");
-    assertThat(site.getRole()).isEqualTo("PREPARER");
+    assertThat(site.getRole()).isEqualTo(Role.PREPARER);
   }
 
   @Test

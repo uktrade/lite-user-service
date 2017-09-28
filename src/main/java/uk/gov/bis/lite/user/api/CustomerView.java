@@ -5,11 +5,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CustomerView {
   private String customerId;
-  private String role;
+  private Role role;
 
   @JsonCreator
-  public CustomerView(@JsonProperty("customers") String customerId,
-                      @JsonProperty("role") String role) {
+  public CustomerView(@JsonProperty("customerId") String customerId,
+                      @JsonProperty("role") Role role) {
     this.customerId = customerId;
     this.role = role;
   }
@@ -18,7 +18,7 @@ public class CustomerView {
     return customerId;
   }
 
-  public String getRole() {
+  public Role getRole() {
     return role;
   }
 }

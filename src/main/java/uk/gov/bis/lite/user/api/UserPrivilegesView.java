@@ -59,6 +59,11 @@ public class UserPrivilegesView {
       return this;
     }
 
+    public UserPrivilegesViewBuilder setCustomers(List<CustomerView> customers) {
+      this.customers = customers;
+      return this;
+    }
+
     public UserPrivilegesViewBuilder addSite(SiteView site) {
       sites.add(site);
       return this;
@@ -66,6 +71,11 @@ public class UserPrivilegesView {
 
     public UserPrivilegesViewBuilder addSites(List<SiteView> sites) {
       this.sites.addAll(sites);
+      return this;
+    }
+
+    public UserPrivilegesViewBuilder setSites(List<SiteView> sites) {
+      this.sites = sites;
       return this;
     }
 
