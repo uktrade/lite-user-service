@@ -1,9 +1,11 @@
 package uk.gov.bis.lite.spire;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.matchingXPath;
 import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -163,5 +165,21 @@ public class SpireUserRolesClientTest {
     assertThatThrownBy(() -> client.sendRequest("123"))
         .isInstanceOf(SpireClientException.class)
         .hasMessageContaining("SOAP");
+  }
+
+  @Test
+  public void userIdInRequest() throws Exception {
+    stubFor(post(urlEqualTo("/spire/fox/ispire/SPIRE_USER_ROLES"))
+        .withBasicAuth("username", "password")
+        .withRequestBody(matchingXPath("//SOAP-ENV:Envelope/SOAP-ENV:Body/spir:getRoles/userId[text() = '123']")
+            .withXPathNamespace("SOAP-ENV", "http://schemas.xmlsoap.org/soap/envelope/")
+            .withXPathNamespace("spir", "http://www.fivium.co.uk/fox/webservices/ispire/SPIRE_USER_ROLES")
+        )
+        .willReturn(aResponse()
+            .withStatus(200)
+            .withHeader("Content-Type", "text/xml; charset=utf-8")
+            .withBody(fixture("fixture/spire/SPIRE_USER_ROLES/SarAndSiteAdmin.xml"))));
+
+    client.sendRequest("123");
   }
 }

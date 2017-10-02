@@ -18,7 +18,7 @@ public class SpireUserRolesClient extends SpireClient<List<SpireUserRole>> {
   private SpireRequest createRequest(String userId) {
     SpireRequest request = createRequest();
     request.addChild("userId", userId);
-    return createRequest();
+    return request;
   }
 
   public Optional<List<SpireUserRole>> sendRequest(String userId) {

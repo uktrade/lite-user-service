@@ -1,6 +1,7 @@
 package uk.gov.bis.lite.spire;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.matchingXPath;
 import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
@@ -85,6 +86,10 @@ public class SpireUserRolesUtil {
   public static void stubForBody(String body) {
     stubFor(post(urlEqualTo("/spire/fox/ispire/SPIRE_USER_ROLES"))
         .withBasicAuth("username", "password")
+        .withRequestBody(matchingXPath("//SOAP-ENV:Envelope/SOAP-ENV:Body/spir:getRoles/userId")
+            .withXPathNamespace("SOAP-ENV", "http://schemas.xmlsoap.org/soap/envelope/")
+            .withXPathNamespace("spir", "http://www.fivium.co.uk/fox/webservices/ispire/SPIRE_USER_ROLES")
+        )
         .willReturn(aResponse()
             .withStatus(200)
             .withHeader("Content-Type", "text/xml; charset=utf-8")
