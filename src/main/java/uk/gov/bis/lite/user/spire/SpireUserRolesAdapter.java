@@ -33,6 +33,7 @@ public class SpireUserRolesAdapter {
   public static UserPrivilegesView adapt(List<SpireUserRole> spireUserRoles) {
     Map<String, CustomerView> customerMap = new HashMap<>();
     Map<String, SiteView> siteMap = new HashMap<>();
+
     for (SpireUserRole sur: spireUserRoles) {
       if (StringUtils.equals(sur.getResType(), "SPIRE_SAR_USERS")) {
         String customerId = sur.getSarRef();
@@ -41,7 +42,7 @@ public class SpireUserRolesAdapter {
           if (customerMap.containsKey(customerId)) {
             CustomerView customer = customerMap.get(customerId);
             if (rolePriorityMap.get(role.get()) > rolePriorityMap.getOrDefault(customer.getRole(), -1)){
-              customerMap.put(customerId, new CustomerView(customerId, role.get()));
+              customerMap.replace(customerId, new CustomerView(customerId, role.get()));
             }
           } else {
             customerMap.put(customerId, new CustomerView(customerId, role.get()));
@@ -54,7 +55,7 @@ public class SpireUserRolesAdapter {
           if (siteMap.containsKey(siteId)) {
             SiteView site = siteMap.get(siteId);
             if (rolePriorityMap.get(role.get()) > rolePriorityMap.getOrDefault(site.getRole(), -1)){
-              siteMap.put(siteId, new SiteView(siteId, role.get()));
+              siteMap.replace(siteId, new SiteView(siteId, role.get()));
             }
           } else {
             siteMap.put(siteId, new SiteView(siteId, role.get()));
