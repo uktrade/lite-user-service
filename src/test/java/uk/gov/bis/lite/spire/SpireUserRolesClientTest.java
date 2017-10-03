@@ -5,7 +5,6 @@ import static com.github.tomakehurst.wiremock.client.WireMock.matchingXPath;
 import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -20,16 +19,16 @@ import uk.gov.bis.lite.common.spire.client.errorhandler.ErrorHandler;
 import uk.gov.bis.lite.common.spire.client.exception.SpireClientException;
 import uk.gov.bis.lite.common.spire.client.parser.SpireParser;
 import uk.gov.bis.lite.user.spire.SpireUserRole;
+import uk.gov.bis.lite.user.spire.SpireUserRoles;
 import uk.gov.bis.lite.user.spire.SpireUserRolesClient;
 import uk.gov.bis.lite.user.spire.SpireUserRolesErrorHandler;
 import uk.gov.bis.lite.user.spire.SpireUserRolesParser;
 
-import java.util.List;
 import java.util.Optional;
 
 public class SpireUserRolesClientTest {
 
-  private SpireParser<List<SpireUserRole>> parser = new SpireUserRolesParser();
+  private SpireParser<SpireUserRoles> parser = new SpireUserRolesParser();
 
   private SpireClientConfig config = new SpireClientConfig("username", "password", "http://localhost:8080/spire/fox/ispire/");
 
@@ -46,13 +45,13 @@ public class SpireUserRolesClientTest {
   public void singleSarAdminTest() throws Exception {
     stubForBody(fixture("fixture/spire/SPIRE_USER_ROLES/SingleSarAdmin.xml"));
 
-    Optional<List<SpireUserRole>> spireUserRolesOpt = client.sendRequest("123");
+    Optional<SpireUserRoles> spireUserRolesOpt = client.sendRequest("123");
 
     assertThat(spireUserRolesOpt.isPresent()).isTrue();
-    List<SpireUserRole> spireUserRoles = spireUserRolesOpt.get();
-    assertThat(spireUserRoles.size()).isEqualTo(1);
+    SpireUserRoles spireUserRoles = spireUserRolesOpt.get();
+    assertThat(spireUserRoles.getUserRoles().size()).isEqualTo(1);
 
-    SpireUserRole sur = spireUserRoles.get(0);
+    SpireUserRole sur = spireUserRoles.getUserRoles().get(0);
     assertThat(sur.getResType()).isEqualTo("SPIRE_SAR_USERS");
     assertThat(sur.getRoleName()).isEqualTo("SAR_ADMINISTRATOR");
     assertThat(sur.getFullName()).isEqualTo("Mr Test");
@@ -65,13 +64,13 @@ public class SpireUserRolesClientTest {
   public void singleSiteAdminTest() throws Exception {
     stubForBody(fixture("fixture/spire/SPIRE_USER_ROLES/SingleSiteAdmin.xml"));
 
-    Optional<List<SpireUserRole>> spireUserRolesOpt = client.sendRequest("123");
+    Optional<SpireUserRoles> spireUserRolesOpt = client.sendRequest("123");
 
     assertThat(spireUserRolesOpt.isPresent()).isTrue();
-    List<SpireUserRole> spireUserRoles = spireUserRolesOpt.get();
-    assertThat(spireUserRoles.size()).isEqualTo(1);
+    SpireUserRoles spireUserRoles = spireUserRolesOpt.get();
+    assertThat(spireUserRoles.getUserRoles().size()).isEqualTo(1);
 
-    SpireUserRole sur = spireUserRoles.get(0);
+    SpireUserRole sur = spireUserRoles.getUserRoles().get(0);
     assertThat(sur.getResType()).isEqualTo("SPIRE_SITE_USERS");
     assertThat(sur.getRoleName()).isEqualTo("SITE_ADMINISTRATOR");
     assertThat(sur.getFullName()).isEqualTo("Mr Test");
@@ -84,13 +83,13 @@ public class SpireUserRolesClientTest {
   public void SarAndSiteAdminTest() throws Exception {
     stubForBody(fixture("fixture/spire/SPIRE_USER_ROLES/SarAndSiteAdmin.xml"));
 
-    Optional<List<SpireUserRole>> spireUserRolesOpt = client.sendRequest("123");
+    Optional<SpireUserRoles> spireUserRolesOpt = client.sendRequest("123");
 
     assertThat(spireUserRolesOpt.isPresent()).isTrue();
-    List<SpireUserRole> spireUserRoles = spireUserRolesOpt.get();
-    assertThat(spireUserRoles.size()).isEqualTo(2);
+    SpireUserRoles spireUserRoles = spireUserRolesOpt.get();
+    assertThat(spireUserRoles.getUserRoles().size()).isEqualTo(2);
 
-    SpireUserRole sur = spireUserRoles.get(0);
+    SpireUserRole sur = spireUserRoles.getUserRoles().get(0);
     assertThat(sur.getResType()).isEqualTo("SPIRE_SAR_USERS");
     assertThat(sur.getRoleName()).isEqualTo("SAR_ADMINISTRATOR");
     assertThat(sur.getFullName()).isEqualTo("Mr Test");
@@ -98,7 +97,7 @@ public class SpireUserRolesClientTest {
     assertThat(sur.getIsAdmin()).isEqualTo("Y");
     assertThat(sur.getIsApplicant()).isEqualTo("N");
 
-    sur = spireUserRoles.get(1);
+    sur = spireUserRoles.getUserRoles().get(1);
     assertThat(sur.getResType()).isEqualTo("SPIRE_SITE_USERS");
     assertThat(sur.getRoleName()).isEqualTo("SITE_ADMINISTRATOR");
     assertThat(sur.getFullName()).isEqualTo("Mr Test");
@@ -111,13 +110,13 @@ public class SpireUserRolesClientTest {
   public void junkRoleTest() throws Exception {
     stubForBody(fixture("fixture/spire/SPIRE_USER_ROLES/JunkRole.xml"));
 
-    Optional<List<SpireUserRole>> spireUserRolesOpt = client.sendRequest("123");
+    Optional<SpireUserRoles> spireUserRolesOpt = client.sendRequest("123");
 
     assertThat(spireUserRolesOpt.isPresent()).isTrue();
-    List<SpireUserRole> spireUserRoles = spireUserRolesOpt.get();
-    assertThat(spireUserRoles.size()).isEqualTo(1);
+    SpireUserRoles spireUserRoles = spireUserRolesOpt.get();
+    assertThat(spireUserRoles.getUserRoles().size()).isEqualTo(1);
 
-    SpireUserRole sur = spireUserRoles.get(0);
+    SpireUserRole sur = spireUserRoles.getUserRoles().get(0);
     assertThat(sur.getResType()).isEqualTo("lkvdLQUFmpnYWDBueprb");
     assertThat(sur.getRoleName()).isEqualTo("CPRnydOuaOHRHiIHJqMg");
     assertThat(sur.getFullName()).isEqualTo("zSmRtJFHnfkIgKDtNwvO");
@@ -131,18 +130,18 @@ public class SpireUserRolesClientTest {
   public void noRolesTest() throws Exception {
     stubForBody(fixture("fixture/spire/SPIRE_USER_ROLES/NoRoles.xml"));
 
-    Optional<List<SpireUserRole>> spireUserRolesOpt = client.sendRequest("123");
+    Optional<SpireUserRoles> spireUserRolesOpt = client.sendRequest("123");
 
     assertThat(spireUserRolesOpt.isPresent()).isTrue();
-    List<SpireUserRole> spireUserRoles = spireUserRolesOpt.get();
-    assertThat(spireUserRoles.isEmpty()).isTrue();
+    SpireUserRoles spireUserRoles = spireUserRolesOpt.get();
+    assertThat(spireUserRoles.getUserRoles().isEmpty()).isTrue();
   }
 
   @Test
   public void userIdDoesNotExistTest() throws Exception {
     stubForBody(fixture("fixture/spire/SPIRE_USER_ROLES/UserIdDoesNotExist.xml"));
 
-    Optional<List<SpireUserRole>> spireUserRolesOpt = client.sendRequest("123");
+    Optional<SpireUserRoles> spireUserRolesOpt = client.sendRequest("123");
 
     assertThat(spireUserRolesOpt.isPresent()).isFalse();
   }

@@ -14,6 +14,7 @@ import uk.gov.bis.lite.user.api.SiteView;
 import uk.gov.bis.lite.user.api.UserPrivilegesView;
 import uk.gov.bis.lite.user.service.UserPrivilegesService;
 import uk.gov.bis.lite.user.service.UserPrivilegesServiceImpl;
+import uk.gov.bis.lite.user.spire.SpireUserRoles;
 import uk.gov.bis.lite.user.spire.SpireUserRolesClient;
 
 import java.util.Arrays;
@@ -21,7 +22,9 @@ import java.util.Optional;
 
 public class UserPrivilegesServiceImplTest {
 
-  private SpireUserRolesClient client = mock(SpireUserRolesClient.class);
+  private static final String USER_ACCOUNT_TYPE = "REGULATOR";
+
+                                                 private SpireUserRolesClient client = mock(SpireUserRolesClient.class);
 
   private UserPrivilegesService service = new UserPrivilegesServiceImpl(client);
 
@@ -29,15 +32,16 @@ public class UserPrivilegesServiceImplTest {
   public void userHasCustomersAndSitesTest() throws Exception {
     when(client.sendRequest("123"))
         .thenReturn(
-            Optional.of(Arrays.asList(
-                buildCustomerAdmin("SAR123"),
-                buildSiteAdmin("SITE123"))));
+            Optional.of(
+                new SpireUserRoles("REGULATOR", Arrays.asList(
+                  buildCustomerAdmin("SAR123"),
+                  buildSiteAdmin("SITE123")))));
 
     Optional<UserPrivilegesView> userPrivsOpt = service.getUserPrivileges("123");
     assertThat(userPrivsOpt.isPresent()).isTrue();
 
     UserPrivilegesView userPrivs = userPrivsOpt.get();
-    assertThat(userPrivs.getUserAccountType()).isEmpty();
+    assertThat(userPrivs.getUserAccountType()).isEqualTo(USER_ACCOUNT_TYPE);
     assertThat(userPrivs.getCustomers().size()).isEqualTo(1);
     assertThat(userPrivs.getSites().size()).isEqualTo(1);
 
@@ -53,7 +57,21 @@ public class UserPrivilegesServiceImplTest {
   @Test
   public void userHasNoCustomersOrSitesTest() throws Exception {
     when(client.sendRequest("123"))
-        .thenReturn(Optional.of(emptyList()));
+        .thenReturn(Optional.of(new SpireUserRoles("REGULATOR", emptyList())));
+
+    Optional<UserPrivilegesView> userPrivsOpt = service.getUserPrivileges("123");
+    assertThat(userPrivsOpt.isPresent()).isTrue();
+
+    UserPrivilegesView userPrivs = userPrivsOpt.get();
+    assertThat(userPrivs.getUserAccountType()).isEqualTo(USER_ACCOUNT_TYPE);
+    assertThat(userPrivs.getCustomers().isEmpty()).isTrue();
+    assertThat(userPrivs.getSites().isEmpty()).isTrue();
+  }
+
+  @Test
+  public void userHasNoData() throws Exception {
+    when(client.sendRequest("123"))
+        .thenReturn(Optional.of(new SpireUserRoles("", emptyList())));
 
     Optional<UserPrivilegesView> userPrivsOpt = service.getUserPrivileges("123");
     assertThat(userPrivsOpt.isPresent()).isTrue();

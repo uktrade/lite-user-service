@@ -30,11 +30,11 @@ public class SpireUserRolesAdapter {
     CUSTOMER
   }
 
-  public static UserPrivilegesView adapt(List<SpireUserRole> spireUserRoles) {
+  public static UserPrivilegesView adapt(SpireUserRoles spireUserRoles) {
     Map<String, CustomerView> customerMap = new HashMap<>();
     Map<String, SiteView> siteMap = new HashMap<>();
 
-    for (SpireUserRole sur: spireUserRoles) {
+    for (SpireUserRole sur: spireUserRoles.getUserRoles()) {
       if (StringUtils.equals(sur.getResType(), "SPIRE_SAR_USERS")) {
         String customerId = sur.getSarRef();
         Optional<Role> role = spireRoleMapper(sur.getRoleName(), SpireListType.CUSTOMER);
@@ -73,6 +73,7 @@ public class SpireUserRolesAdapter {
         .collect(Collectors.toList());
 
     return UserPrivilegesView.builder()
+        .setUserAccountType(spireUserRoles.getUserAccountType())
         .setCustomers(customers)
         .setSites(sites)
         .build();

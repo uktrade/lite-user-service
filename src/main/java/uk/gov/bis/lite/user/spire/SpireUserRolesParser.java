@@ -21,21 +21,21 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-public class SpireUserRolesParser implements SpireParser<List<SpireUserRole>> {
+public class SpireUserRolesParser implements SpireParser<SpireUserRoles> {
   private static final Logger LOGGER = LoggerFactory.getLogger(SpireUserRolesParser.class);
 
   @Override
-  public List<SpireUserRole> parseResponse(SpireResponse spireResponse) {
+  public SpireUserRoles parseResponse(SpireResponse spireResponse) {
     Stopwatch stopwatch = Stopwatch.createStarted();
-    List<SpireUserRole> userRoles = doResponseParsing(spireResponse);
+    SpireUserRoles spireUserRoles = doResponseParsing(spireResponse);
     stopwatch.stop();
     LOGGER.info("The unmarshalling of SpireResponse produced List<SpireUserRole> of size {} and took {}ms,",
-        userRoles.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS));
-    return userRoles;
+        spireUserRoles.getUserRoles().size(), stopwatch.elapsed(TimeUnit.MILLISECONDS));
+    return spireUserRoles;
   }
 
-  private List<SpireUserRole> doResponseParsing(SpireResponse spireResponse) {
-    return spireResponse.getElementChildNodesForList("//ROLE_LIST")
+  private SpireUserRoles doResponseParsing(SpireResponse spireResponse) {
+    List<SpireUserRole> userRoles = spireResponse.getElementChildNodesForList("//ROLE_LIST")
         .parallelStream()
         .map(node -> {
           Node clonedNode = node.cloneNode(true); // Better XPath performance with large DOMs
@@ -56,6 +56,7 @@ public class SpireUserRolesParser implements SpireParser<List<SpireUserRole>> {
         })
         .filter(Objects::nonNull)
         .collect(Collectors.toList());
+    return new SpireUserRoles("", userRoles);
   }
 
   private Optional<String> getNodeValue(XPath xpath, Node node, String name){

@@ -1,8 +1,17 @@
 package uk.gov.bis.lite.spire;
 
-import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.gov.bis.lite.spire.SpireUserRolesUtil.*;
+import static uk.gov.bis.lite.spire.SpireUserRolesUtil.FULL_NAME;
+import static uk.gov.bis.lite.spire.SpireUserRolesUtil.RES_TYPE_SPIRE_SAR_USERS;
+import static uk.gov.bis.lite.spire.SpireUserRolesUtil.RES_TYPE_SPIRE_SITE_USERS;
+import static uk.gov.bis.lite.spire.SpireUserRolesUtil.ROLE_SAR_ADMINISTRATOR;
+import static uk.gov.bis.lite.spire.SpireUserRolesUtil.ROLE_SITE_ADMINISTRATOR;
+import static uk.gov.bis.lite.spire.SpireUserRolesUtil.buildCustomerAdmin;
+import static uk.gov.bis.lite.spire.SpireUserRolesUtil.buildCustomerPreparer;
+import static uk.gov.bis.lite.spire.SpireUserRolesUtil.buildCustomerSubmitter;
+import static uk.gov.bis.lite.spire.SpireUserRolesUtil.buildSiteAdmin;
+import static uk.gov.bis.lite.spire.SpireUserRolesUtil.buildSitePreparer;
+import static uk.gov.bis.lite.spire.SpireUserRolesUtil.buildSiteSubmitter;
 
 import org.junit.Test;
 import uk.gov.bis.lite.user.api.CustomerView;
@@ -10,18 +19,24 @@ import uk.gov.bis.lite.user.api.Role;
 import uk.gov.bis.lite.user.api.SiteView;
 import uk.gov.bis.lite.user.api.UserPrivilegesView;
 import uk.gov.bis.lite.user.spire.SpireUserRole;
+import uk.gov.bis.lite.user.spire.SpireUserRoles;
 import uk.gov.bis.lite.user.spire.SpireUserRolesAdapter;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class SpireUserRolesAdapterTest {
 
+  private static final String USER_ACCOUNT_TYPE = "REGULATOR";
+
+  private static SpireUserRoles buildSpireUserRoles(SpireUserRole... userRole) {
+    return new SpireUserRoles(USER_ACCOUNT_TYPE, Arrays.asList(userRole));
+  }
+
   @Test
   public void customerIsAdminTest() throws Exception {
-    List<SpireUserRole> roleList = singletonList(buildCustomerAdmin("SAR123"));
+    SpireUserRoles sur = buildSpireUserRoles(buildCustomerAdmin("SAR123"));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getCustomers().size()).isEqualTo(1);
     assertThat(userPrivs.getSites().isEmpty()).isTrue();
 
@@ -32,9 +47,9 @@ public class SpireUserRolesAdapterTest {
 
   @Test
   public void customerIsSubmitterTest() throws Exception {
-    List<SpireUserRole> roleList = singletonList(buildCustomerSubmitter("SAR123"));
+    SpireUserRoles sur = buildSpireUserRoles(buildCustomerSubmitter("SAR123"));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getCustomers().size()).isEqualTo(1);
     assertThat(userPrivs.getSites().isEmpty()).isTrue();
 
@@ -45,9 +60,9 @@ public class SpireUserRolesAdapterTest {
 
   @Test
   public void customerIsPreparerTest() throws Exception {
-    List<SpireUserRole> roleList = singletonList(buildCustomerPreparer("SAR123"));
+    SpireUserRoles sur = buildSpireUserRoles(buildCustomerPreparer("SAR123"));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getCustomers().size()).isEqualTo(1);
     assertThat(userPrivs.getSites().isEmpty()).isTrue();
 
@@ -58,9 +73,9 @@ public class SpireUserRolesAdapterTest {
 
   @Test
   public void siteIsAdminTest() throws Exception {
-    List<SpireUserRole> roleList = singletonList(buildSiteAdmin("SAR123"));
+    SpireUserRoles sur = buildSpireUserRoles(buildSiteAdmin("SAR123"));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getSites().size()).isEqualTo(1);
     assertThat(userPrivs.getCustomers().isEmpty()).isTrue();
 
@@ -71,9 +86,9 @@ public class SpireUserRolesAdapterTest {
 
   @Test
   public void siteIsSubmitterTest() throws Exception {
-    List<SpireUserRole> roleList = singletonList(buildSiteSubmitter("SITE123"));
+    SpireUserRoles sur = buildSpireUserRoles(buildSiteSubmitter("SITE123"));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getSites().size()).isEqualTo(1);
     assertThat(userPrivs.getCustomers().isEmpty()).isTrue();
 
@@ -84,9 +99,9 @@ public class SpireUserRolesAdapterTest {
 
   @Test
   public void siteIsPreparerTest() throws Exception {
-    List<SpireUserRole> roleList = singletonList(buildSitePreparer("SITE123"));
+    SpireUserRoles sur = buildSpireUserRoles(buildSitePreparer("SITE123"));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getSites().size()).isEqualTo(1);
     assertThat(userPrivs.getCustomers().isEmpty()).isTrue();
 
@@ -97,9 +112,9 @@ public class SpireUserRolesAdapterTest {
 
   @Test
   public void customerAndSiteTest() throws Exception {
-    List<SpireUserRole> roleList = Arrays.asList(buildCustomerAdmin("SAR123"), buildSiteAdmin("SITE123"));
+    SpireUserRoles sur = buildSpireUserRoles(buildCustomerAdmin("SAR123"), buildSiteAdmin("SITE123"));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getSites().size()).isEqualTo(1);
     assertThat(userPrivs.getCustomers().size()).isEqualTo(1);
 
@@ -115,13 +130,13 @@ public class SpireUserRolesAdapterTest {
   @Test
   public void multipleCustomersAndSitesTest() throws Exception {
     // Tests ordering of customers and sites list
-    List<SpireUserRole> roleList = Arrays.asList(
+    SpireUserRoles sur = buildSpireUserRoles(
         buildCustomerAdmin("SAR123"),
         buildCustomerAdmin("SAR456"),
         buildSiteAdmin("SITE123"),
         buildSiteAdmin("SITE456"));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getCustomers().size()).isEqualTo(2);
     assertThat(userPrivs.getSites().size()).isEqualTo(2);
 
@@ -145,13 +160,13 @@ public class SpireUserRolesAdapterTest {
   @Test
   public void multipleCustomersAndSitesReversedTest() throws Exception {
     // Tests ordering of customers and sites list
-    List<SpireUserRole> roleList = Arrays.asList(
+    SpireUserRoles sur = buildSpireUserRoles(
         buildSiteAdmin("SITE456"),
         buildSiteAdmin("SITE123"),
         buildCustomerAdmin("SAR456"),
         buildCustomerAdmin("SAR123"));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getCustomers().size()).isEqualTo(2);
     assertThat(userPrivs.getSites().size()).isEqualTo(2);
 
@@ -174,12 +189,12 @@ public class SpireUserRolesAdapterTest {
 
   @Test
   public void customerRoleAdminPriorityTest() throws Exception {
-    List<SpireUserRole> roleList = Arrays.asList(
+    SpireUserRoles sur = buildSpireUserRoles(
         buildCustomerAdmin("SAR123"),
         buildCustomerSubmitter("SAR123"),
         buildCustomerPreparer("SAR123"));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getCustomers().size()).isEqualTo(1);
     assertThat(userPrivs.getSites().isEmpty()).isTrue();
 
@@ -190,12 +205,12 @@ public class SpireUserRolesAdapterTest {
 
   @Test
   public void customerRoleAdminPriorityReversedTest() throws Exception {
-    List<SpireUserRole> roleList = Arrays.asList(
+    SpireUserRoles sur = buildSpireUserRoles(
         buildCustomerPreparer("SAR123"),
         buildCustomerSubmitter("SAR123"),
         buildCustomerAdmin("SAR123"));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getCustomers().size()).isEqualTo(1);
     assertThat(userPrivs.getSites().isEmpty()).isTrue();
 
@@ -206,12 +221,12 @@ public class SpireUserRolesAdapterTest {
 
   @Test
   public void siteRoleAdminPriorityTest() throws Exception {
-    List<SpireUserRole> roleList = Arrays.asList(
+    SpireUserRoles sur = buildSpireUserRoles(
         buildSiteAdmin("SITE123"),
         buildSiteSubmitter("SITE123"),
         buildSitePreparer("SITE123"));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getSites().size()).isEqualTo(1);
     assertThat(userPrivs.getCustomers().isEmpty()).isTrue();
 
@@ -222,12 +237,12 @@ public class SpireUserRolesAdapterTest {
 
   @Test
   public void siteRoleAdminPriorityReversedTest() throws Exception {
-    List<SpireUserRole> roleList = Arrays.asList(
+    SpireUserRoles sur = buildSpireUserRoles(
         buildSitePreparer("SITE123"),
         buildSiteSubmitter("SITE123"),
         buildSiteAdmin("SITE123"));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getSites().size()).isEqualTo(1);
     assertThat(userPrivs.getCustomers().isEmpty()).isTrue();
 
@@ -238,11 +253,11 @@ public class SpireUserRolesAdapterTest {
 
   @Test
   public void customerRoleSubmitterPriorityTest() throws Exception {
-    List<SpireUserRole> roleList = Arrays.asList(
+    SpireUserRoles sur = buildSpireUserRoles(
         buildCustomerSubmitter("SAR123"),
         buildCustomerPreparer("SAR123"));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getCustomers().size()).isEqualTo(1);
     assertThat(userPrivs.getSites().isEmpty()).isTrue();
 
@@ -253,11 +268,11 @@ public class SpireUserRolesAdapterTest {
 
   @Test
   public void customerRoleSubmitterPriorityReversedTest() throws Exception {
-    List<SpireUserRole> roleList = Arrays.asList(
+    SpireUserRoles sur = buildSpireUserRoles(
         buildCustomerPreparer("SAR123"),
         buildCustomerSubmitter("SAR123"));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getCustomers().size()).isEqualTo(1);
     assertThat(userPrivs.getSites().isEmpty()).isTrue();
 
@@ -268,11 +283,11 @@ public class SpireUserRolesAdapterTest {
 
   @Test
   public void siteRoleSubmitterPriorityTest() throws Exception {
-    List<SpireUserRole> roleList = Arrays.asList(
+    SpireUserRoles sur = buildSpireUserRoles(
         buildSiteSubmitter("SITE123"),
         buildSitePreparer("SITE123"));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getSites().size()).isEqualTo(1);
     assertThat(userPrivs.getCustomers().isEmpty()).isTrue();
 
@@ -283,11 +298,11 @@ public class SpireUserRolesAdapterTest {
 
   @Test
   public void siteRoleAdminSubmitterReversedTest() throws Exception {
-    List<SpireUserRole> roleList = Arrays.asList(
+    SpireUserRoles sur = buildSpireUserRoles(
         buildSitePreparer("SITE123"),
         buildSiteSubmitter("SITE123"));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getSites().size()).isEqualTo(1);
     assertThat(userPrivs.getCustomers().isEmpty()).isTrue();
 
@@ -298,11 +313,11 @@ public class SpireUserRolesAdapterTest {
 
   @Test
   public void customerIgnoreDuplicateAdminTest() throws Exception {
-    List<SpireUserRole> roleList = Arrays.asList(
+    SpireUserRoles sur = buildSpireUserRoles(
         buildCustomerAdmin("SAR123"),
         buildCustomerAdmin("SAR123"));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getCustomers().size()).isEqualTo(1);
     assertThat(userPrivs.getSites().isEmpty()).isTrue();
 
@@ -313,11 +328,11 @@ public class SpireUserRolesAdapterTest {
 
   @Test
   public void siteIgnoreDuplicateAdminTest() throws Exception {
-    List<SpireUserRole> roleList = Arrays.asList(
+    SpireUserRoles sur = buildSpireUserRoles(
         buildSiteAdmin("SITE123"),
         buildSiteAdmin("SITE123"));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getSites().size()).isEqualTo(1);
     assertThat(userPrivs.getCustomers().isEmpty()).isTrue();
 
@@ -328,11 +343,11 @@ public class SpireUserRolesAdapterTest {
 
   @Test
   public void customerIgnoreDuplicateSubmitterTest() throws Exception {
-    List<SpireUserRole> roleList = Arrays.asList(
+    SpireUserRoles sur = buildSpireUserRoles(
         buildCustomerSubmitter("SAR123"),
         buildCustomerSubmitter("SAR123"));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getCustomers().size()).isEqualTo(1);
     assertThat(userPrivs.getSites().isEmpty()).isTrue();
 
@@ -343,11 +358,11 @@ public class SpireUserRolesAdapterTest {
 
   @Test
   public void siteIgnoreDuplicateSubmitterTest() throws Exception {
-    List<SpireUserRole> roleList = Arrays.asList(
+    SpireUserRoles sur = buildSpireUserRoles(
         buildSiteSubmitter("SITE123"),
         buildSiteSubmitter("SITE123"));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getSites().size()).isEqualTo(1);
     assertThat(userPrivs.getCustomers().isEmpty()).isTrue();
 
@@ -358,11 +373,11 @@ public class SpireUserRolesAdapterTest {
 
   @Test
   public void customerIgnoreDuplicatePreparerTest() throws Exception {
-    List<SpireUserRole> roleList = Arrays.asList(
+    SpireUserRoles sur = buildSpireUserRoles(
         buildCustomerPreparer("SAR123"),
         buildCustomerPreparer("SAR123"));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getCustomers().size()).isEqualTo(1);
     assertThat(userPrivs.getSites().isEmpty()).isTrue();
 
@@ -373,11 +388,11 @@ public class SpireUserRolesAdapterTest {
 
   @Test
   public void siteIgnoreDuplicatePreparerTest() throws Exception {
-    List<SpireUserRole> roleList = Arrays.asList(
+    SpireUserRoles sur = buildSpireUserRoles(
         buildSitePreparer("SITE123"),
         buildSitePreparer("SITE123"));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getSites().size()).isEqualTo(1);
     assertThat(userPrivs.getCustomers().isEmpty()).isTrue();
 
@@ -388,7 +403,7 @@ public class SpireUserRolesAdapterTest {
 
   @Test
   public void ignoreUnusedOrEmptyRolesTest() throws Exception {
-    List<SpireUserRole> roleList = Arrays.asList(
+    SpireUserRoles sur = buildSpireUserRoles(
         SpireUserRole.builder()
             .setResType(RES_TYPE_SPIRE_SAR_USERS)
             .setSarRef("SAR123")
@@ -439,36 +454,36 @@ public class SpireUserRolesAdapterTest {
             .build()
         );
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getCustomers().isEmpty()).isTrue();
     assertThat(userPrivs.getSites().isEmpty()).isTrue();
   }
 
   @Test
   public void ignoreEmptySarRefs() throws Exception {
-    List<SpireUserRole> roleList = Arrays.asList(
+    SpireUserRoles sur = buildSpireUserRoles(
         buildCustomerAdmin(""),
         buildCustomerAdmin(null));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getCustomers().isEmpty()).isTrue();
     assertThat(userPrivs.getSites().isEmpty()).isTrue();
   }
 
   @Test
   public void ignoreEmptySiteRefs() throws Exception {
-    List<SpireUserRole> roleList = Arrays.asList(
+    SpireUserRoles sur = buildSpireUserRoles(
         buildSiteAdmin(""),
         buildSiteAdmin(null));
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getCustomers().isEmpty()).isTrue();
     assertThat(userPrivs.getSites().isEmpty()).isTrue();
   }
 
   @Test
   public void ignoreEmptyResType() throws Exception {
-    List<SpireUserRole> roleList = Arrays.asList(
+    SpireUserRoles sur = buildSpireUserRoles(
         SpireUserRole.builder()
             .setResType("")
             .setSarRef("SAR123")
@@ -503,14 +518,14 @@ public class SpireUserRolesAdapterTest {
             .build()
     );
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getCustomers().isEmpty()).isTrue();
     assertThat(userPrivs.getSites().isEmpty()).isTrue();
   }
 
   @Test
   public void tolerantOfUnusedFieldTest() throws Exception {
-    List<SpireUserRole> roleList = Arrays.asList(
+    SpireUserRoles sur = buildSpireUserRoles(
         SpireUserRole.builder()
             .setResType(RES_TYPE_SPIRE_SAR_USERS)
             .setSarRef("SAR123")
@@ -523,7 +538,7 @@ public class SpireUserRolesAdapterTest {
             .build()
         );
 
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(roleList);
+    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getCustomers().size()).isEqualTo(1);
     assertThat(userPrivs.getSites().size()).isEqualTo(1);
   }

@@ -7,11 +7,10 @@ import uk.gov.bis.lite.common.spire.client.SpireRequestConfig;
 import uk.gov.bis.lite.common.spire.client.errorhandler.ErrorHandler;
 import uk.gov.bis.lite.common.spire.client.parser.SpireParser;
 
-import java.util.List;
 import java.util.Optional;
 
-public class SpireUserRolesClient extends SpireClient<List<SpireUserRole>> {
-  public SpireUserRolesClient(SpireParser<List<SpireUserRole>> parser, SpireClientConfig clientConfig, SpireRequestConfig requestConfig, ErrorHandler errorHandler) {
+public class SpireUserRolesClient extends SpireClient<SpireUserRoles> {
+  public SpireUserRolesClient(SpireParser<SpireUserRoles> parser, SpireClientConfig clientConfig, SpireRequestConfig requestConfig, ErrorHandler errorHandler) {
     super(parser, clientConfig, requestConfig, errorHandler);
   }
 
@@ -21,7 +20,7 @@ public class SpireUserRolesClient extends SpireClient<List<SpireUserRole>> {
     return request;
   }
 
-  public Optional<List<SpireUserRole>> sendRequest(String userId) {
+  public Optional<SpireUserRoles> sendRequest(String userId) {
     try {
       return Optional.of(sendRequest(createRequest(userId)));
     }
