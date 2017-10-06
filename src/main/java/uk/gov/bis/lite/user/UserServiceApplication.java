@@ -78,6 +78,8 @@ public class UserServiceApplication extends Application<UserServiceConfiguration
     return guiceBundle;
   }
 
-
+  public static void main(String[] args) throws Exception {
+    new UserServiceApplication().run(args);
+  }
 
 }
