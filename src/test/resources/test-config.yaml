@@ -1,6 +1,7 @@
 spireClientUsername: username
 spireClientPassword: password
 spireClientUrl: http://localhost:9090/
+jwtSharedSecret: demo-secret-which-is-very-long-so-as-to-hit-the-byte-requirement
 
 adminUsername: admin
 adminPassword: admin
@@ -9,10 +10,10 @@ server:
   type: default
   applicationConnectors:
     - type: http
-      port: 8080
+      port: 0 # random application port
   adminConnectors:
     - type: http
-      port: 8081
+      port: 0 # random admin port
 
 logging:
   level: INFO

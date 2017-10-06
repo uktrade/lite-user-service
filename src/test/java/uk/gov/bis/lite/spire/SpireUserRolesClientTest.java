@@ -1,16 +1,19 @@
 package uk.gov.bis.lite.spire;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.configureFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.matchingXPath;
 import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static uk.gov.bis.lite.spire.SpireUserRolesUtil.stubForBody;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import uk.gov.bis.lite.common.spire.client.SpireClientConfig;
@@ -28,18 +31,20 @@ import java.util.Optional;
 
 public class SpireUserRolesClientTest {
 
-  private SpireParser<SpireUserRoles> parser = new SpireUserRolesParser();
-
-  private SpireClientConfig config = new SpireClientConfig("username", "password", "http://localhost:8080/spire/fox/ispire/");
-
-  private SpireRequestConfig requestConfig = new SpireRequestConfig("SPIRE_USER_ROLES", "getRoles", true);
-
-  private ErrorHandler errorHandler = new SpireUserRolesErrorHandler();
-
-  private SpireUserRolesClient client = new SpireUserRolesClient(parser, config, requestConfig, errorHandler);
+  private SpireUserRolesClient client;
 
   @Rule
-  public WireMockRule wireMockRule = new WireMockRule(8080);
+  public WireMockRule wireMockRule = new WireMockRule(options().dynamicPort());
+
+  @Before
+  public void setUp() throws Exception {
+    configureFor(wireMockRule.port());
+    SpireParser<SpireUserRoles> parser = new SpireUserRolesParser();
+    SpireClientConfig config = new SpireClientConfig("username", "password", "http://localhost:" + wireMockRule.port() + "/spire/fox/ispire/");
+    SpireRequestConfig requestConfig = new SpireRequestConfig("SPIRE_USER_ROLES", "getRoles", true);
+    ErrorHandler errorHandler = new SpireUserRolesErrorHandler();
+    client = new SpireUserRolesClient(parser, config, requestConfig, errorHandler);
+  }
 
   @Test
   public void singleSarAdminTest() throws Exception {

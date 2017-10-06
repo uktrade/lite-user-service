@@ -1,6 +1,10 @@
 package uk.gov.bis.lite.user.resource;
 
 import com.google.inject.Inject;
+import io.dropwizard.auth.Auth;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import uk.gov.bis.lite.common.jwt.LiteJwtUser;
 import uk.gov.bis.lite.user.api.UserPrivilegesView;
 import uk.gov.bis.lite.user.service.UserPrivilegesService;
 
@@ -15,6 +19,8 @@ import javax.ws.rs.core.MediaType;
 @Path("/user-privileges")
 public class UserPrivilegesResource {
 
+  private static final Logger LOGGER = LoggerFactory.getLogger(UserPrivilegesResource.class);
+
   private final UserPrivilegesService userPrivilegesService;
 
   @Inject
@@ -24,8 +30,8 @@ public class UserPrivilegesResource {
 
   @GET
   @Produces({MediaType.APPLICATION_JSON})
-  @Path("/user/{userId}")
-  public Optional<UserPrivilegesView> viewUserPrivileges(@PathParam("userId") String userId) {
+  @Path("/{userId}")
+  public Optional<UserPrivilegesView> viewUserPrivileges(@PathParam("userId") String userId, @Auth LiteJwtUser user) {
     return userPrivilegesService.getUserPrivileges(userId);
   }
 }

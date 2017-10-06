@@ -49,12 +49,14 @@ dependencies {
   compile 'ru.vyarus:dropwizard-guicey:4.1.0'
   compile 'net.logstash.logback:logstash-logback-encoder:4.10'
   compile 'ch.qos.logback.contrib:logback-jackson:0.1.5'
+  compile 'com.github.toastshaman:dropwizard-auth-jwt:1.1.2-0'
 
   // Lite dependencies
   compile 'uk.gov.bis.lite:spire-client:1.6'
   compile 'uk.gov.bis.lite:jersey-correlation-id:1.0'
   compile 'uk.gov.bis.lite:json-console-appender:1.1'
   compile 'uk.gov.bis.lite:readiness-metric:1.0'
+  compile 'uk.gov.bis.lite:jwt:1.0'
 
   testCompile "io.dropwizard:dropwizard-testing:$dropwizardVersion"
   testCompile 'junit:junit:4.12'

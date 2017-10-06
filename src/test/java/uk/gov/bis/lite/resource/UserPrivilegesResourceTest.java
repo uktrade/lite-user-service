@@ -20,7 +20,7 @@ import javax.ws.rs.core.Response;
 
 public class UserPrivilegesResourceTest {
 
-  private static final String URL = "/user-privileges/user";
+  private static final String URL = "/user-privileges";
 
   private final UserPrivilegesService userPrivilegesService = mock(UserPrivilegesService.class);
 

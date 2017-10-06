@@ -1,9 +1,11 @@
 package uk.gov.bis.lite.user;
 
+import com.github.toastshaman.dropwizard.auth.jwt.JwtAuthFilter;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import io.dropwizard.Application;
 import io.dropwizard.auth.AuthDynamicFeature;
+import io.dropwizard.auth.AuthValueFactoryProvider;
 import io.dropwizard.auth.PrincipalImpl;
 import io.dropwizard.auth.basic.BasicCredentialAuthFilter;
 import io.dropwizard.setup.Bootstrap;
@@ -11,10 +13,12 @@ import io.dropwizard.setup.Environment;
 import ru.vyarus.dropwizard.guice.GuiceBundle;
 import ru.vyarus.dropwizard.guice.module.installer.feature.ManagedInstaller;
 import ru.vyarus.dropwizard.guice.module.installer.feature.jersey.ResourceInstaller;
+import uk.gov.bis.lite.common.jersey.filter.ContainerCorrelationIdFilter;
+import uk.gov.bis.lite.common.jwt.LiteJwtAuthFilterHelper;
+import uk.gov.bis.lite.common.jwt.LiteJwtUser;
 import uk.gov.bis.lite.common.metrics.readiness.ReadinessServlet;
 import uk.gov.bis.lite.user.config.GuiceModule;
 import uk.gov.bis.lite.user.config.UserServiceConfiguration;
-import uk.gov.bis.lite.common.jersey.filter.ContainerCorrelationIdFilter;
 import uk.gov.bis.lite.user.config.auth.SimpleAuthenticator;
 import uk.gov.bis.lite.user.resource.UserPrivilegesResource;
 
@@ -53,6 +57,14 @@ public class UserServiceApplication extends Application<UserServiceConfiguration
     ReadinessServlet readinessServlet = injector.getInstance(ReadinessServlet.class);
     environment.admin().addServlet("ready", readinessServlet).addMapping("/ready");
 
+    String jwtSharedSecret = configuration.getJwtSharedSecret();
+
+    JwtAuthFilter<LiteJwtUser> liteJwtUserJwtAuthFilter = LiteJwtAuthFilterHelper.buildAuthFilter(jwtSharedSecret);
+
+    environment.jersey().register(new AuthDynamicFeature(liteJwtUserJwtAuthFilter));
+
+    environment.jersey().register(new AuthValueFactoryProvider.Binder<>(LiteJwtUser.class));
+
     environment.jersey().register(new AuthDynamicFeature(
         new BasicCredentialAuthFilter.Builder<PrincipalImpl>()
             .setAuthenticator(new SimpleAuthenticator(configuration.getAdminUsername(), configuration.getAdminPassword()))
@@ -66,7 +78,6 @@ public class UserServiceApplication extends Application<UserServiceConfiguration
     return guiceBundle;
   }
 
-  public static void main(String[] args) throws Exception {
-    new UserServiceApplication().run(args);
-  }
+
+
 }

@@ -15,15 +15,22 @@ import javax.ws.rs.core.Response;
 
 public class UserServiceApplicationIntegrationTest extends BaseIntegrationTest {
 
-  public String urlTarget(String targetPath) {
+  private String urlTarget(String targetPath) {
     return "http://localhost:" + RULE.getLocalPort() + targetPath;
+  }
+
+  private Response get(String targetPath) {
+    return RULE.client().target(urlTarget(targetPath))
+        .request()
+        .headers(authedHeaders)
+        .get();
   }
 
   @Test
   public void singleCustomerTest() throws Exception {
     stubForBody(fixture("fixture/spire/SPIRE_USER_ROLES/SingleSarAdmin.xml"));
 
-    Response response = RULE.client().target(urlTarget("/user-privileges/user/123")).request().get();
+    Response response = get("/user-privileges/123");
 
     assertThat(response.getStatus()).isEqualTo(200);
     assertThat(response.getHeaderString("Content-Type")).isEqualTo("application/json");
@@ -41,7 +48,7 @@ public class UserServiceApplicationIntegrationTest extends BaseIntegrationTest {
   public void singleSiteTest() throws Exception {
     stubForBody(fixture("fixture/spire/SPIRE_USER_ROLES/SingleSiteAdmin.xml"));
 
-    Response response = RULE.client().target(urlTarget("/user-privileges/user/123")).request().get();
+    Response response = get("/user-privileges/123");
 
     assertThat(response.getStatus()).isEqualTo(200);
     assertThat(response.getHeaderString("Content-Type")).isEqualTo("application/json");
@@ -59,7 +66,7 @@ public class UserServiceApplicationIntegrationTest extends BaseIntegrationTest {
   public void customerAndSiteTest() throws Exception {
     stubForBody(fixture("fixture/spire/SPIRE_USER_ROLES/SarAndSiteAdmin.xml"));
 
-    Response response = RULE.client().target(urlTarget("/user-privileges/user/123")).request().get();
+    Response response = get("/user-privileges/123");
 
     assertThat(response.getStatus()).isEqualTo(200);
     assertThat(response.getHeaderString("Content-Type")).isEqualTo("application/json");
@@ -81,7 +88,7 @@ public class UserServiceApplicationIntegrationTest extends BaseIntegrationTest {
   public void junkRolesTest() throws Exception {
     stubForBody(fixture("fixture/spire/SPIRE_USER_ROLES/JunkRole.xml"));
 
-    Response response = RULE.client().target(urlTarget("/user-privileges/user/123")).request().get();
+    Response response = get("/user-privileges/123");
 
     assertThat(response.getStatus()).isEqualTo(200);
     assertThat(response.getHeaderString("Content-Type")).isEqualTo("application/json");
@@ -95,7 +102,7 @@ public class UserServiceApplicationIntegrationTest extends BaseIntegrationTest {
   public void noRolesTest() throws Exception {
     stubForBody(fixture("fixture/spire/SPIRE_USER_ROLES/NoRoles.xml"));
 
-    Response response = RULE.client().target(urlTarget("/user-privileges/user/123")).request().get();
+    Response response = get("/user-privileges/123");
 
     assertThat(response.getStatus()).isEqualTo(200);
     assertThat(response.getHeaderString("Content-Type")).isEqualTo("application/json");
@@ -109,7 +116,7 @@ public class UserServiceApplicationIntegrationTest extends BaseIntegrationTest {
   public void userIdDoesNotExistTest() throws Exception {
     stubForBody(fixture("fixture/spire/SPIRE_USER_ROLES/UserIdDoesNotExist.xml"));
 
-    Response response = RULE.client().target(urlTarget("/user-privileges/user/123")).request().get();
+    Response response = get("/user-privileges/123");
 
     assertThat(response.getStatus()).isEqualTo(404);
   }
@@ -118,9 +125,21 @@ public class UserServiceApplicationIntegrationTest extends BaseIntegrationTest {
   public void unhandledErrorTest() throws Exception {
     stubForBody(fixture("fixture/spire/SPIRE_USER_ROLES/UnhandledError.xml"));
 
-    Response response = RULE.client().target(urlTarget("/user-privileges/user/123")).request().get();
+    Response response = get("/user-privileges/123");
 
     assertThat(response.getStatus()).isEqualTo(400);
+  }
+
+  @Test
+  public void unauthorisedTest() throws Exception {
+    stubForBody(fixture("fixture/spire/SPIRE_USER_ROLES/SingleSarAdmin.xml"));
+
+    Response response = RULE.client().target(urlTarget("/user-privileges/123")).request().get();
+
+    String body = response.readEntity(String.class);
+
+    assertThat(response.getStatus()).isEqualTo(401);
+    assertThat(body).isEqualTo("Credentials are required to access this resource.");
   }
 
 }
