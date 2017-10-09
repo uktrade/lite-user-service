@@ -5,7 +5,7 @@ node('jdk8') {
   currentBuild.displayName = "#${env.BUILD_NUMBER} - ${params.BUILD_VERSION}"
   slackBuildNotifier.notifyBuild("STARTED", slackChannels)
   try {
-    def serviceName = 'user'
+    def serviceName = 'user-service'
     def gitURL = "github.com/uktrade/lite-${serviceName}"
 
     stage('Clean workspace'){
