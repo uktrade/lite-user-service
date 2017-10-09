@@ -31,9 +31,9 @@ public class BaseIntegrationTest {
    *  "alg": "HS256"
    * }.
    * {
-   *  "iss": "Online JWT Builder",
-   *  "iat": 1507121580,
-   *  "exp": 1538657587,
+   *  "iss": "Some lite service",
+   *  "iat": 1507542376,
+   *  "exp": 1602236776,
    *  "aud": "lite",
    *  "sub": "123456",
    *  "email": "example@example.com"
@@ -42,7 +42,7 @@ public class BaseIntegrationTest {
    *
    * using HMAC SHA-256 with key "demo-secret-which-is-very-long-so-as-to-hit-the-byte-requirement" for signing
    */
-  public static final String JWT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE1MDcxMjE1ODAsImV4cCI6MTUzODY1NzU4NywiYXVkIjoibGl0ZSIsInN1YiI6IjEyMzQ1NiIsImVtYWlsIjoiZXhhbXBsZUBleGFtcGxlLmNvbSJ9.wUKTzHkQoym-KCWzFUFrXeEKRQ3y3to-CBeHbqOxW4s";
+  public static final String JWT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTb21lIGxpdGUgc2VydmljZSIsImlhdCI6MTUwNzU0MjM3NiwiZXhwIjoxNjAyMjM2Nzc2LCJhdWQiOiJsaXRlIiwic3ViIjoiMTIzNDU2IiwiZW1haWwiOiJleGFtcGxlQGV4YW1wbGUuY29tIn0.wC_Jc4cOoM4UFX7UHHD3hCUcz8b9UPL_ImncY5FtAho";
 
   static {
     authedHeaders = new MultivaluedHashMap<>();
