@@ -51,6 +51,7 @@ public class SpireUserRolesParser implements SpireParser<SpireUserRoles> {
             getNodeValue(xpath, clonedNode,"IS_APPLICANT").ifPresent(userRoleBuilder::setIsApplicant);
             return userRoleBuilder.build();
           } else {
+            LOGGER.warn("Unexpected element found while parsing the SOAP response body: \"{}\"", clonedNode.getNodeName());
             return null;
           }
         })
