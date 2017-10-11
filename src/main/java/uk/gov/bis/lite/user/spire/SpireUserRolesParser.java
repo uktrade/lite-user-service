@@ -8,7 +8,6 @@ import org.w3c.dom.Node;
 import uk.gov.bis.lite.common.spire.client.SpireResponse;
 import uk.gov.bis.lite.common.spire.client.exception.SpireClientException;
 import uk.gov.bis.lite.common.spire.client.parser.SpireParser;
-import uk.gov.bis.lite.user.spire.SpireUserRole.SpireUserRoleBuilder;
 
 import java.util.List;
 import java.util.Objects;
@@ -41,15 +40,15 @@ public class SpireUserRolesParser implements SpireParser<SpireUserRoles> {
         .map(node -> {
           Node clonedNode = node.cloneNode(true); // Better XPath performance with large DOMs
           if (StringUtils.equals(clonedNode.getNodeName(), "ROLE")) {
-            SpireUserRoleBuilder userRoleBuilder = SpireUserRole.builder();
-            getNodeValue(xpath, clonedNode,"RES_TYPE").ifPresent(userRoleBuilder::setResType);
-            getNodeValue(xpath, clonedNode,"ROLE_NAME").ifPresent(userRoleBuilder::setRoleName);
-            getNodeValue(xpath, clonedNode,"FULL_NAME").ifPresent(userRoleBuilder::setFullName);
-            getNodeValue(xpath, clonedNode,"SAR_REF").ifPresent(userRoleBuilder::setSarRef);
-            getNodeValue(xpath, clonedNode,"SITE_REF").ifPresent(userRoleBuilder::setSiteRef);
-            getNodeValue(xpath, clonedNode,"IS_ADMIN").ifPresent(userRoleBuilder::setIsAdmin);
-            getNodeValue(xpath, clonedNode,"IS_APPLICANT").ifPresent(userRoleBuilder::setIsApplicant);
-            return userRoleBuilder.build();
+            SpireUserRole userRole = new SpireUserRole();
+            getNodeValue(xpath, clonedNode,"RES_TYPE").ifPresent(userRole::setResType);
+            getNodeValue(xpath, clonedNode,"ROLE_NAME").ifPresent(userRole::setRoleName);
+            getNodeValue(xpath, clonedNode,"FULL_NAME").ifPresent(userRole::setFullName);
+            getNodeValue(xpath, clonedNode,"SAR_REF").ifPresent(userRole::setSarRef);
+            getNodeValue(xpath, clonedNode,"SITE_REF").ifPresent(userRole::setSiteRef);
+            getNodeValue(xpath, clonedNode,"IS_ADMIN").ifPresent(userRole::setIsAdmin);
+            getNodeValue(xpath, clonedNode,"IS_APPLICANT").ifPresent(userRole::setIsApplicant);
+            return userRole;
           } else {
             LOGGER.warn("Unexpected element found while parsing the SOAP response body: \"{}\"", clonedNode.getNodeName());
             return null;

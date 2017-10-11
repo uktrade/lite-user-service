@@ -404,54 +404,48 @@ public class SpireUserRolesAdapterTest {
   @Test
   public void ignoreUnusedOrEmptyRolesTest() throws Exception {
     SpireUserRoles sur = buildSpireUserRoles(
-        SpireUserRole.builder()
+        new SpireUserRole()
             .setResType(RES_TYPE_SPIRE_SAR_USERS)
             .setSarRef("SAR123")
             .setRoleName("SOME_OTHER_ROLE")
             .setIsAdmin("Y")
             .setIsApplicant("N")
-            .setFullName(FULL_NAME)
-            .build(),
-        SpireUserRole.builder()
+            .setFullName(FULL_NAME),
+        new SpireUserRole()
             .setResType(RES_TYPE_SPIRE_SAR_USERS)
             .setSarRef("SAR123")
             .setRoleName("")
             .setIsAdmin("Y")
             .setIsApplicant("N")
-            .setFullName(FULL_NAME)
-            .build(),
-        SpireUserRole.builder()
+            .setFullName(FULL_NAME),
+        new SpireUserRole()
             .setResType(RES_TYPE_SPIRE_SAR_USERS)
             .setSarRef("SAR123")
             .setRoleName(null)
             .setIsAdmin("Y")
             .setIsApplicant("N")
-            .setFullName(FULL_NAME)
-            .build(),
-        SpireUserRole.builder()
+            .setFullName(FULL_NAME),
+        new SpireUserRole()
             .setResType(RES_TYPE_SPIRE_SITE_USERS)
             .setSiteRef("SITE123")
             .setRoleName("SOME_OTHER_ROLE")
             .setIsAdmin("Y")
             .setIsApplicant("N")
-            .setFullName(FULL_NAME)
-            .build(),
-        SpireUserRole.builder()
+            .setFullName(FULL_NAME),
+        new SpireUserRole()
             .setResType(RES_TYPE_SPIRE_SITE_USERS)
             .setSiteRef("SITE123")
             .setRoleName("")
             .setIsAdmin("Y")
             .setIsApplicant("N")
-            .setFullName(FULL_NAME)
-            .build(),
-        SpireUserRole.builder()
+            .setFullName(FULL_NAME),
+        new SpireUserRole()
             .setResType(RES_TYPE_SPIRE_SITE_USERS)
             .setSiteRef("SITE123")
             .setRoleName(null)
             .setIsAdmin("Y")
             .setIsApplicant("N")
             .setFullName(FULL_NAME)
-            .build()
         );
 
     UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
@@ -484,38 +478,34 @@ public class SpireUserRolesAdapterTest {
   @Test
   public void ignoreEmptyResType() throws Exception {
     SpireUserRoles sur = buildSpireUserRoles(
-        SpireUserRole.builder()
+        new SpireUserRole()
             .setResType("")
             .setSarRef("SAR123")
             .setRoleName(ROLE_SAR_ADMINISTRATOR)
             .setIsAdmin("Y")
             .setIsApplicant("N")
-            .setFullName(FULL_NAME)
-            .build(),
-        SpireUserRole.builder()
+            .setFullName(FULL_NAME),
+        new SpireUserRole()
             .setResType("")
             .setSiteRef("SITE123")
             .setRoleName(ROLE_SITE_ADMINISTRATOR)
             .setIsAdmin("Y")
             .setIsApplicant("N")
-            .setFullName(FULL_NAME)
-            .build(),
-        SpireUserRole.builder()
+            .setFullName(FULL_NAME),
+        new SpireUserRole()
             .setResType(null)
             .setSarRef("SAR123")
             .setRoleName(ROLE_SAR_ADMINISTRATOR)
             .setIsAdmin("Y")
             .setIsApplicant("N")
-            .setFullName(FULL_NAME)
-            .build(),
-        SpireUserRole.builder()
+            .setFullName(FULL_NAME),
+        new SpireUserRole()
             .setResType(null)
             .setSiteRef("SITE123")
             .setRoleName(ROLE_SITE_ADMINISTRATOR)
             .setIsAdmin("Y")
             .setIsApplicant("N")
             .setFullName(FULL_NAME)
-            .build()
     );
 
     UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
@@ -526,16 +516,14 @@ public class SpireUserRolesAdapterTest {
   @Test
   public void tolerantOfUnusedFieldTest() throws Exception {
     SpireUserRoles sur = buildSpireUserRoles(
-        SpireUserRole.builder()
+        new SpireUserRole()
             .setResType(RES_TYPE_SPIRE_SAR_USERS)
             .setSarRef("SAR123")
-            .setRoleName(ROLE_SAR_ADMINISTRATOR)
-            .build(),
-        SpireUserRole.builder()
+            .setRoleName(ROLE_SAR_ADMINISTRATOR),
+        new SpireUserRole()
             .setResType(RES_TYPE_SPIRE_SITE_USERS)
             .setSiteRef("SITE123")
             .setRoleName(ROLE_SITE_ADMINISTRATOR)
-            .build()
         );
 
     UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);

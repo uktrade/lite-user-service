@@ -18,69 +18,63 @@ public class SpireUserRolesUtil {
   public static String FULL_NAME = "Mr Test";
 
   public static SpireUserRole buildCustomerAdmin(String sarRef) {
-    return SpireUserRole.builder()
+    return new SpireUserRole()
         .setResType(RES_TYPE_SPIRE_SAR_USERS)
         .setSarRef(sarRef)
         .setRoleName(ROLE_SAR_ADMINISTRATOR)
         .setIsAdmin("Y")
         .setIsApplicant("N")
-        .setFullName(FULL_NAME)
-        .build();
+        .setFullName(FULL_NAME);
   }
 
   public static SpireUserRole buildCustomerSubmitter(String sarRef) {
-    return SpireUserRole.builder()
+    return new SpireUserRole()
         .setResType(RES_TYPE_SPIRE_SAR_USERS)
         .setSarRef(sarRef)
         .setRoleName(ROLE_APPLICATION_SUBMITTER)
         .setIsAdmin("N")
         .setIsApplicant("Y")
-        .setFullName(FULL_NAME)
-        .build();
+        .setFullName(FULL_NAME);
   }
 
   public static SpireUserRole buildCustomerPreparer(String sarRef) {
-    return SpireUserRole.builder()
+    return new SpireUserRole()
         .setResType(RES_TYPE_SPIRE_SAR_USERS)
         .setSarRef(sarRef)
         .setRoleName(ROLE_APPLICATION_PREPARER)
         .setIsAdmin("N")
         .setIsApplicant("Y")
-        .setFullName(FULL_NAME)
-        .build();
+        .setFullName(FULL_NAME);
   }
 
   public static SpireUserRole buildSiteAdmin(String siteRef) {
-    return SpireUserRole.builder()
+    return new SpireUserRole()
         .setResType(RES_TYPE_SPIRE_SITE_USERS)
         .setSiteRef(siteRef)
         .setRoleName(ROLE_SITE_ADMINISTRATOR)
         .setIsAdmin("Y")
         .setIsApplicant("N")
-        .setFullName(FULL_NAME)
-        .build();
+        .setFullName(FULL_NAME);
   }
 
   public static SpireUserRole buildSiteSubmitter(String siteRef) {
-    return SpireUserRole.builder()
+    return new SpireUserRole()
         .setResType(RES_TYPE_SPIRE_SITE_USERS)
         .setSiteRef(siteRef)
         .setRoleName(ROLE_APPLICATION_SUBMITTER)
         .setIsAdmin("N")
         .setIsApplicant("Y")
-        .setFullName(FULL_NAME)
-        .build();
+        .setFullName(FULL_NAME);
   }
 
   public static SpireUserRole buildSitePreparer(String siteRef) {
-    return SpireUserRole.builder()
+    return new SpireUserRole()
         .setResType(RES_TYPE_SPIRE_SITE_USERS)
         .setSiteRef(siteRef)
         .setRoleName(ROLE_APPLICATION_PREPARER)
         .setIsAdmin("N")
         .setIsApplicant("Y")
-        .setFullName(FULL_NAME)
-        .build();
+        .setFullName(FULL_NAME);
   }
 
   public static void stubForBody(String body) {
