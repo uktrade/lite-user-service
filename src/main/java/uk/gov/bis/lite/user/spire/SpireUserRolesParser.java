@@ -35,12 +35,12 @@ public class SpireUserRolesParser implements SpireParser<SpireUserRoles> {
   }
 
   private SpireUserRoles doResponseParsing(SpireResponse spireResponse) {
+    XPath xpath = XPathFactory.newInstance().newXPath();
     List<SpireUserRole> userRoles = spireResponse.getElementChildNodesForList("//ROLE_LIST")
-        .parallelStream()
+        .stream()
         .map(node -> {
           Node clonedNode = node.cloneNode(true); // Better XPath performance with large DOMs
           if (StringUtils.equals(clonedNode.getNodeName(), "ROLE")) {
-            XPath xpath = XPathFactory.newInstance().newXPath();
             SpireUserRoleBuilder userRoleBuilder = SpireUserRole.builder();
             getNodeValue(xpath, clonedNode,"RES_TYPE").ifPresent(userRoleBuilder::setResType);
             getNodeValue(xpath, clonedNode,"ROLE_NAME").ifPresent(userRoleBuilder::setRoleName);
