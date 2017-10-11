@@ -1,4 +1,4 @@
-package uk.gov.bis.lite.user.api;
+package uk.gov.bis.lite.user.api.view;
 
 import java.util.Collections;
 import java.util.List;

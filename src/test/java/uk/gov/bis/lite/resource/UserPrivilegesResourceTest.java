@@ -8,10 +8,10 @@ import static org.mockito.Mockito.when;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.Rule;
 import org.junit.Test;
-import uk.gov.bis.lite.user.api.CustomerView;
-import uk.gov.bis.lite.user.api.Role;
-import uk.gov.bis.lite.user.api.SiteView;
-import uk.gov.bis.lite.user.api.UserPrivilegesView;
+import uk.gov.bis.lite.user.api.view.CustomerView;
+import uk.gov.bis.lite.user.api.view.Role;
+import uk.gov.bis.lite.user.api.view.SiteView;
+import uk.gov.bis.lite.user.api.view.UserPrivilegesView;
 import uk.gov.bis.lite.user.resource.UserPrivilegesResource;
 import uk.gov.bis.lite.user.service.UserPrivilegesService;
 

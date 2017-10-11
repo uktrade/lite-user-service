@@ -1,10 +1,10 @@
 package uk.gov.bis.lite.user.spire;
 
 import org.apache.commons.lang3.StringUtils;
-import uk.gov.bis.lite.user.api.CustomerView;
-import uk.gov.bis.lite.user.api.Role;
-import uk.gov.bis.lite.user.api.SiteView;
-import uk.gov.bis.lite.user.api.UserPrivilegesView;
+import uk.gov.bis.lite.user.api.view.CustomerView;
+import uk.gov.bis.lite.user.api.view.Role;
+import uk.gov.bis.lite.user.api.view.SiteView;
+import uk.gov.bis.lite.user.api.view.UserPrivilegesView;
 
 import java.util.Comparator;
 import java.util.EnumMap;

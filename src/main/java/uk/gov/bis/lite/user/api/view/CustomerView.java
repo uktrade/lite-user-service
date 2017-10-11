@@ -1,4 +1,4 @@
-package uk.gov.bis.lite.user.api;
+package uk.gov.bis.lite.user.api.view;
 
 public class CustomerView {
   private String customerId;

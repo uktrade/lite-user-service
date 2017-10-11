@@ -5,7 +5,7 @@ import io.dropwizard.auth.Auth;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.bis.lite.common.jwt.LiteJwtUser;
-import uk.gov.bis.lite.user.api.UserPrivilegesView;
+import uk.gov.bis.lite.user.api.view.UserPrivilegesView;
 import uk.gov.bis.lite.user.service.UserPrivilegesService;
 
 import java.util.Optional;

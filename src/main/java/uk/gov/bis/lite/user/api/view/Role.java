@@ -1,4 +1,4 @@
-package uk.gov.bis.lite.user.api;
+package uk.gov.bis.lite.user.api.view;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;

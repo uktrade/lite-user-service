@@ -1,6 +1,6 @@
 package uk.gov.bis.lite.user.service;
 
-import uk.gov.bis.lite.user.api.UserPrivilegesView;
+import uk.gov.bis.lite.user.api.view.UserPrivilegesView;
 
 import java.util.Optional;
 
