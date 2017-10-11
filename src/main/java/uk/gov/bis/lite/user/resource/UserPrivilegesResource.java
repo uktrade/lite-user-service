@@ -14,7 +14,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 @Path("/user-privileges")
 public class UserPrivilegesResource {
@@ -31,7 +33,12 @@ public class UserPrivilegesResource {
   @GET
   @Produces({MediaType.APPLICATION_JSON})
   @Path("/{userId}")
-  public Optional<UserPrivilegesView> viewUserPrivileges(@PathParam("userId") String userId, @Auth LiteJwtUser user) {
-    return userPrivilegesService.getUserPrivileges(userId);
+  public UserPrivilegesView viewUserPrivileges(@PathParam("userId") String userId, @Auth LiteJwtUser user) {
+    Optional<UserPrivilegesView> userPrivs = userPrivilegesService.getUserPrivileges(userId);
+    if (userPrivs.isPresent()) {
+      return userPrivs.get();
+    } else {
+      throw new WebApplicationException("User not found.", Response.Status.NOT_FOUND);
+    }
   }
 }

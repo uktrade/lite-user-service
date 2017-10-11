@@ -15,8 +15,10 @@ import uk.gov.bis.lite.user.api.view.UserPrivilegesView;
 import uk.gov.bis.lite.user.resource.UserPrivilegesResource;
 import uk.gov.bis.lite.user.service.UserPrivilegesService;
 
+import java.util.Map;
 import java.util.Optional;
 
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
 public class UserPrivilegesResourceTest {
@@ -120,6 +122,12 @@ public class UserPrivilegesResourceTest {
         .get();
 
     assertThat(response.getStatus()).isEqualTo(404);
+
+    Map<String, String> map = response.readEntity(new GenericType<Map<String, String>>(){});
+
+    assertThat(map.entrySet().size()).isEqualTo(2);
+    assertThat(map.get("code")).isEqualTo("404");
+    assertThat(map.get("message")).isEqualTo("User not found.");
   }
 
 }
