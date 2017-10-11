@@ -25,11 +25,6 @@ public class SpireUserRolesAdapter {
     rolePriorityMap.put(Role.PREPARER, 0);
   }
 
-  private enum SpireListType {
-    SITE,
-    CUSTOMER
-  }
-
   public static UserPrivilegesView adapt(SpireUserRoles spireUserRoles) {
     Map<String, CustomerView> customerMap = new HashMap<>();
     Map<String, SiteView> siteMap = new HashMap<>();
@@ -37,7 +32,7 @@ public class SpireUserRolesAdapter {
     for (SpireUserRole sur: spireUserRoles.getUserRoles()) {
       if (StringUtils.equals(sur.getResType(), "SPIRE_SAR_USERS")) {
         String customerId = sur.getSarRef();
-        Optional<Role> role = spireRoleMapper(sur.getRoleName(), SpireListType.CUSTOMER);
+        Optional<Role> role = mapSpireRole(sur.getRoleName());
         if (role.isPresent() && !StringUtils.isEmpty(customerId)) {
           if (customerMap.containsKey(customerId)) {
             Role existingRole = customerMap.get(customerId).getRole();
@@ -58,7 +53,7 @@ public class SpireUserRolesAdapter {
         }
       } else if (StringUtils.equals(sur.getResType(), "SPIRE_SITE_USERS")) {
         String siteId = sur.getSiteRef();
-        Optional<Role> role = spireRoleMapper(sur.getRoleName(), SpireListType.SITE);
+        Optional<Role> role = mapSpireRole(sur.getRoleName());
         if (role.isPresent() && !StringUtils.isEmpty(siteId)) {
           if (siteMap.containsKey(siteId)) {
             Role existingRole = siteMap.get(siteId).getRole();
@@ -94,16 +89,12 @@ public class SpireUserRolesAdapter {
         .setSites(sites);
   }
 
-  private static Optional<Role> spireRoleMapper(String spireRoleName, SpireListType listType) {
-    if (StringUtils.isEmpty(spireRoleName)) {
-      return Optional.empty();
-    } else if (StringUtils.equals(spireRoleName , "SAR_ADMINISTRATOR") && listType == SpireListType.CUSTOMER) {
+  private static Optional<Role> mapSpireRole(String spireRoleName) {
+    if (StringUtils.equals(spireRoleName, "SAR_ADMINISTRATOR") || StringUtils.equals(spireRoleName, "SITE_ADMINISTRATOR")) {
       return Optional.of(Role.ADMIN);
-    } else if (StringUtils.equals(spireRoleName , "SITE_ADMINISTRATOR") && listType == SpireListType.SITE) {
-      return Optional.of(Role.ADMIN);
-    } else if (StringUtils.equals(spireRoleName , "APPLICATION_SUBMITTER")) {
+    } else if (StringUtils.equals(spireRoleName, "APPLICATION_SUBMITTER")) {
       return Optional.of(Role.SUBMITTER);
-    } else if (StringUtils.equals(spireRoleName , "APPLICATION_PREPARER")) {
+    } else if (StringUtils.equals(spireRoleName, "APPLICATION_PREPARER")) {
       return Optional.of(Role.PREPARER);
     } else {
       return Optional.empty();

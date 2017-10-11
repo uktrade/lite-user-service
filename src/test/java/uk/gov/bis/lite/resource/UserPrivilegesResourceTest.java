@@ -105,7 +105,7 @@ public class UserPrivilegesResourceTest {
 
     UserPrivilegesView result = response.readEntity(UserPrivilegesView.class);
     assertThat(result).isNotNull();
-    assertThat(result.getUserAccountType()).isEmpty();
+    assertThat(result.getUserAccountType()).isNull();
     assertThat(result.getCustomers().size()).isEqualTo(0);
     assertThat(result.getSites().size()).isEqualTo(0);
   }
