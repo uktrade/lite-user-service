@@ -23,6 +23,7 @@ import uk.gov.bis.lite.user.spire.SpireUserRoles;
 import uk.gov.bis.lite.user.spire.SpireUserRolesAdapter;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 public class SpireUserRolesAdapterTest {
 
@@ -529,5 +530,41 @@ public class SpireUserRolesAdapterTest {
     UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
     assertThat(userPrivs.getCustomers().size()).isEqualTo(1);
     assertThat(userPrivs.getSites().size()).isEqualTo(1);
+  }
+
+  @Test
+  public void sarAdminRoleMappingTest() throws Exception {
+      Optional<Role> role = SpireUserRolesAdapter.mapSpireRole("SAR_ADMINISTRATOR");
+      assertThat(role).isPresent().contains(Role.ADMIN);
+  }
+
+  @Test
+  public void siteAdminRoleMappingTest() throws Exception {
+    Optional<Role> role = SpireUserRolesAdapter.mapSpireRole("SITE_ADMINISTRATOR");
+    assertThat(role).isPresent().contains(Role.ADMIN);
+  }
+
+  @Test
+  public void submitterRoleMappingTest() throws Exception {
+    Optional<Role> role = SpireUserRolesAdapter.mapSpireRole("APPLICATION_SUBMITTER");
+    assertThat(role).isPresent().contains(Role.SUBMITTER);
+  }
+
+  @Test
+  public void preparerRoleMappingTest() throws Exception {
+    Optional<Role> role = SpireUserRolesAdapter.mapSpireRole("APPLICATION_PREPARER");
+    assertThat(role).isPresent().contains(Role.PREPARER);
+  }
+
+  @Test
+  public void unknownRoleMappingTest() throws Exception {
+    Optional<Role> role = SpireUserRolesAdapter.mapSpireRole("SOMETHING");
+    assertThat(role).isEmpty();
+  }
+
+  @Test
+  public void emptyRoleMappingTest() throws Exception {
+    Optional<Role> role = SpireUserRolesAdapter.mapSpireRole("");
+    assertThat(role).isEmpty();
   }
 }

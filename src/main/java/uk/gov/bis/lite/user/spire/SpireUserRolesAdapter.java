@@ -1,5 +1,6 @@
 package uk.gov.bis.lite.user.spire;
 
+import com.google.common.annotations.VisibleForTesting;
 import org.apache.commons.lang3.StringUtils;
 import uk.gov.bis.lite.user.api.view.CustomerView;
 import uk.gov.bis.lite.user.api.view.Role;
@@ -89,7 +90,8 @@ public class SpireUserRolesAdapter {
         .setSites(sites);
   }
 
-  private static Optional<Role> mapSpireRole(String spireRoleName) {
+  @VisibleForTesting
+  public static Optional<Role> mapSpireRole(String spireRoleName) {
     if (StringUtils.equals(spireRoleName, "SAR_ADMINISTRATOR") || StringUtils.equals(spireRoleName, "SITE_ADMINISTRATOR")) {
       return Optional.of(Role.ADMIN);
     } else if (StringUtils.equals(spireRoleName, "APPLICATION_SUBMITTER")) {
