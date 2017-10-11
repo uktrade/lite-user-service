@@ -2,12 +2,14 @@ package uk.gov.bis.lite.service;
 
 import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static uk.gov.bis.lite.spire.SpireUserRolesUtil.buildCustomerAdmin;
 import static uk.gov.bis.lite.spire.SpireUserRolesUtil.buildSiteAdmin;
 
 import org.junit.Test;
+import uk.gov.bis.lite.common.spire.client.SpireRequest;
 import uk.gov.bis.lite.user.api.view.CustomerView;
 import uk.gov.bis.lite.user.api.view.Role;
 import uk.gov.bis.lite.user.api.view.SiteView;
@@ -16,6 +18,7 @@ import uk.gov.bis.lite.user.service.UserPrivilegesService;
 import uk.gov.bis.lite.user.service.UserPrivilegesServiceImpl;
 import uk.gov.bis.lite.user.spire.SpireUserRoles;
 import uk.gov.bis.lite.user.spire.SpireUserRolesClient;
+import uk.gov.bis.lite.user.spire.SpireUserRolesUserNotFoundException;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -30,12 +33,12 @@ public class UserPrivilegesServiceImplTest {
 
   @Test
   public void userHasCustomersAndSitesTest() throws Exception {
-    when(client.sendRequest("123"))
+    when(client.createRequest()).thenReturn(mock(SpireRequest.class));
+    when(client.sendRequest(any()))
         .thenReturn(
-            Optional.of(
                 new SpireUserRoles("REGULATOR", Arrays.asList(
                   buildCustomerAdmin("SAR123"),
-                  buildSiteAdmin("SITE123")))));
+                  buildSiteAdmin("SITE123"))));
 
     Optional<UserPrivilegesView> userPrivsOpt = service.getUserPrivileges("123");
     assertThat(userPrivsOpt.isPresent()).isTrue();
@@ -56,8 +59,9 @@ public class UserPrivilegesServiceImplTest {
 
   @Test
   public void userHasNoCustomersOrSitesTest() throws Exception {
-    when(client.sendRequest("123"))
-        .thenReturn(Optional.of(new SpireUserRoles("REGULATOR", emptyList())));
+    when(client.createRequest()).thenReturn(mock(SpireRequest.class));
+    when(client.sendRequest(any()))
+        .thenReturn(new SpireUserRoles("REGULATOR", emptyList()));
 
     Optional<UserPrivilegesView> userPrivsOpt = service.getUserPrivileges("123");
     assertThat(userPrivsOpt.isPresent()).isTrue();
@@ -70,8 +74,9 @@ public class UserPrivilegesServiceImplTest {
 
   @Test
   public void userHasNoData() throws Exception {
-    when(client.sendRequest("123"))
-        .thenReturn(Optional.of(new SpireUserRoles("", emptyList())));
+    when(client.createRequest()).thenReturn(mock(SpireRequest.class));
+    when(client.sendRequest(any()))
+        .thenReturn(new SpireUserRoles("", emptyList()));
 
     Optional<UserPrivilegesView> userPrivsOpt = service.getUserPrivileges("123");
     assertThat(userPrivsOpt.isPresent()).isTrue();
@@ -84,7 +89,8 @@ public class UserPrivilegesServiceImplTest {
 
   @Test
   public void userDoesNotExist() throws Exception {
-    when(client.sendRequest("123")).thenReturn(Optional.empty());
+    when(client.createRequest()).thenReturn(mock(SpireRequest.class));
+    when(client.sendRequest(any())).thenThrow(new SpireUserRolesUserNotFoundException("User not found"));
 
     Optional<UserPrivilegesView> userPrivsOpt = service.getUserPrivileges("123");
     assertThat(userPrivsOpt.isPresent()).isFalse();

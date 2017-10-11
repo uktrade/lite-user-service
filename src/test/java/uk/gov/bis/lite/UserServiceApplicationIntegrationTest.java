@@ -1,5 +1,10 @@
 package uk.gov.bis.lite;
 
+import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.matchingXPath;
+import static com.github.tomakehurst.wiremock.client.WireMock.post;
+import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
 import static uk.gov.bis.lite.spire.SpireUserRolesUtil.stubForBody;
@@ -142,4 +147,30 @@ public class UserServiceApplicationIntegrationTest extends BaseIntegrationTest {
     assertThat(body).isEqualTo("Credentials are required to access this resource.");
   }
 
+  @Test
+  public void spireError500() throws Exception {
+    stubFor(post(urlEqualTo("/spire/fox/ispire/SPIRE_USER_ROLES"))
+        .willReturn(aResponse()
+            .withStatus(500)));
+
+    Response response = get("/user-privileges/123");
+
+    assertThat(response.getStatus()).isEqualTo(400);
+  }
+
+  @Test
+  public void userIdInRequest() throws Exception {
+    stubFor(post(urlEqualTo("/spire/fox/ispire/SPIRE_USER_ROLES"))
+        .withBasicAuth("username", "password")
+        .withRequestBody(matchingXPath("//SOAP-ENV:Envelope/SOAP-ENV:Body/spir:getRoles/userId[text() = '123']")
+            .withXPathNamespace("SOAP-ENV", "http://schemas.xmlsoap.org/soap/envelope/")
+            .withXPathNamespace("spir", "http://www.fivium.co.uk/fox/webservices/ispire/SPIRE_USER_ROLES")
+        )
+        .willReturn(aResponse()
+            .withStatus(200)
+            .withHeader("Content-Type", "text/xml; charset=utf-8")
+            .withBody(fixture("fixture/spire/SPIRE_USER_ROLES/SarAndSiteAdmin.xml"))));
+
+    get("/user-privileges/123");
+  }
 }
