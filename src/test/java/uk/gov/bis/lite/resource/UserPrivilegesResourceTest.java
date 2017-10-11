@@ -1,5 +1,6 @@
 package uk.gov.bis.lite.resource;
 
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -31,11 +32,16 @@ public class UserPrivilegesResourceTest {
 
   @Test
   public void testUserPrivs() throws Exception {
-    UserPrivilegesView userPrivs = UserPrivilegesView.builder()
+    UserPrivilegesView userPrivs = new UserPrivilegesView()
         .setUserAccountType("APPLICANT")
-        .addCustomer(new CustomerView("CUSTOMER123", Role.ADMIN))
-        .addSite(new SiteView("SITE123", Role.PREPARER))
-        .build();
+        .setCustomers(asList(
+            new CustomerView()
+                .setCustomerId("CUSTOMER123")
+                .setRole(Role.ADMIN)))
+        .setSites(asList(
+            new SiteView()
+                .setSiteId("SITE123")
+                .setRole(Role.PREPARER)));
 
     when(userPrivilegesService.getUserPrivileges("1")).thenReturn(Optional.of(userPrivs));
 
@@ -64,9 +70,8 @@ public class UserPrivilegesResourceTest {
   @Test
   public void testUserPrivsWithNoSitesOrCustomers() throws Exception {
     // User privs with only userAccountType set
-    UserPrivilegesView userPrivs = UserPrivilegesView.builder()
-        .setUserAccountType("APPLICANT")
-        .build();
+    UserPrivilegesView userPrivs = new UserPrivilegesView()
+        .setUserAccountType("APPLICANT");
 
     when(userPrivilegesService.getUserPrivileges("1")).thenReturn(Optional.of(userPrivs));
 
@@ -87,7 +92,7 @@ public class UserPrivilegesResourceTest {
   @Test
   public void testEmptyUserPrivs() throws Exception {
     // Empty user privs object
-    UserPrivilegesView userPrivs = UserPrivilegesView.builder().build();
+    UserPrivilegesView userPrivs = new UserPrivilegesView();
 
     when(userPrivilegesService.getUserPrivileges("1")).thenReturn(Optional.of(userPrivs));
 

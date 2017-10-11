@@ -1,24 +1,26 @@
 package uk.gov.bis.lite.user.api;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class SiteView {
-  private final String siteId;
-  private final Role role;
+  private String siteId;
+  private Role role;
 
-  @JsonCreator
-  public SiteView(@JsonProperty("siteId") String siteId,
-                  @JsonProperty("role") Role role) {
-    this.siteId = siteId;
-    this.role = role;
-  }
+  public SiteView() {}
 
   public String getSiteId() {
     return siteId;
   }
 
+  public SiteView setSiteId(String siteId) {
+    this.siteId = siteId;
+    return this;
+  }
+
   public Role getRole() {
     return role;
+  }
+
+  public SiteView setRole(Role role) {
+    this.role = role;
+    return this;
   }
 }

@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class SpireUserRolesAdapter {
 
-  private static Map<Role, Integer> rolePriorityMap;
+  private static final Map<Role, Integer> rolePriorityMap;
 
   static {
     rolePriorityMap = new EnumMap<>(Role.class);
@@ -40,12 +40,20 @@ public class SpireUserRolesAdapter {
         Optional<Role> role = spireRoleMapper(sur.getRoleName(), SpireListType.CUSTOMER);
         if (role.isPresent() && !StringUtils.isEmpty(customerId)) {
           if (customerMap.containsKey(customerId)) {
-            CustomerView customer = customerMap.get(customerId);
-            if (rolePriorityMap.get(role.get()) > rolePriorityMap.getOrDefault(customer.getRole(), -1)){
-              customerMap.replace(customerId, new CustomerView(customerId, role.get()));
+            Role existingRole = customerMap.get(customerId).getRole();
+            int existingRolePriority = rolePriorityMap.getOrDefault(existingRole, -1);
+            int rolePriority = rolePriorityMap.get(role.get());
+            if (rolePriority > existingRolePriority) {
+              CustomerView customer = new CustomerView()
+                  .setCustomerId(customerId)
+                  .setRole(role.get());
+              customerMap.replace(customerId, customer);
             }
           } else {
-            customerMap.put(customerId, new CustomerView(customerId, role.get()));
+            CustomerView customer = new CustomerView()
+                .setCustomerId(customerId)
+                .setRole(role.get());
+            customerMap.put(customerId, customer);
           }
         }
       } else if (StringUtils.equals(sur.getResType(), "SPIRE_SITE_USERS")) {
@@ -53,12 +61,20 @@ public class SpireUserRolesAdapter {
         Optional<Role> role = spireRoleMapper(sur.getRoleName(), SpireListType.SITE);
         if (role.isPresent() && !StringUtils.isEmpty(siteId)) {
           if (siteMap.containsKey(siteId)) {
-            SiteView site = siteMap.get(siteId);
-            if (rolePriorityMap.get(role.get()) > rolePriorityMap.getOrDefault(site.getRole(), -1)){
-              siteMap.replace(siteId, new SiteView(siteId, role.get()));
+            Role existingRole = siteMap.get(siteId).getRole();
+            int existingRolePriority = rolePriorityMap.getOrDefault(existingRole, -1);
+            int rolePriority = rolePriorityMap.get(role.get());
+            if (rolePriority > existingRolePriority){
+              SiteView site = new SiteView()
+                  .setSiteId(siteId)
+                  .setRole(role.get());
+              siteMap.replace(siteId, site);
             }
           } else {
-            siteMap.put(siteId, new SiteView(siteId, role.get()));
+            SiteView site = new SiteView()
+                .setSiteId(siteId)
+                .setRole(role.get());
+            siteMap.put(siteId, site);
           }
         }
       }
@@ -72,11 +88,10 @@ public class SpireUserRolesAdapter {
         .sorted(Comparator.comparing(SiteView::getSiteId))
         .collect(Collectors.toList());
 
-    return UserPrivilegesView.builder()
+    return new UserPrivilegesView()
         .setUserAccountType(spireUserRoles.getUserAccountType())
         .setCustomers(customers)
-        .setSites(sites)
-        .build();
+        .setSites(sites);
   }
 
   private static Optional<Role> spireRoleMapper(String spireRoleName, SpireListType listType) {

@@ -1,90 +1,42 @@
 package uk.gov.bis.lite.user.api;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class UserPrivilegesView {
-  private final String userAccountType;
-  private final List<CustomerView> customers;
-  private final List<SiteView> sites;
+  private String userAccountType;
+  private List<CustomerView> customers;
+  private List<SiteView> sites;
 
-  @JsonCreator
-  private UserPrivilegesView(@JsonProperty("userAccountType") String userAccountType,
-                             @JsonProperty("customers") List<CustomerView> customers,
-                             @JsonProperty("sites") List<SiteView> sites) {
-    this.userAccountType = userAccountType;
-    this.customers = customers;
-    this.sites = sites;
+  public UserPrivilegesView() {
+    customers = Collections.emptyList();
+    sites = Collections.emptyList();
   }
 
   public String getUserAccountType() {
     return userAccountType;
   }
 
+  public UserPrivilegesView setUserAccountType(String userAccountType) {
+    this.userAccountType = userAccountType;
+    return this;
+  }
+
   public List<CustomerView> getCustomers() {
     return customers;
+  }
+
+  public UserPrivilegesView setCustomers(List<CustomerView> customers) {
+    this.customers = customers;
+    return this;
   }
 
   public List<SiteView> getSites() {
     return sites;
   }
 
-  public static class UserPrivilegesViewBuilder {
-    private String userAccountType;
-    private List<CustomerView> customers;
-    private List<SiteView> sites;
-
-    public UserPrivilegesViewBuilder() {
-      userAccountType = "";
-      customers = new ArrayList<>();
-      sites = new ArrayList<>();
-    }
-
-    public UserPrivilegesViewBuilder setUserAccountType(String userAccountType) {
-      this.userAccountType = userAccountType;
-      return this;
-    }
-
-    public UserPrivilegesViewBuilder addCustomer(CustomerView customer) {
-      customers.add(customer);
-      return this;
-    }
-
-    public UserPrivilegesViewBuilder addCustomers(List<CustomerView> customers) {
-      this.customers.addAll(customers);
-      return this;
-    }
-
-    public UserPrivilegesViewBuilder setCustomers(List<CustomerView> customers) {
-      this.customers = customers;
-      return this;
-    }
-
-    public UserPrivilegesViewBuilder addSite(SiteView site) {
-      sites.add(site);
-      return this;
-    }
-
-    public UserPrivilegesViewBuilder addSites(List<SiteView> sites) {
-      this.sites.addAll(sites);
-      return this;
-    }
-
-    public UserPrivilegesViewBuilder setSites(List<SiteView> sites) {
-      this.sites = sites;
-      return this;
-    }
-
-    public UserPrivilegesView build() {
-      return new UserPrivilegesView(userAccountType, Collections.unmodifiableList(customers), Collections.unmodifiableList(sites));
-    }
-  }
-
-  public static UserPrivilegesViewBuilder builder() {
-    return new UserPrivilegesViewBuilder();
+  public UserPrivilegesView setSites(List<SiteView> sites) {
+    this.sites = sites;
+    return this;
   }
 }

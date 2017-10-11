@@ -24,7 +24,7 @@ public class UserPrivilegesServiceImplTest {
 
   private static final String USER_ACCOUNT_TYPE = "REGULATOR";
 
-                                                 private SpireUserRolesClient client = mock(SpireUserRolesClient.class);
+  private SpireUserRolesClient client = mock(SpireUserRolesClient.class);
 
   private UserPrivilegesService service = new UserPrivilegesServiceImpl(client);
 
