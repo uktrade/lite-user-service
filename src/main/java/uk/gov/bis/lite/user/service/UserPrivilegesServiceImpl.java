@@ -24,8 +24,7 @@ public class UserPrivilegesServiceImpl implements UserPrivilegesService {
     request.addChild("userId", userId);
     try {
       return Optional.of(spireUserRolesClient.sendRequest(request)).map(SpireUserRolesAdapter::adapt);
-    }
-    catch (SpireUserRolesUserNotFoundException e) {
+    } catch (SpireUserRolesUserNotFoundException e) {
       return Optional.empty();
     }
   }
