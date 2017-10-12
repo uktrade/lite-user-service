@@ -35,43 +35,29 @@ public class SpireUserRolesAdapter {
         String customerId = sur.getSarRef();
         Optional<Role> role = mapSpireRole(sur.getRoleName());
         if (role.isPresent() && !StringUtils.isEmpty(customerId)) {
-          if (customerMap.containsKey(customerId)) {
-            Role existingRole = customerMap.get(customerId).getRole();
-            int existingRolePriority = rolePriorityMap.getOrDefault(existingRole, -1);
-            int rolePriority = rolePriorityMap.get(role.get());
-            if (rolePriority > existingRolePriority) {
-              CustomerView customer = new CustomerView()
-                  .setCustomerId(customerId)
-                  .setRole(role.get());
-              customerMap.replace(customerId, customer);
-            }
-          } else {
-            CustomerView customer = new CustomerView()
-                .setCustomerId(customerId)
-                .setRole(role.get());
-            customerMap.put(customerId, customer);
-          }
+          CustomerView customer = new CustomerView()
+              .setCustomerId(customerId)
+              .setRole(role.get());
+
+          customerMap.merge(customerId, customer, (existingView, newView) -> {
+            int existingRolePriority = rolePriorityMap.getOrDefault(existingView.getRole(), -1);
+            int newRolePriority = rolePriorityMap.get(newView.getRole());
+            return newRolePriority > existingRolePriority ? newView : existingView;
+          });
         }
       } else if (StringUtils.equals(sur.getResType(), "SPIRE_SITE_USERS")) {
         String siteId = sur.getSiteRef();
         Optional<Role> role = mapSpireRole(sur.getRoleName());
         if (role.isPresent() && !StringUtils.isEmpty(siteId)) {
-          if (siteMap.containsKey(siteId)) {
-            Role existingRole = siteMap.get(siteId).getRole();
-            int existingRolePriority = rolePriorityMap.getOrDefault(existingRole, -1);
-            int rolePriority = rolePriorityMap.get(role.get());
-            if (rolePriority > existingRolePriority){
-              SiteView site = new SiteView()
-                  .setSiteId(siteId)
-                  .setRole(role.get());
-              siteMap.replace(siteId, site);
-            }
-          } else {
-            SiteView site = new SiteView()
-                .setSiteId(siteId)
-                .setRole(role.get());
-            siteMap.put(siteId, site);
-          }
+          SiteView site = new SiteView()
+              .setSiteId(siteId)
+              .setRole(role.get());
+
+          siteMap.merge(siteId, site, (existingView, newView) -> {
+            int existingRolePriority = rolePriorityMap.getOrDefault(existingView.getRole(), -1);
+            int newRolePriority = rolePriorityMap.get(newView.getRole());
+            return newRolePriority > existingRolePriority ? newView : existingView;
+          });
         }
       }
     }
