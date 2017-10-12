@@ -1,6 +1,7 @@
 package uk.gov.bis.lite.spire;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static uk.gov.bis.lite.spire.SpireUserRolesUtil.FULL_NAME;
 import static uk.gov.bis.lite.spire.SpireUserRolesUtil.RES_TYPE_SPIRE_SAR_USERS;
 import static uk.gov.bis.lite.spire.SpireUserRolesUtil.RES_TYPE_SPIRE_SITE_USERS;
@@ -17,12 +18,15 @@ import org.junit.Test;
 import uk.gov.bis.lite.user.api.view.CustomerView;
 import uk.gov.bis.lite.user.api.view.Role;
 import uk.gov.bis.lite.user.api.view.SiteView;
+import uk.gov.bis.lite.user.api.view.UserAccountType;
 import uk.gov.bis.lite.user.api.view.UserPrivilegesView;
 import uk.gov.bis.lite.user.spire.SpireUserRole;
 import uk.gov.bis.lite.user.spire.SpireUserRoles;
 import uk.gov.bis.lite.user.spire.SpireUserRolesAdapter;
+import uk.gov.bis.lite.user.spire.SpireUserRolesAdapterException;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 
 public class SpireUserRolesAdapterTest {
@@ -533,6 +537,30 @@ public class SpireUserRolesAdapterTest {
   }
 
   @Test
+  public void unknownUserAccountTypeTest() throws Exception {
+    SpireUserRoles spireUserRoles = new SpireUserRoles("SOMETHING", Collections.emptyList());
+    assertThatThrownBy(() -> SpireUserRolesAdapter.adapt(spireUserRoles))
+        .isInstanceOf(SpireUserRolesAdapterException.class)
+        .hasMessageContaining("Could not map user account type");
+  }
+
+  @Test
+  public void emptyUserAccountTypeTest() throws Exception {
+    SpireUserRoles spireUserRoles = new SpireUserRoles("", Collections.emptyList());
+    assertThatThrownBy(() -> SpireUserRolesAdapter.adapt(spireUserRoles))
+        .isInstanceOf(SpireUserRolesAdapterException.class)
+        .hasMessageContaining("Could not map user account type");
+  }
+
+  @Test
+  public void nullUserAccountTypeTest() throws Exception {
+    SpireUserRoles spireUserRoles = new SpireUserRoles(null, Collections.emptyList());
+    assertThatThrownBy(() -> SpireUserRolesAdapter.adapt(spireUserRoles))
+        .isInstanceOf(SpireUserRolesAdapterException.class)
+        .hasMessageContaining("Could not map user account type");
+  }
+
+  @Test
   public void sarAdminRoleMappingTest() throws Exception {
       Optional<Role> role = SpireUserRolesAdapter.mapSpireRole("SAR_ADMINISTRATOR");
       assertThat(role).isPresent().contains(Role.ADMIN);
@@ -566,5 +594,29 @@ public class SpireUserRolesAdapterTest {
   public void emptyRoleMappingTest() throws Exception {
     Optional<Role> role = SpireUserRolesAdapter.mapSpireRole("");
     assertThat(role).isEmpty();
+  }
+
+  @Test
+  public void exporterUserAccountTypeMappingTest() throws Exception {
+    Optional<UserAccountType> uat = SpireUserRolesAdapter.mapSpireUserAccountType("EXPORTER");
+    assertThat(uat).isPresent().contains(UserAccountType.EXPORTER);
+  }
+
+  @Test
+  public void regulatorUserAccountTypeMappingTest() throws Exception {
+    Optional<UserAccountType> uat = SpireUserRolesAdapter.mapSpireUserAccountType("REGULATOR");
+    assertThat(uat).isPresent().contains(UserAccountType.REGULATOR);
+  }
+
+  @Test
+  public void unknownUserAccountTypeMappingTest() throws Exception {
+    Optional<UserAccountType> uat = SpireUserRolesAdapter.mapSpireUserAccountType("SOMETHING");
+    assertThat(uat).isEmpty();
+  }
+
+  @Test
+  public void emptyUserAccountTypeMappingTest() throws Exception {
+    Optional<UserAccountType> uat = SpireUserRolesAdapter.mapSpireUserAccountType("");
+    assertThat(uat).isEmpty();
   }
 }

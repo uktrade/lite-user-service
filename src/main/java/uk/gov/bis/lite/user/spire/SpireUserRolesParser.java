@@ -34,6 +34,7 @@ public class SpireUserRolesParser implements SpireParser<SpireUserRoles> {
   }
 
   private SpireUserRoles doResponseParsing(SpireResponse spireResponse) {
+    String userAccountType = "EXPORTER"; // TODO harded coded value pending changes to the SPIRE endpoint
     XPath xpath = XPathFactory.newInstance().newXPath();
     List<SpireUserRole> userRoles = spireResponse.getElementChildNodesForList("//ROLE_LIST")
         .stream()
@@ -56,7 +57,7 @@ public class SpireUserRolesParser implements SpireParser<SpireUserRoles> {
         })
         .filter(Objects::nonNull)
         .collect(Collectors.toList());
-    return new SpireUserRoles("", userRoles);
+    return new SpireUserRoles(userAccountType, userRoles);
   }
 
   private Optional<String> getNodeValue(XPath xpath, Node node, String name){

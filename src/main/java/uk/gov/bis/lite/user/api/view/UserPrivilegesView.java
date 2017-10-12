@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class UserPrivilegesView {
-  private String userAccountType;
+  private UserAccountType userAccountType;
   private List<CustomerView> customers;
   private List<SiteView> sites;
 
@@ -13,11 +13,11 @@ public class UserPrivilegesView {
     sites = Collections.emptyList();
   }
 
-  public String getUserAccountType() {
+  public UserAccountType getUserAccountType() {
     return userAccountType;
   }
 
-  public UserPrivilegesView setUserAccountType(String userAccountType) {
+  public UserPrivilegesView setUserAccountType(UserAccountType userAccountType) {
     this.userAccountType = userAccountType;
     return this;
   }

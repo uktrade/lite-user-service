@@ -82,7 +82,7 @@ public class UserPrivilegesServiceImplTest {
     assertThat(userPrivsOpt.isPresent()).isTrue();
 
     UserPrivilegesView userPrivs = userPrivsOpt.get();
-    assertThat(userPrivs.getUserAccountType()).isEmpty();
+    assertThat(userPrivs.getUserAccountType()).isNull();
     assertThat(userPrivs.getCustomers().isEmpty()).isTrue();
     assertThat(userPrivs.getSites().isEmpty()).isTrue();
   }
