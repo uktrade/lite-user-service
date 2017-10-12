@@ -99,7 +99,9 @@ public class SpireUserRolesParserTest {
     SpireResponse response = createSpireResponse(fixture("fixture/spire/SPIRE_USER_ROLES/NoRoles.xml"));
 
     SpireUserRoles spireUserRoles = parser.parseResponse(response);
+
     assertThat(spireUserRoles.getUserRoles().isEmpty()).isTrue();
+    assertThat(spireUserRoles.getUserAccountType()).isEmpty();
   }
 
   @Test
@@ -107,6 +109,9 @@ public class SpireUserRolesParserTest {
     SpireResponse response = createSpireResponse(fixture("fixture/spire/SPIRE_USER_ROLES/UserIdDoesNotExist.xml"));
 
     SpireUserRoles spireUserRoles = parser.parseResponse(response);
+
+    assertThat(spireUserRoles.getUserRoles().isEmpty()).isTrue();
+    assertThat(spireUserRoles.getUserAccountType()).isEmpty();
   }
 
   @Test
@@ -114,5 +119,8 @@ public class SpireUserRolesParserTest {
     SpireResponse response = createSpireResponse(fixture("fixture/spire/SPIRE_USER_ROLES/UnhandledError.xml"));
 
     SpireUserRoles spireUserRoles = parser.parseResponse(response);
+
+    assertThat(spireUserRoles.getUserRoles().isEmpty()).isTrue();
+    assertThat(spireUserRoles.getUserAccountType()).isEmpty();
   }
 }
