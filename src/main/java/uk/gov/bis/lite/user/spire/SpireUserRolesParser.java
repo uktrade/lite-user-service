@@ -34,7 +34,7 @@ public class SpireUserRolesParser implements SpireParser<SpireUserRoles> {
   }
 
   private SpireUserRoles doResponseParsing(SpireResponse spireResponse) {
-    String userAccountType = "EXPORTER"; // TODO harded coded value pending changes to the SPIRE endpoint
+    String userAccountType = "EXPORTER"; // TODO hard coded value pending changes to the SPIRE endpoint
     XPath xpath = XPathFactory.newInstance().newXPath();
     List<SpireUserRole> userRoles = spireResponse.getElementChildNodesForList("//ROLE_LIST")
         .stream()
