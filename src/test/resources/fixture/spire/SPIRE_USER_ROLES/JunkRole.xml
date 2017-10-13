@@ -1,0 +1,18 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.fivium.co.uk/fox/webservices/ispire/SPIRE_USER_ROLES">
+  <soap:Header/>
+  <soap:Body>
+    <ns:getRolesResponse>
+      <ROLE_LIST>
+        <ROLE>
+          <RES_TYPE>lkvdLQUFmpnYWDBueprb</RES_TYPE>
+          <ROLE_NAME>CPRnydOuaOHRHiIHJqMg</ROLE_NAME>
+          <FULL_NAME>zSmRtJFHnfkIgKDtNwvO</FULL_NAME>
+          <SAR_REF>LEROZQOLsJkUkaKBaFlz</SAR_REF>
+          <SITE_REF>ZbZCAxWTbdfIDefwpUmX</SITE_REF>
+          <IS_ADMIN>crlvblOjtwtGhSoMcRgB</IS_ADMIN>
+          <IS_APPLICANT>nhqgcWLWCIVtssZwvdrb</IS_APPLICANT>
+        </ROLE>
+      </ROLE_LIST>
+    </ns:getRolesResponse>
+  </soap:Body>
+</soap:Envelope>
