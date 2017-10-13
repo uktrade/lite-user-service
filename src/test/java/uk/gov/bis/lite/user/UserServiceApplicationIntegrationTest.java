@@ -1,4 +1,4 @@
-package uk.gov.bis.lite;
+package uk.gov.bis.lite.user;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.matchingXPath;
@@ -9,14 +9,14 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.gov.bis.lite.spire.SpireUserRolesUtil.stubForBody;
+import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.stubForBody;
 
 import org.junit.Test;
-import uk.gov.bis.lite.integration.BaseIntegrationTest;
 import uk.gov.bis.lite.user.api.view.CustomerView;
 import uk.gov.bis.lite.user.api.view.Role;
 import uk.gov.bis.lite.user.api.view.SiteView;
 import uk.gov.bis.lite.user.api.view.UserPrivilegesView;
+import uk.gov.bis.lite.user.integration.BaseIntegrationTest;
 
 import javax.ws.rs.core.Response;
 

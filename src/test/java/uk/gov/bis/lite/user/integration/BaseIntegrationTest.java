@@ -1,4 +1,4 @@
-package uk.gov.bis.lite.integration;
+package uk.gov.bis.lite.user.integration;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.configureFor;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;

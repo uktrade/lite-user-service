@@ -1,18 +1,18 @@
-package uk.gov.bis.lite.spire;
+package uk.gov.bis.lite.user.spire;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static uk.gov.bis.lite.spire.SpireUserRolesUtil.FULL_NAME;
-import static uk.gov.bis.lite.spire.SpireUserRolesUtil.RES_TYPE_SPIRE_SAR_USERS;
-import static uk.gov.bis.lite.spire.SpireUserRolesUtil.RES_TYPE_SPIRE_SITE_USERS;
-import static uk.gov.bis.lite.spire.SpireUserRolesUtil.ROLE_SAR_ADMINISTRATOR;
-import static uk.gov.bis.lite.spire.SpireUserRolesUtil.ROLE_SITE_ADMINISTRATOR;
-import static uk.gov.bis.lite.spire.SpireUserRolesUtil.buildCustomerAdmin;
-import static uk.gov.bis.lite.spire.SpireUserRolesUtil.buildCustomerPreparer;
-import static uk.gov.bis.lite.spire.SpireUserRolesUtil.buildCustomerSubmitter;
-import static uk.gov.bis.lite.spire.SpireUserRolesUtil.buildSiteAdmin;
-import static uk.gov.bis.lite.spire.SpireUserRolesUtil.buildSitePreparer;
-import static uk.gov.bis.lite.spire.SpireUserRolesUtil.buildSiteSubmitter;
+import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.FULL_NAME;
+import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.RES_TYPE_SPIRE_SAR_USERS;
+import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.RES_TYPE_SPIRE_SITE_USERS;
+import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.ROLE_SAR_ADMINISTRATOR;
+import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.ROLE_SITE_ADMINISTRATOR;
+import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.buildCustomerAdmin;
+import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.buildCustomerPreparer;
+import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.buildCustomerSubmitter;
+import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.buildSiteAdmin;
+import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.buildSitePreparer;
+import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.buildSiteSubmitter;
 
 import org.junit.Test;
 import uk.gov.bis.lite.user.api.view.CustomerView;
@@ -20,10 +20,6 @@ import uk.gov.bis.lite.user.api.view.Role;
 import uk.gov.bis.lite.user.api.view.SiteView;
 import uk.gov.bis.lite.user.api.view.UserAccountType;
 import uk.gov.bis.lite.user.api.view.UserPrivilegesView;
-import uk.gov.bis.lite.user.spire.SpireUserRole;
-import uk.gov.bis.lite.user.spire.SpireUserRoles;
-import uk.gov.bis.lite.user.spire.SpireUserRolesAdapter;
-import uk.gov.bis.lite.user.spire.SpireUserRolesAdapterException;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -317,93 +313,33 @@ public class SpireUserRolesAdapterTest {
   }
 
   @Test
-  public void customerIgnoreDuplicateAdminTest() throws Exception {
+  public void ignoreDuplicateRolesTest() throws Exception {
+    // Admin -> Submitter -> Preparer
     SpireUserRoles sur = buildSpireUserRoles(
         buildCustomerAdmin("SAR123"),
-        buildCustomerAdmin("SAR123"));
-
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
-    assertThat(userPrivs.getCustomers().size()).isEqualTo(1);
-    assertThat(userPrivs.getSites().isEmpty()).isTrue();
-
-    CustomerView customer = userPrivs.getCustomers().get(0);
-    assertThat(customer.getCustomerId()).isEqualTo("SAR123");
-    assertThat(customer.getRole()).isEqualTo(Role.ADMIN);
-  }
-
-  @Test
-  public void siteIgnoreDuplicateAdminTest() throws Exception {
-    SpireUserRoles sur = buildSpireUserRoles(
-        buildSiteAdmin("SITE123"),
-        buildSiteAdmin("SITE123"));
-
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
-    assertThat(userPrivs.getSites().size()).isEqualTo(1);
-    assertThat(userPrivs.getCustomers().isEmpty()).isTrue();
-
-    SiteView site = userPrivs.getSites().get(0);
-    assertThat(site.getSiteId()).isEqualTo("SITE123");
-    assertThat(site.getRole()).isEqualTo(Role.ADMIN);
-  }
-
-  @Test
-  public void customerIgnoreDuplicateSubmitterTest() throws Exception {
-    SpireUserRoles sur = buildSpireUserRoles(
+        buildCustomerAdmin("SAR123"),
         buildCustomerSubmitter("SAR123"),
-        buildCustomerSubmitter("SAR123"));
-
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
-    assertThat(userPrivs.getCustomers().size()).isEqualTo(1);
-    assertThat(userPrivs.getSites().isEmpty()).isTrue();
-
-    CustomerView customer = userPrivs.getCustomers().get(0);
-    assertThat(customer.getCustomerId()).isEqualTo("SAR123");
-    assertThat(customer.getRole()).isEqualTo(Role.SUBMITTER);
-  }
-
-  @Test
-  public void siteIgnoreDuplicateSubmitterTest() throws Exception {
-    SpireUserRoles sur = buildSpireUserRoles(
-        buildSiteSubmitter("SITE123"),
-        buildSiteSubmitter("SITE123"));
-
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
-    assertThat(userPrivs.getSites().size()).isEqualTo(1);
-    assertThat(userPrivs.getCustomers().isEmpty()).isTrue();
-
-    SiteView site = userPrivs.getSites().get(0);
-    assertThat(site.getSiteId()).isEqualTo("SITE123");
-    assertThat(site.getRole()).isEqualTo(Role.SUBMITTER);
-  }
-
-  @Test
-  public void customerIgnoreDuplicatePreparerTest() throws Exception {
-    SpireUserRoles sur = buildSpireUserRoles(
+        buildCustomerSubmitter("SAR123"),
         buildCustomerPreparer("SAR123"),
-        buildCustomerPreparer("SAR123"));
-
-    UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
-    assertThat(userPrivs.getCustomers().size()).isEqualTo(1);
-    assertThat(userPrivs.getSites().isEmpty()).isTrue();
-
-    CustomerView customer = userPrivs.getCustomers().get(0);
-    assertThat(customer.getCustomerId()).isEqualTo("SAR123");
-    assertThat(customer.getRole()).isEqualTo(Role.PREPARER);
-  }
-
-  @Test
-  public void siteIgnoreDuplicatePreparerTest() throws Exception {
-    SpireUserRoles sur = buildSpireUserRoles(
+        buildCustomerPreparer("SAR123"),
+        buildSiteAdmin("SITE123"),
+        buildSiteAdmin("SITE123"),
+        buildSiteSubmitter("SITE123"),
+        buildSiteSubmitter("SITE123"),
         buildSitePreparer("SITE123"),
         buildSitePreparer("SITE123"));
 
     UserPrivilegesView userPrivs = SpireUserRolesAdapter.adapt(sur);
+    assertThat(userPrivs.getCustomers().size()).isEqualTo(1);
     assertThat(userPrivs.getSites().size()).isEqualTo(1);
-    assertThat(userPrivs.getCustomers().isEmpty()).isTrue();
+
+    CustomerView customer = userPrivs.getCustomers().get(0);
+    assertThat(customer.getCustomerId()).isEqualTo("SAR123");
+    assertThat(customer.getRole()).isEqualTo(Role.ADMIN);
 
     SiteView site = userPrivs.getSites().get(0);
     assertThat(site.getSiteId()).isEqualTo("SITE123");
-    assertThat(site.getRole()).isEqualTo(Role.PREPARER);
+    assertThat(site.getRole()).isEqualTo(Role.ADMIN);
   }
 
   @Test

@@ -1,16 +1,13 @@
-package uk.gov.bis.lite.spire;
+package uk.gov.bis.lite.user.spire;
 
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.gov.bis.lite.spire.SpireUserRolesUtil.createSpireResponse;
+import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.createSpireResponse;
 
 import org.junit.Before;
 import org.junit.Test;
 import uk.gov.bis.lite.common.spire.client.SpireResponse;
 import uk.gov.bis.lite.common.spire.client.parser.SpireParser;
-import uk.gov.bis.lite.user.spire.SpireUserRole;
-import uk.gov.bis.lite.user.spire.SpireUserRoles;
-import uk.gov.bis.lite.user.spire.SpireUserRolesParser;
 
 public class SpireUserRolesParserTest {
 
@@ -101,7 +98,7 @@ public class SpireUserRolesParserTest {
     SpireUserRoles spireUserRoles = parser.parseResponse(response);
 
     assertThat(spireUserRoles.getUserRoles().isEmpty()).isTrue();
-    assertThat(spireUserRoles.getUserAccountType()).isEmpty();
+    assertThat(spireUserRoles.getUserAccountType()).isEqualTo("EXPORTER");
   }
 
   @Test
@@ -111,7 +108,7 @@ public class SpireUserRolesParserTest {
     SpireUserRoles spireUserRoles = parser.parseResponse(response);
 
     assertThat(spireUserRoles.getUserRoles().isEmpty()).isTrue();
-    assertThat(spireUserRoles.getUserAccountType()).isEmpty();
+    assertThat(spireUserRoles.getUserAccountType()).isEqualTo("EXPORTER");
   }
 
   @Test
@@ -121,6 +118,6 @@ public class SpireUserRolesParserTest {
     SpireUserRoles spireUserRoles = parser.parseResponse(response);
 
     assertThat(spireUserRoles.getUserRoles().isEmpty()).isTrue();
-    assertThat(spireUserRoles.getUserAccountType()).isEmpty();
+    assertThat(spireUserRoles.getUserAccountType()).isEqualTo("EXPORTER");
   }
 }

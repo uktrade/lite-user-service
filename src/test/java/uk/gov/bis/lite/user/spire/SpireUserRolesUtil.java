@@ -1,4 +1,4 @@
-package uk.gov.bis.lite.spire;
+package uk.gov.bis.lite.user.spire;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.matchingXPath;
@@ -7,7 +7,6 @@ import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 
 import uk.gov.bis.lite.common.spire.client.SpireResponse;
-import uk.gov.bis.lite.user.spire.SpireUserRole;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

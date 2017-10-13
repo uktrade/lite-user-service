@@ -1,16 +1,14 @@
-package uk.gov.bis.lite.spire;
+package uk.gov.bis.lite.user.spire;
 
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static uk.gov.bis.lite.spire.SpireUserRolesUtil.createSpireResponse;
+import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.createSpireResponse;
 
 import org.junit.Before;
 import org.junit.Test;
 import uk.gov.bis.lite.common.spire.client.SpireResponse;
 import uk.gov.bis.lite.common.spire.client.errorhandler.ErrorNodeErrorHandler;
 import uk.gov.bis.lite.common.spire.client.exception.SpireClientException;
-import uk.gov.bis.lite.user.spire.SpireUserRolesErrorHandler;
-import uk.gov.bis.lite.user.spire.SpireUserRolesUserNotFoundException;
 
 public class SpireUserRolesErrorHandlerTest {
 

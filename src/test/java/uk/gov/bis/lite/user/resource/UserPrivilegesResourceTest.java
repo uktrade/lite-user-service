@@ -1,4 +1,4 @@
-package uk.gov.bis.lite.resource;
+package uk.gov.bis.lite.user.resource;
 
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -13,7 +13,6 @@ import uk.gov.bis.lite.user.api.view.Role;
 import uk.gov.bis.lite.user.api.view.SiteView;
 import uk.gov.bis.lite.user.api.view.UserAccountType;
 import uk.gov.bis.lite.user.api.view.UserPrivilegesView;
-import uk.gov.bis.lite.user.resource.UserPrivilegesResource;
 import uk.gov.bis.lite.user.service.UserPrivilegesService;
 
 import java.util.Map;

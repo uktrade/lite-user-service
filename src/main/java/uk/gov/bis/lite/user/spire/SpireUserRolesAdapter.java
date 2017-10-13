@@ -84,7 +84,7 @@ public class SpireUserRolesAdapter {
   }
 
   @VisibleForTesting
-  public static Optional<Role> mapSpireRole(String spireRoleName) {
+  static Optional<Role> mapSpireRole(String spireRoleName) {
     if (StringUtils.equals(spireRoleName, "SAR_ADMINISTRATOR") || StringUtils.equals(spireRoleName, "SITE_ADMINISTRATOR")) {
       return Optional.of(Role.ADMIN);
     } else if (StringUtils.equals(spireRoleName, "APPLICATION_SUBMITTER")) {
@@ -97,7 +97,7 @@ public class SpireUserRolesAdapter {
   }
 
   @VisibleForTesting
-  public static Optional<UserAccountType> mapSpireUserAccountType(String spireUserAccountType) {
+  static Optional<UserAccountType> mapSpireUserAccountType(String spireUserAccountType) {
     if (StringUtils.equals(spireUserAccountType, "EXPORTER")) {
       return Optional.of(UserAccountType.EXPORTER);
     } else if (StringUtils.equals(spireUserAccountType, "REGULATOR")) {
