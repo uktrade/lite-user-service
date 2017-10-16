@@ -7,6 +7,12 @@ import static io.dropwizard.testing.ResourceHelpers.resourceFilePath;
 import com.github.tomakehurst.wiremock.junit.WireMockClassRule;
 import io.dropwizard.testing.ConfigOverride;
 import io.dropwizard.testing.junit.DropwizardAppRule;
+import org.jose4j.jws.AlgorithmIdentifiers;
+import org.jose4j.jws.JsonWebSignature;
+import org.jose4j.jwt.JwtClaims;
+import org.jose4j.jwx.HeaderParameterNames;
+import org.jose4j.keys.HmacKey;
+import org.jose4j.lang.JoseException;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -22,31 +28,32 @@ public class BaseIntegrationTest {
 
   public static final MultivaluedMap<String, Object> authedHeaders;
 
-  /**
-   * Decodes to:
-   *
-   * <blockquote><pre>
-   * {
-   *  "typ": "JWT",
-   *  "alg": "HS256"
-   * }.
-   * {
-   *  "iss": "Some lite service",
-   *  "iat": 1507542376,
-   *  "exp": 1602236776,
-   *  "aud": "lite",
-   *  "sub": "123456",
-   *  "email": "example@example.com"
-   * }
-   * </pre></blockquote>
-   *
-   * using HMAC SHA-256 with key "demo-secret-which-is-very-long-so-as-to-hit-the-byte-requirement" for signing
-   */
-  public static final String JWT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTb21lIGxpdGUgc2VydmljZSIsImlhdCI6MTUwNzU0MjM3NiwiZXhwIjoxNjAyMjM2Nzc2LCJhdWQiOiJsaXRlIiwic3ViIjoiMTIzNDU2IiwiZW1haWwiOiJleGFtcGxlQGV4YW1wbGUuY29tIn0.wC_Jc4cOoM4UFX7UHHD3hCUcz8b9UPL_ImncY5FtAho";
-
   static {
+    JwtClaims claims = new JwtClaims();
+    claims.setIssuer("Some lite application");
+    claims.setExpirationTimeMinutesInTheFuture(10);
+    claims.setGeneratedJwtId();
+    claims.setIssuedAtToNow();
+    claims.setNotBeforeMinutesInThePast(2);
+    claims.setSubject("123456");
+    claims.setClaim("email","example@example.com");
+    claims.setClaim("fullName","Mr Test");
+
+    JsonWebSignature jws = new JsonWebSignature();
+    jws.setPayload(claims.toJson());
+    jws.setKey(new HmacKey("demo-secret-which-is-very-long-so-as-to-hit-the-byte-requirement".getBytes()));
+    jws.setAlgorithmHeaderValue(AlgorithmIdentifiers.HMAC_SHA256);
+    jws.setHeader(HeaderParameterNames.TYPE, "JWT");
+
+    String jwt;
+    try {
+      jwt = jws.getCompactSerialization();
+    } catch (JoseException e) {
+      throw new RuntimeException(e);
+    }
+
     authedHeaders = new MultivaluedHashMap<>();
-    authedHeaders.put("Authorization", Collections.singletonList("Bearer " + JWT));
+    authedHeaders.put("Authorization", Collections.singletonList("Bearer " + jwt));
   }
 
   @ClassRule

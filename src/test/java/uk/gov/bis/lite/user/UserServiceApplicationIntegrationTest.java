@@ -161,7 +161,7 @@ public class UserServiceApplicationIntegrationTest extends BaseIntegrationTest {
   }
 
   @Test
-  public void userIdInRequest() throws Exception {
+  public void userIdInRequestTest() throws Exception {
     stubForBody(fixture("fixture/spire/SPIRE_USER_ROLES/SingleSarAdmin.xml"));
 
     get("/user-privileges/123");
