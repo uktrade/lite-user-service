@@ -18,7 +18,7 @@ Authorization: Bearer <JWT>
 For example:
 
 ```
-curl -X GET -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTb21lIGxpdGUgc2VydmljZSIsImlhdCI6MTUwNzU0MjM3NiwiZXhwIjoxNjAyMjM2Nzc2LCJhdWQiOiJsaXRlIiwic3ViIjoiMTIzNDU2IiwiZW1haWwiOiJleGFtcGxlQGV4YW1wbGUuY29tIn0.wC_Jc4cOoM4UFX7UHHD3hCUcz8b9UPL_ImncY5FtAho" '/user-privileges/{userId}'
+curl -X GET -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJTb21lIGxpdGUgYXBwbGljYXRpb24iLCJleHAiOjE1MzkzNjIwMzMsImp0aSI6InA0MDJRMzFkRXlTeTNiWUxlc2Q5a2ciLCJpYXQiOjE1MDc4MjYwMzMsIm5iZiI6MTUwNzgyNTkxMywic3ViIjoiMTIzNDU2IiwiZW1haWwiOiJleGFtcGxlQGV4YW1wbGUuY29tIiwiZnVsbE5hbWUiOiJNciBUZXN0In0.qlu5a6hAVvUO-XrftkLCk_1xqhYjWtCaotR7narg7EU" '/user-privileges/{userId}'
 ```
 
 Which decodes to:
@@ -29,12 +29,14 @@ Which decodes to:
   "alg": "HS256"
 }.
 {
-  "iss": "Some lite service",
-  "iat": 1507542376,
-  "exp": 1602236776,
-  "aud": "lite",
+  "iss": "Some lite application",
+  "exp": 1539362033,
+  "jti": "p402Q31dEySy3bYLesd9kg",
+  "iat": 1507826033,
+  "nbf": 1507825913,
   "sub": "123456",
-  "email": "example@example.com"
+  "email": "example@example.com",
+  "fullName": "Mr Test"
 }
 ```
 
