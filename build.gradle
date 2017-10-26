@@ -100,8 +100,27 @@ publishing {
   }
 }
 
+
+task apiJar(type: Jar, dependsOn: compileJava) {
+  from sourceSets.main.output.classesDir
+  include 'uk/gov/bis/lite/user/api/**/*'
+}
+
+task apiJarWithSources(type: Jar) {
+  from sourceSets.main.allJava
+  include 'uk/gov/bis/lite/user/api/**/*'
+}
+
 publishing {
   publications {
+    api(MavenPublication) {
+      artifactId 'lite-user-service-api'
+      version '1.0'
+      artifact apiJar
+      artifact apiJarWithSources {
+        classifier "sources"
+      }
+    }
     service(MavenPublication) {
       artifactId 'user-service'
       from components.shadow
