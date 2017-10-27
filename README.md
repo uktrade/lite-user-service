@@ -2,11 +2,17 @@
 
 ## Endpoints
 
-* `GET /user-privileges/{userId}` (requires JWT Authorization header)
+* `GET /user-privileges/{userId}` mapped to `UserPrivilegesView` (requires JWT Authorization header) 
 
 ## Admin endpoints
 
 * `GET /ready`
+
+## API Jar
+
+Classes needed to consume the endpoints of this service exposed via a published jar, see the following:
+* Gradle: `compile group: 'uk.gov.bis.lite', name: 'lite-user-service-api', version: '1.0'`
+* SBT: `libraryDependencies += "uk.gov.bis.lite" % "lite-user-service-api" % "1.0"`
 
 ## JWT Authorisation Header
 Endpoints which use JWT for authorisation require the "Authorization" header in the following format
@@ -43,3 +49,26 @@ Which decodes to:
 Signed with `HMAC SHA-256` and key `demo-secret-which-is-very-long-so-as-to-hit-the-byte-requirement`
 
 See [lite-dropwizard-common](https://github.com/uktrade/lite-dropwizard-common) JWT for more information.
+
+
+## Example responses
+
+GET /user-privileges/24492
+
+```json
+{
+    "userAccountType": "EXPORTER",
+    "customers": [
+        {
+            "customerId": "SAR1",
+            "role": "ADMIN"
+        }
+    ],
+    "sites": [
+        {
+            "siteId": "SAR1_SITE1",
+            "role": "ADMIN"
+        }
+    ]
+}
+```
