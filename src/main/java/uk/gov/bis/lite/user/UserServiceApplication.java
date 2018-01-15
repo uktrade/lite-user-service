@@ -8,6 +8,8 @@ import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;
 import io.dropwizard.auth.PrincipalImpl;
 import io.dropwizard.auth.basic.BasicCredentialAuthFilter;
+import io.dropwizard.configuration.ResourceConfigurationSourceProvider;
+import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import ru.vyarus.dropwizard.guice.GuiceBundle;
@@ -17,6 +19,7 @@ import uk.gov.bis.lite.common.jersey.filter.ContainerCorrelationIdFilter;
 import uk.gov.bis.lite.common.jwt.LiteJwtAuthFilterHelper;
 import uk.gov.bis.lite.common.jwt.LiteJwtUser;
 import uk.gov.bis.lite.common.metrics.readiness.ReadinessServlet;
+import uk.gov.bis.lite.common.paas.db.CloudFoundryEnvironmentSubstitutor;
 import uk.gov.bis.lite.user.config.GuiceModule;
 import uk.gov.bis.lite.user.config.UserServiceConfiguration;
 import uk.gov.bis.lite.user.config.auth.SimpleAuthenticator;
@@ -42,6 +45,9 @@ public class UserServiceApplication extends Application<UserServiceConfiguration
 
   @Override
   public void initialize(Bootstrap<UserServiceConfiguration> bootstrap) {
+    bootstrap.setConfigurationSourceProvider(new SubstitutingSourceProvider(
+        new ResourceConfigurationSourceProvider(), new CloudFoundryEnvironmentSubstitutor()));
+
     guiceBundle = new GuiceBundle.Builder<UserServiceConfiguration>()
         .modules(module)
         .installers(ResourceInstaller.class, ManagedInstaller.class)
