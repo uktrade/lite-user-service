@@ -1,4 +1,4 @@
-spireClientUserName: ${SPIRE_CLIENT_USERNAME}
+spireClientUsername: ${SPIRE_CLIENT_USERNAME}
 spireClientPassword: ${SPIRE_CLIENT_PASSWORD}
 spireClientUrl: ${SPIRE_CLIENT_URL}
 
