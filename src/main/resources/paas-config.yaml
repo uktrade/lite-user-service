@@ -1,11 +1,11 @@
-spireClientUsername: ${SPIRE_CLIENT_USERNAME}
-spireClientPassword: ${SPIRE_CLIENT_PASSWORD}
-spireClientUrl: ${SPIRE_CLIENT_URL}
+spireClientUsername: "${SPIRE_CLIENT_USERNAME}"
+spireClientPassword: "${SPIRE_CLIENT_PASSWORD}"
+spireClientUrl: "${SPIRE_CLIENT_URL}"
 
-jwtSharedSecret: ${JWT_SHARED_SECRET}
+jwtSharedSecret: "${JWT_SHARED_SECRET}"
 
-adminUsername: ${ADMIN_USERNAME}
-adminPassword: ${ADMIN_PASSWORD}
+adminUsername: "${ADMIN_USERNAME}"
+adminPassword: "${ADMIN_PASSWORD}"
 
 server:
   type: default
