@@ -7,7 +7,7 @@ buildscript {
 plugins {
   id 'java'
   id 'application'
-  id 'com.github.johnrengelman.shadow' version '1.2.4'
+  id 'com.github.johnrengelman.shadow' version '2.0.2'
 }
 
 apply plugin: 'maven-publish'
@@ -129,9 +129,8 @@ publishing {
         classifier "sources"
       }
     }
-    service(MavenPublication) {
-      artifactId 'lite-user-service'
-      from components.shadow
+    shadow(MavenPublication) { publication ->
+      project.shadow.component(publication)
     }
   }
 }
