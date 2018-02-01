@@ -1,0 +1,23 @@
+spireClientUsername: "${SPIRE_CLIENT_USERNAME}"
+spireClientPassword: "${SPIRE_CLIENT_PASSWORD}"
+spireClientUrl: "${SPIRE_CLIENT_URL}"
+
+jwtSharedSecret: "${JWT_SHARED_SECRET}"
+
+adminUsername: "${ADMIN_USERNAME}"
+adminPassword: "${ADMIN_PASSWORD}"
+
+server:
+  type: default
+  applicationConnectors:
+    - type: http
+      port: ${PORT}
+
+logging:
+  level: INFO
+  appenders:
+    - type: console
+      includeCallerData : true
+      logFormat: "[%mdc{corrID}] %d [%p] %marker %logger %m%n"
+  loggers:
+    uk.gov.bis.lite.common.spire.client: TRACE

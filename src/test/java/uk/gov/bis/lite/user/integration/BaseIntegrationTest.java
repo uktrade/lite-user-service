@@ -2,7 +2,6 @@ package uk.gov.bis.lite.user.integration;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.configureFor;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
-import static io.dropwizard.testing.ResourceHelpers.resourceFilePath;
 
 import com.github.tomakehurst.wiremock.junit.WireMockClassRule;
 import io.dropwizard.testing.ConfigOverride;
@@ -36,8 +35,8 @@ public class BaseIntegrationTest {
     claims.setIssuedAtToNow();
     claims.setNotBeforeMinutesInThePast(2);
     claims.setSubject("123456");
-    claims.setClaim("email","example@example.com");
-    claims.setClaim("fullName","Mr Test");
+    claims.setClaim("email", "example@example.com");
+    claims.setClaim("fullName", "Mr Test");
 
     JsonWebSignature jws = new JsonWebSignature();
     jws.setPayload(claims.toJson());
@@ -61,8 +60,8 @@ public class BaseIntegrationTest {
 
   @Rule
   public DropwizardAppRule<UserServiceConfiguration> RULE = new DropwizardAppRule<>(
-      UserServiceApplication.class, resourceFilePath("test-config.yaml"),
-      ConfigOverride.config("spireClientUrl", "http://localhost:" +  wireMockClassRule.port() + "/spire/fox/ispire/"));
+      UserServiceApplication.class, "test-config.yaml",
+      ConfigOverride.config("spireClientUrl", "http://localhost:" + wireMockClassRule.port() + "/spire/fox/ispire/"));
 
   @BeforeClass
   public static void setUp() throws Exception {
