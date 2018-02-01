@@ -1,9 +1,0 @@
----
-applications:
-- name: lite-user-service-dev
-  buildpack: java_buildpack
-  path: build/libs/user-service-1.0-SNAPSHOT.jar
-  memory: 2G
-  instances: 1
-  env:
-    JBP_CONFIG_JAVA_MAIN: '{ arguments: "server paas-config.yaml" }'
