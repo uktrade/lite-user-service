@@ -134,7 +134,7 @@ public class UserServiceApplicationIntegrationTest extends BaseIntegrationTest {
 
     Response response = get("/user-privileges/123");
 
-    assertThat(response.getStatus()).isEqualTo(400);
+    assertThat(response.getStatus()).isEqualTo(500);
   }
 
   @Test
@@ -157,7 +157,7 @@ public class UserServiceApplicationIntegrationTest extends BaseIntegrationTest {
 
     Response response = get("/user-privileges/123");
 
-    assertThat(response.getStatus()).isEqualTo(400);
+    assertThat(response.getStatus()).isEqualTo(500);
   }
 
   @Test
