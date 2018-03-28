@@ -45,7 +45,7 @@ dependencies {
   compile 'com.github.toastshaman:dropwizard-auth-jwt:1.1.2-0'
 
   // Lite dependencies
-  compile 'uk.gov.bis.lite:spire-client:1.6'
+  compile 'uk.gov.bis.lite:spire-client:1.8'
   compile 'uk.gov.bis.lite:jersey-correlation-id:1.0'
   compile 'uk.gov.bis.lite:json-console-appender:1.1'
   compile 'uk.gov.bis.lite:readiness-metric:1.0'
