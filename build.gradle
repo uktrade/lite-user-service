@@ -8,6 +8,7 @@ plugins {
   id 'java'
   id 'application'
   id 'com.github.johnrengelman.shadow' version '2.0.2'
+  id 'jacoco'
 }
 
 apply plugin: 'maven-publish'
