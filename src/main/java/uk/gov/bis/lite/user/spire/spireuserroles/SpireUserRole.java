@@ -1,4 +1,4 @@
-package uk.gov.bis.lite.user.spire;
+package uk.gov.bis.lite.user.spire.spireuserroles;
 
 public class SpireUserRole {
   private String resType;

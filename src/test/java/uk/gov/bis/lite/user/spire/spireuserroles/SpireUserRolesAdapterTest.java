@@ -1,18 +1,18 @@
-package uk.gov.bis.lite.user.spire;
+package uk.gov.bis.lite.user.spire.spireuserroles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.FULL_NAME;
-import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.RES_TYPE_SPIRE_SAR_USERS;
-import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.RES_TYPE_SPIRE_SITE_USERS;
-import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.ROLE_SAR_ADMINISTRATOR;
-import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.ROLE_SITE_ADMINISTRATOR;
-import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.buildCustomerAdmin;
-import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.buildCustomerPreparer;
-import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.buildCustomerSubmitter;
-import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.buildSiteAdmin;
-import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.buildSitePreparer;
-import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.buildSiteSubmitter;
+import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesUtil.FULL_NAME;
+import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesUtil.RES_TYPE_SPIRE_SAR_USERS;
+import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesUtil.RES_TYPE_SPIRE_SITE_USERS;
+import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesUtil.ROLE_SAR_ADMINISTRATOR;
+import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesUtil.ROLE_SITE_ADMINISTRATOR;
+import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesUtil.buildCustomerAdmin;
+import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesUtil.buildCustomerPreparer;
+import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesUtil.buildCustomerSubmitter;
+import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesUtil.buildSiteAdmin;
+import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesUtil.buildSitePreparer;
+import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesUtil.buildSiteSubmitter;
 
 import org.junit.Test;
 import uk.gov.bis.lite.user.api.view.CustomerView;

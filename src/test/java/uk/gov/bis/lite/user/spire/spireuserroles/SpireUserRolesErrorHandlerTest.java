@@ -1,8 +1,8 @@
-package uk.gov.bis.lite.user.spire;
+package uk.gov.bis.lite.user.spire.spireuserroles;
 
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.createSpireResponse;
+import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesUtil.createSpireResponse;
 
 import org.junit.Before;
 import org.junit.Test;

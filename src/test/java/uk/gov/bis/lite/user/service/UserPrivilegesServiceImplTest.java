@@ -6,8 +6,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.buildCustomerAdmin;
-import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.buildSiteAdmin;
+import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesUtil.buildCustomerAdmin;
+import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesUtil.buildSiteAdmin;
 
 import org.junit.Test;
 import uk.gov.bis.lite.common.spire.client.SpireRequest;
@@ -16,10 +16,10 @@ import uk.gov.bis.lite.user.api.view.Role;
 import uk.gov.bis.lite.user.api.view.SiteView;
 import uk.gov.bis.lite.user.api.view.UserAccountType;
 import uk.gov.bis.lite.user.api.view.UserPrivilegesView;
-import uk.gov.bis.lite.user.spire.SpireUserRoles;
-import uk.gov.bis.lite.user.spire.SpireUserRolesAdapterException;
-import uk.gov.bis.lite.user.spire.SpireUserRolesClient;
-import uk.gov.bis.lite.user.spire.SpireUserRolesUserNotFoundException;
+import uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRoles;
+import uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesAdapterException;
+import uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesClient;
+import uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesUserNotFoundException;
 
 import java.util.Arrays;
 import java.util.Optional;

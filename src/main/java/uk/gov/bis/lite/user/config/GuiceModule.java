@@ -7,12 +7,11 @@ import uk.gov.bis.lite.common.metrics.readiness.DefaultReadinessService;
 import uk.gov.bis.lite.common.metrics.readiness.ReadinessService;
 import uk.gov.bis.lite.common.spire.client.SpireClientConfig;
 import uk.gov.bis.lite.common.spire.client.SpireRequestConfig;
-import uk.gov.bis.lite.common.spire.client.errorhandler.ErrorNodeErrorHandler;
 import uk.gov.bis.lite.user.service.UserPrivilegesService;
 import uk.gov.bis.lite.user.service.UserPrivilegesServiceImpl;
-import uk.gov.bis.lite.user.spire.SpireUserRolesClient;
-import uk.gov.bis.lite.user.spire.SpireUserRolesErrorHandler;
-import uk.gov.bis.lite.user.spire.SpireUserRolesParser;
+import uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesClient;
+import uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesErrorHandler;
+import uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesParser;
 
 public class GuiceModule extends AbstractModule implements ConfigurationAwareModule<UserServiceConfiguration> {
 

@@ -1,4 +1,4 @@
-package uk.gov.bis.lite.user.spire;
+package uk.gov.bis.lite.user.spire.spireuserroles;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.matchingXPath;

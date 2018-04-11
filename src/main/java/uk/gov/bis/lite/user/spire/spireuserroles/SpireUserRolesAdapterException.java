@@ -1,4 +1,4 @@
-package uk.gov.bis.lite.user.spire;
+package uk.gov.bis.lite.user.spire.spireuserroles;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;

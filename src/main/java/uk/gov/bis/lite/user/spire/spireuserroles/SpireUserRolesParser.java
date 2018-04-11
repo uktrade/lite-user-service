@@ -1,4 +1,4 @@
-package uk.gov.bis.lite.user.spire;
+package uk.gov.bis.lite.user.spire.spireuserroles;
 
 import com.google.common.base.Stopwatch;
 import org.apache.commons.lang3.StringUtils;

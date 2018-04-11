@@ -3,9 +3,9 @@ package uk.gov.bis.lite.user.service;
 import com.google.inject.Inject;
 import uk.gov.bis.lite.common.spire.client.SpireRequest;
 import uk.gov.bis.lite.user.api.view.UserPrivilegesView;
-import uk.gov.bis.lite.user.spire.SpireUserRolesAdapter;
-import uk.gov.bis.lite.user.spire.SpireUserRolesClient;
-import uk.gov.bis.lite.user.spire.SpireUserRolesUserNotFoundException;
+import uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesAdapter;
+import uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesClient;
+import uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesUserNotFoundException;
 
 import java.util.Optional;
 
