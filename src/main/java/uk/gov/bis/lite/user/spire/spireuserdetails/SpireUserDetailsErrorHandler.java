@@ -1,18 +1,18 @@
-package uk.gov.bis.lite.user.spire.spireuserroles;
+package uk.gov.bis.lite.user.spire.spireuserdetails;
 
 import uk.gov.bis.lite.common.spire.client.errorhandler.ErrorNodeErrorHandler;
 import uk.gov.bis.lite.common.spire.client.exception.SpireClientException;
 import uk.gov.bis.lite.user.spire.SpireUserNotFoundException;
 
-public class SpireUserRolesErrorHandler extends ErrorNodeErrorHandler {
+public class SpireUserDetailsErrorHandler extends ErrorNodeErrorHandler {
 
-  public SpireUserRolesErrorHandler() {
-    super("//*[local-name()='ROLE_LIST']");
-}
+  public SpireUserDetailsErrorHandler() {
+    super("//*[local-name()='USER_DETAILS_LIST']");
+  }
 
   @Override
   public void handleError(String errorText) {
-    if (errorText.matches("Web user account for provided (userId|loginId) not found.")) {
+    if (errorText.contains("User provided not found.")) {
       throw new SpireUserNotFoundException("User not found: \"" + errorText + "\"");
     } else {
       throw new SpireClientException("Unhandled error: \"" + errorText + "\"");

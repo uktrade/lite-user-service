@@ -7,12 +7,15 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Arrays;
 import java.util.Optional;
 
-public enum UserAccountType {
-  EXPORTER,
-  REGULATOR;
+public enum AccountStatus {
+  ACTIVE,
+  BLOCKED,
+  CANCELLED,
+  NEW,
+  SUSPENDED;
 
   @JsonCreator
-  public static UserAccountType fromJsonValue(String value) {
+  public static AccountStatus fromJsonValue(String value) {
     return getEnumByValue(value).orElse(null);
   }
 
@@ -21,8 +24,8 @@ public enum UserAccountType {
     return this.name();
   }
 
-  public static Optional<UserAccountType> getEnumByValue(String value) {
-    return Arrays.stream(UserAccountType.values())
+  public static Optional<AccountStatus> getEnumByValue(String value) {
+    return Arrays.stream(AccountStatus.values())
         .filter(e -> StringUtils.equals(value, e.getValue()))
         .findAny();
   }

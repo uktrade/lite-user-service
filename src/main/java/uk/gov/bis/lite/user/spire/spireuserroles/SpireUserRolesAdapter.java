@@ -5,7 +5,6 @@ import org.apache.commons.lang3.StringUtils;
 import uk.gov.bis.lite.user.api.view.CustomerView;
 import uk.gov.bis.lite.user.api.view.Role;
 import uk.gov.bis.lite.user.api.view.SiteView;
-import uk.gov.bis.lite.user.api.view.UserAccountType;
 import uk.gov.bis.lite.user.api.view.UserPrivilegesView;
 
 import java.util.Comparator;
@@ -71,14 +70,7 @@ public class SpireUserRolesAdapter {
         .sorted(Comparator.comparing(SiteView::getSiteId))
         .collect(Collectors.toList());
 
-    Optional<UserAccountType> userAccountType = mapSpireUserAccountType(spireUserRoles.getUserAccountType());
-
-    if (!userAccountType.isPresent()) {
-      throw new SpireUserRolesAdapterException("Could not map user account type \"" + spireUserRoles.getUserAccountType() + "\" to UserAccountType");
-    }
-
     return new UserPrivilegesView()
-        .setUserAccountType(userAccountType.get())
         .setCustomers(customers)
         .setSites(sites);
   }
@@ -91,17 +83,6 @@ public class SpireUserRolesAdapter {
       return Optional.of(Role.SUBMITTER);
     } else if (StringUtils.equals(spireRoleName, "APPLICATION_PREPARER")) {
       return Optional.of(Role.PREPARER);
-    } else {
-      return Optional.empty();
-    }
-  }
-
-  @VisibleForTesting
-  static Optional<UserAccountType> mapSpireUserAccountType(String spireUserAccountType) {
-    if (StringUtils.equals(spireUserAccountType, "EXPORTER")) {
-      return Optional.of(UserAccountType.EXPORTER);
-    } else if (StringUtils.equals(spireUserAccountType, "REGULATOR")) {
-      return Optional.of(UserAccountType.REGULATOR);
     } else {
       return Optional.empty();
     }

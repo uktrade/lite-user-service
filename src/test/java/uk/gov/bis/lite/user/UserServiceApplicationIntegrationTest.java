@@ -9,7 +9,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesUtil.stubForBody;
+import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesTestUtils.stubForBody;
 
 import org.junit.Test;
 import uk.gov.bis.lite.user.api.view.CustomerView;

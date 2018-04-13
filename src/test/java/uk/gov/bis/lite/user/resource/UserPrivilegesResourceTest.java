@@ -11,7 +11,6 @@ import org.junit.Test;
 import uk.gov.bis.lite.user.api.view.CustomerView;
 import uk.gov.bis.lite.user.api.view.Role;
 import uk.gov.bis.lite.user.api.view.SiteView;
-import uk.gov.bis.lite.user.api.view.UserAccountType;
 import uk.gov.bis.lite.user.api.view.UserPrivilegesView;
 import uk.gov.bis.lite.user.service.UserPrivilegesService;
 
@@ -35,7 +34,6 @@ public class UserPrivilegesResourceTest {
   @Test
   public void testUserPrivs() throws Exception {
     UserPrivilegesView userPrivs = new UserPrivilegesView()
-        .setUserAccountType(UserAccountType.EXPORTER)
         .setCustomers(asList(
             new CustomerView()
                 .setCustomerId("CUSTOMER123")
@@ -56,7 +54,6 @@ public class UserPrivilegesResourceTest {
 
     UserPrivilegesView result = response.readEntity(UserPrivilegesView.class);
     assertThat(result).isNotNull();
-    assertThat(result.getUserAccountType()).isEqualTo(UserAccountType.EXPORTER);
     assertThat(result.getCustomers().size()).isEqualTo(1);
     assertThat(result.getSites().size()).isEqualTo(1);
 
@@ -72,28 +69,6 @@ public class UserPrivilegesResourceTest {
   @Test
   public void testUserPrivsWithNoSitesOrCustomers() throws Exception {
     // User privs with only userAccountType set
-    UserPrivilegesView userPrivs = new UserPrivilegesView()
-        .setUserAccountType(UserAccountType.EXPORTER);
-
-    when(userPrivilegesService.getUserPrivileges("1")).thenReturn(Optional.of(userPrivs));
-
-    Response response = resources.client()
-        .target(URL + "/1")
-        .request()
-        .get();
-
-    assertThat(response.getStatus()).isEqualTo(200);
-
-    UserPrivilegesView result = response.readEntity(UserPrivilegesView.class);
-    assertThat(result).isNotNull();
-    assertThat(result.getUserAccountType()).isEqualTo(UserAccountType.EXPORTER);
-    assertThat(result.getCustomers().size()).isEqualTo(0);
-    assertThat(result.getSites().size()).isEqualTo(0);
-  }
-
-  @Test
-  public void testEmptyUserPrivs() throws Exception {
-    // Empty user privs object
     UserPrivilegesView userPrivs = new UserPrivilegesView();
 
     when(userPrivilegesService.getUserPrivileges("1")).thenReturn(Optional.of(userPrivs));
@@ -107,7 +82,6 @@ public class UserPrivilegesResourceTest {
 
     UserPrivilegesView result = response.readEntity(UserPrivilegesView.class);
     assertThat(result).isNotNull();
-    assertThat(result.getUserAccountType()).isNull();
     assertThat(result.getCustomers().size()).isEqualTo(0);
     assertThat(result.getSites().size()).isEqualTo(0);
   }

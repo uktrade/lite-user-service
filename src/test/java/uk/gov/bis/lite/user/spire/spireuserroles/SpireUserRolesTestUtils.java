@@ -6,15 +6,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 
-import uk.gov.bis.lite.common.spire.client.SpireResponse;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-
-import javax.xml.soap.MessageFactory;
-import javax.xml.soap.SOAPMessage;
-
-public class SpireUserRolesUtil {
+public class SpireUserRolesTestUtils {
   public static String RES_TYPE_SPIRE_SAR_USERS = "SPIRE_SAR_USERS";
   public static String RES_TYPE_SPIRE_SITE_USERS = "SPIRE_SITE_USERS";
   public static String ROLE_SAR_ADMINISTRATOR = "SAR_ADMINISTRATOR";
@@ -94,11 +86,5 @@ public class SpireUserRolesUtil {
             .withStatus(200)
             .withHeader("Content-Type", "text/xml; charset=utf-8")
             .withBody(body)));
-  }
-
-  public static SpireResponse createSpireResponse(String soapMessageString) throws Exception {
-    InputStream is = new ByteArrayInputStream(soapMessageString.getBytes());
-    SOAPMessage soapMessage = MessageFactory.newInstance().createMessage(null, is);
-    return new SpireResponse(soapMessage);
   }
 }

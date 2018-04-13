@@ -2,13 +2,14 @@ package uk.gov.bis.lite.user.spire.spireuserroles;
 
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesUtil.createSpireResponse;
+import static uk.gov.bis.lite.user.spire.SpireResponseTestUtils.createSpireResponse;
 
 import org.junit.Before;
 import org.junit.Test;
 import uk.gov.bis.lite.common.spire.client.SpireResponse;
 import uk.gov.bis.lite.common.spire.client.errorhandler.ErrorNodeErrorHandler;
 import uk.gov.bis.lite.common.spire.client.exception.SpireClientException;
+import uk.gov.bis.lite.user.spire.SpireUserNotFoundException;
 
 public class SpireUserRolesErrorHandlerTest {
 
@@ -23,7 +24,7 @@ public class SpireUserRolesErrorHandlerTest {
   public void userIdDoesNotExistTest() throws Exception {
     String errorText = "Web user account for provided userId not found.";
     assertThatThrownBy(() -> errorHandler.handleError(errorText))
-        .isInstanceOf(SpireUserRolesUserNotFoundException.class)
+        .isInstanceOf(SpireUserNotFoundException.class)
         .hasMessageContaining("User not found: \"Web user account for provided userId not found.\"");
   }
 
@@ -31,7 +32,7 @@ public class SpireUserRolesErrorHandlerTest {
   public void userIdDoesNotExistResponseTest() throws Exception {
     SpireResponse response = createSpireResponse(fixture("fixture/spire/SPIRE_USER_ROLES/UserIdDoesNotExist.xml"));
     assertThatThrownBy(() -> errorHandler.checkResponse(response))
-        .isInstanceOf(SpireUserRolesUserNotFoundException.class)
+        .isInstanceOf(SpireUserNotFoundException.class)
         .hasMessageContaining("User not found: \"Web user account for provided userId not found.\"");
   }
 

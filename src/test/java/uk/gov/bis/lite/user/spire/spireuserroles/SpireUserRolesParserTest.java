@@ -2,7 +2,7 @@ package uk.gov.bis.lite.user.spire.spireuserroles;
 
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesUtil.createSpireResponse;
+import static uk.gov.bis.lite.user.spire.SpireResponseTestUtils.createSpireResponse;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -98,7 +98,6 @@ public class SpireUserRolesParserTest {
     SpireUserRoles spireUserRoles = parser.parseResponse(response);
 
     assertThat(spireUserRoles.getUserRoles().isEmpty()).isTrue();
-    assertThat(spireUserRoles.getUserAccountType()).isEqualTo("EXPORTER");
   }
 
   @Test
@@ -108,7 +107,6 @@ public class SpireUserRolesParserTest {
     SpireUserRoles spireUserRoles = parser.parseResponse(response);
 
     assertThat(spireUserRoles.getUserRoles().isEmpty()).isTrue();
-    assertThat(spireUserRoles.getUserAccountType()).isEqualTo("EXPORTER");
   }
 
   @Test
@@ -118,6 +116,5 @@ public class SpireUserRolesParserTest {
     SpireUserRoles spireUserRoles = parser.parseResponse(response);
 
     assertThat(spireUserRoles.getUserRoles().isEmpty()).isTrue();
-    assertThat(spireUserRoles.getUserAccountType()).isEqualTo("EXPORTER");
   }
 }
