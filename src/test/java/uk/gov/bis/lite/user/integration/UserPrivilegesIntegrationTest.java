@@ -1,4 +1,4 @@
-package uk.gov.bis.lite.user;
+package uk.gov.bis.lite.user.integration;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.matchingXPath;
@@ -9,6 +9,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
+import static uk.gov.bis.lite.user.TestUtils.generateAuthorizationHeader;
 import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesTestUtils.stubForBody;
 
 import org.junit.Test;
@@ -16,11 +17,22 @@ import uk.gov.bis.lite.user.api.view.CustomerView;
 import uk.gov.bis.lite.user.api.view.Role;
 import uk.gov.bis.lite.user.api.view.SiteView;
 import uk.gov.bis.lite.user.api.view.UserPrivilegesView;
-import uk.gov.bis.lite.user.integration.BaseIntegrationTest;
 
+import java.util.Collections;
+
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
-public class UserServiceApplicationIntegrationTest extends BaseIntegrationTest {
+public class UserPrivilegesIntegrationTest extends BaseIntegrationTest {
+
+  private final MultivaluedMap<String, Object> authedHeaders;
+
+  public UserPrivilegesIntegrationTest() {
+    authedHeaders = new MultivaluedHashMap<>();
+    authedHeaders.put(HttpHeaders.AUTHORIZATION, Collections.singletonList(generateAuthorizationHeader("123456", "test@example.org", "Mr Test")));
+  }
 
   private String urlTarget(String targetPath) {
     return "http://localhost:" + RULE.getLocalPort() + targetPath;

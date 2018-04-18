@@ -75,7 +75,7 @@ build {
   dependsOn shadowJar
 }
 
-run { args 'server', 'src/main/resources/config.yaml' }
+run { args 'server', 'config.yaml' }
 
 def nexusUsername = project.hasProperty('nexusUsername') ? project.nexusUsername : ''
 def nexusPassword = project.hasProperty('nexusPassword') ? project.nexusPassword : ''

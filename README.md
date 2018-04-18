@@ -3,6 +3,7 @@
 ## Endpoints
 
 * `GET /user-privileges/{userId}` (requires JWT Authorization header)
+* `GET /user-details/{userId}` (requires JWT Authorization header)
 
 ## Admin endpoints
 

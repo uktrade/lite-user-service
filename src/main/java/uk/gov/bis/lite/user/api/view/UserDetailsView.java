@@ -7,7 +7,6 @@ public class UserDetailsView {
   private String fullName;
   private String contactEmailAddress;
   private String contactPhoneNumber;
-  private AccountType accountType;
   private AccountStatus accountStatus;
 
   public String getTitle() {
@@ -61,15 +60,6 @@ public class UserDetailsView {
 
   public UserDetailsView setContactPhoneNumber(String contactPhoneNumber) {
     this.contactPhoneNumber = contactPhoneNumber;
-    return this;
-  }
-
-  public AccountType getAccountType() {
-    return accountType;
-  }
-
-  public UserDetailsView setAccountType(AccountType accountType) {
-    this.accountType = accountType;
     return this;
   }
 
