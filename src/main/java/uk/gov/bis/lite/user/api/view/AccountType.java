@@ -9,8 +9,8 @@ import java.util.Optional;
 
 public enum AccountType {
   EXPORTER,
-  UNKNOWN,
-  REGULATOR;
+  REGULATOR,
+  UNKNOWN;
 
   @JsonCreator
   public static AccountType fromJsonValue(String value) {
