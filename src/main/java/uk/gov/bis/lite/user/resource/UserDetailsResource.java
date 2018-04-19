@@ -38,7 +38,7 @@ public class UserDetailsResource {
     if (!StringUtils.equals(user.getUserId(), userId)) {
       throw new WebApplicationException(String.format("userId %s does not match value supplied in token %s", userId, user.getUserId()), Response.Status.UNAUTHORIZED);
     }
-    Optional<UserDetailsView> userDetails = userDetailsService.getUserDetails(userId).map(SpireUserDetailsAdapter::adapt);
+    Optional<UserDetailsView> userDetails = userDetailsService.getUserDetails(userId).map(SpireUserDetailsAdapter::adaptToUserDetailsView);
     if (userDetails.isPresent()) {
       return userDetails.get();
     } else {

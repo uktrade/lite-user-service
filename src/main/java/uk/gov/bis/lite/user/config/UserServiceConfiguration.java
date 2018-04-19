@@ -20,7 +20,11 @@ public class UserServiceConfiguration extends Configuration {
 
   @NotEmpty
   @JsonProperty
-  private String adminUsername;
+  private String jwtSharedSecret;
+
+  @NotEmpty
+  @JsonProperty
+  private String adminLogin;
 
   @NotEmpty
   @JsonProperty
@@ -28,7 +32,11 @@ public class UserServiceConfiguration extends Configuration {
 
   @NotEmpty
   @JsonProperty
-  private String jwtSharedSecret;
+  private String serviceLogin;
+
+  @NotEmpty
+  @JsonProperty
+  private String servicePassword;
 
   public String getSpireClientUsername() {
     return spireClientUsername;
@@ -42,15 +50,23 @@ public class UserServiceConfiguration extends Configuration {
     return spireClientUrl;
   }
 
-  public String getAdminUsername() {
-    return adminUsername;
+  public String getJwtSharedSecret() {
+    return jwtSharedSecret;
+  }
+
+  public String getAdminLogin() {
+    return adminLogin;
   }
 
   public String getAdminPassword() {
     return adminPassword;
   }
 
-  public String getJwtSharedSecret() {
-    return jwtSharedSecret;
+  public String getServiceLogin() {
+    return serviceLogin;
+  }
+
+  public String getServicePassword() {
+    return servicePassword;
   }
 }

@@ -3,7 +3,7 @@ package uk.gov.bis.lite.user.resource;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static uk.gov.bis.lite.user.TestUtils.generateAuthorizationHeader;
+import static uk.gov.bis.lite.user.TestUtils.generateJwtAuthorizationHeader;
 import static uk.gov.bis.lite.user.spire.spireuserdetails.SpireUserDetailsTestUtils.ACCOUNT_STATUS;
 import static uk.gov.bis.lite.user.spire.spireuserdetails.SpireUserDetailsTestUtils.ACCOUNT_TYPE;
 import static uk.gov.bis.lite.user.spire.spireuserdetails.SpireUserDetailsTestUtils.CONTACT_EMAIL_ADDRESS;
@@ -64,7 +64,7 @@ public class UserDetailsResourceTest {
     Response response = resources.client()
         .target(URL + "/" + ID)
         .request()
-        .header(HttpHeaders.AUTHORIZATION, generateAuthorizationHeader(ID, CONTACT_EMAIL_ADDRESS, FULL_NAME))
+        .header(HttpHeaders.AUTHORIZATION, generateJwtAuthorizationHeader(ID, CONTACT_EMAIL_ADDRESS, FULL_NAME))
         .get();
 
     assertThat(response.getStatus()).isEqualTo(200);
@@ -86,7 +86,7 @@ public class UserDetailsResourceTest {
     Response response = resources.client()
         .target(URL + "/" + ID)
         .request()
-        .header(HttpHeaders.AUTHORIZATION, generateAuthorizationHeader(ID, CONTACT_EMAIL_ADDRESS, FULL_NAME))
+        .header(HttpHeaders.AUTHORIZATION, generateJwtAuthorizationHeader(ID, CONTACT_EMAIL_ADDRESS, FULL_NAME))
         .get();
 
     assertThat(response.getStatus()).isEqualTo(404);
@@ -102,7 +102,7 @@ public class UserDetailsResourceTest {
     Response response = resources.client()
         .target(URL + "/" + "1")
         .request()
-        .header(HttpHeaders.AUTHORIZATION, generateAuthorizationHeader("999", CONTACT_EMAIL_ADDRESS, FULL_NAME))
+        .header(HttpHeaders.AUTHORIZATION, generateJwtAuthorizationHeader("999", CONTACT_EMAIL_ADDRESS, FULL_NAME))
         .get();
 
     assertThat(response.getStatus()).isEqualTo(401);

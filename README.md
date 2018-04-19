@@ -2,8 +2,9 @@
 
 ## Endpoints
 
-* `GET /user-privileges/{userId}` (requires JWT Authorization header)
-* `GET /user-details/{userId}` (requires JWT Authorization header)
+* `GET /user-privileges/{userId}` produces `UserPrivilegesView`, requires JWT Authorization header
+* `GET /user-details/{userId}` produces `UserDetailsView`, requires JWT Authorization header
+* `GET /user-account-type/{userId}` produces `UserAccountTypeView`, requires basic auth header with service login
 
 ## Admin endpoints
 

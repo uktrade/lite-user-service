@@ -4,6 +4,7 @@ import uk.gov.bis.lite.common.jwt.LiteJwtConfig;
 import uk.gov.bis.lite.common.jwt.LiteJwtUser;
 import uk.gov.bis.lite.common.jwt.LiteJwtUserHelper;
 
+import java.util.Base64;
 import java.util.Map;
 
 import javax.ws.rs.core.GenericType;
@@ -16,12 +17,16 @@ public class TestUtils {
 
   private TestUtils(){}
 
-  public static String generateAuthorizationHeader(String userId, String email, String fullName) {
+  public static String generateJwtAuthorizationHeader(String userId, String email, String fullName) {
     LiteJwtUser liteJwtUser = new LiteJwtUser()
         .setEmail(email)
         .setFullName(fullName)
         .setUserId(userId);
     return "Bearer " + liteJwtUserHelper.generateToken(liteJwtUser);
+  }
+
+  public static String generateBasicAuthorizationHeader(String username, String password) {
+    return "Basic " + Base64.getEncoder().encodeToString((username + ":" + password).getBytes());
   }
 
   public static Map<String, String> getMapFromResponse(Response response) {

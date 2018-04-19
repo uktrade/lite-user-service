@@ -4,8 +4,11 @@ spireClientUrl: "${SPIRE_CLIENT_URL}"
 
 jwtSharedSecret: "${JWT_SHARED_SECRET}"
 
-adminUsername: "${ADMIN_USERNAME}"
+adminLogin: "${ADMIN_LOGIN}"
 adminPassword: "${ADMIN_PASSWORD}"
+
+serviceLogin: "${SERVICE_LOGIN}"
+servicePassword: "${SERVICE_PASSWORD}"
 
 server:
   type: default

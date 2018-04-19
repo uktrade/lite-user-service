@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public enum AccountType {
   EXPORTER,
-  CANCELLED,
+  UNKNOWN,
   REGULATOR;
 
   @JsonCreator

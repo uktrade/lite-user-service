@@ -9,7 +9,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.gov.bis.lite.user.TestUtils.generateAuthorizationHeader;
+import static uk.gov.bis.lite.user.TestUtils.generateJwtAuthorizationHeader;
 import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesTestUtils.stubForBody;
 
 import org.junit.Test;
@@ -31,15 +31,11 @@ public class UserPrivilegesIntegrationTest extends BaseIntegrationTest {
 
   public UserPrivilegesIntegrationTest() {
     authedHeaders = new MultivaluedHashMap<>();
-    authedHeaders.put(HttpHeaders.AUTHORIZATION, Collections.singletonList(generateAuthorizationHeader("123456", "test@example.org", "Mr Test")));
-  }
-
-  private String urlTarget(String targetPath) {
-    return "http://localhost:" + RULE.getLocalPort() + targetPath;
+    authedHeaders.put(HttpHeaders.AUTHORIZATION, Collections.singletonList(generateJwtAuthorizationHeader("123456", "test@example.org", "Mr Test")));
   }
 
   private Response get(String targetPath) {
-    return RULE.client().target(urlTarget(targetPath))
+    return RULE.client().target(urlTarget(targetPath, RULE.getLocalPort()))
         .request()
         .headers(authedHeaders)
         .get();
@@ -153,7 +149,7 @@ public class UserPrivilegesIntegrationTest extends BaseIntegrationTest {
   public void unauthorisedTest() throws Exception {
     stubForBody(fixture("fixture/spire/SPIRE_USER_ROLES/SingleSarAdmin.xml"));
 
-    Response response = RULE.client().target(urlTarget("/user-privileges/123")).request().get();
+    Response response = RULE.client().target(urlTarget("/user-privileges/123", RULE.getLocalPort())).request().get();
 
     String body = response.readEntity(String.class);
 

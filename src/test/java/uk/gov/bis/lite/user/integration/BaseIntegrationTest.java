@@ -26,4 +26,8 @@ public class BaseIntegrationTest {
   public static void setUp() throws Exception {
     configureFor(wireMockClassRule.port());
   }
+
+  public static String urlTarget(String targetPath, int port) {
+    return "http://localhost:" + port + targetPath;
+  }
 }

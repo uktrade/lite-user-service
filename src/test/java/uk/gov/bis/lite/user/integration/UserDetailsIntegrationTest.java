@@ -2,7 +2,7 @@ package uk.gov.bis.lite.user.integration;
 
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.gov.bis.lite.user.TestUtils.generateAuthorizationHeader;
+import static uk.gov.bis.lite.user.TestUtils.generateJwtAuthorizationHeader;
 import static uk.gov.bis.lite.user.TestUtils.getMapFromResponse;
 import static uk.gov.bis.lite.user.spire.spireuserdetails.SpireUserDetailsTestUtils.stubForBody;
 
@@ -24,15 +24,11 @@ public class UserDetailsIntegrationTest extends BaseIntegrationTest {
 
   public UserDetailsIntegrationTest() {
     authedHeaders = new MultivaluedHashMap<>();
-    authedHeaders.put(HttpHeaders.AUTHORIZATION, Collections.singletonList(generateAuthorizationHeader("24492", "test@example.org", "Mr Test")));
-  }
-
-  private String urlTarget(String targetPath) {
-    return "http://localhost:" + RULE.getLocalPort() + targetPath;
+    authedHeaders.put(HttpHeaders.AUTHORIZATION, Collections.singletonList(generateJwtAuthorizationHeader("24492", "test@example.org", "Mr Test")));
   }
 
   private Response get(String targetPath) {
-    return RULE.client().target(urlTarget(targetPath))
+    return RULE.client().target(urlTarget(targetPath, RULE.getLocalPort()))
         .request()
         .headers(authedHeaders)
         .get();

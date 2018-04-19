@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 import uk.gov.bis.lite.user.api.view.AccountStatus;
+import uk.gov.bis.lite.user.api.view.AccountType;
+import uk.gov.bis.lite.user.api.view.UserAccountTypeView;
 import uk.gov.bis.lite.user.api.view.UserDetailsView;
 
 public class SpireUserDetailsAdapterTest {
@@ -20,7 +22,7 @@ public class SpireUserDetailsAdapterTest {
         .setAccountType(SpireUserDetailsTestUtils.ACCOUNT_TYPE)
         .setAccountStatus(SpireUserDetailsTestUtils.ACCOUNT_STATUS);
 
-    UserDetailsView userDetailsView = SpireUserDetailsAdapter.adapt(spireUserDetails);
+    UserDetailsView userDetailsView = SpireUserDetailsAdapter.adaptToUserDetailsView(spireUserDetails);
     assertThat(userDetailsView.getTitle()).isEqualTo(SpireUserDetailsTestUtils.TITLE);
     assertThat(userDetailsView.getFirstName()).isEqualTo(SpireUserDetailsTestUtils.FIRST_NAME);
     assertThat(userDetailsView.getLastName()).isEqualTo(SpireUserDetailsTestUtils.LAST_NAME);
@@ -33,27 +35,46 @@ public class SpireUserDetailsAdapterTest {
   @Test
   public void accountStatusTest() throws Exception {
     SpireUserDetails spireUserDetails = new SpireUserDetails().setAccountStatus("ACTIVE");
-    UserDetailsView userDetailsView = SpireUserDetailsAdapter.adapt(spireUserDetails);
+    UserDetailsView userDetailsView = SpireUserDetailsAdapter.adaptToUserDetailsView(spireUserDetails);
     assertThat(userDetailsView.getAccountStatus()).isEqualTo(AccountStatus.ACTIVE);
 
     spireUserDetails = new SpireUserDetails().setAccountStatus("BLOCKED");
-    userDetailsView = SpireUserDetailsAdapter.adapt(spireUserDetails);
+    userDetailsView = SpireUserDetailsAdapter.adaptToUserDetailsView(spireUserDetails);
     assertThat(userDetailsView.getAccountStatus()).isEqualTo(AccountStatus.BLOCKED);
 
     spireUserDetails = new SpireUserDetails().setAccountStatus("CANCELLED");
-    userDetailsView = SpireUserDetailsAdapter.adapt(spireUserDetails);
+    userDetailsView = SpireUserDetailsAdapter.adaptToUserDetailsView(spireUserDetails);
     assertThat(userDetailsView.getAccountStatus()).isEqualTo(AccountStatus.CANCELLED);
 
     spireUserDetails = new SpireUserDetails().setAccountStatus("NEW");
-    userDetailsView = SpireUserDetailsAdapter.adapt(spireUserDetails);
+    userDetailsView = SpireUserDetailsAdapter.adaptToUserDetailsView(spireUserDetails);
     assertThat(userDetailsView.getAccountStatus()).isEqualTo(AccountStatus.NEW);
 
     spireUserDetails = new SpireUserDetails().setAccountStatus("SUSPENDED");
-    userDetailsView = SpireUserDetailsAdapter.adapt(spireUserDetails);
+    userDetailsView = SpireUserDetailsAdapter.adaptToUserDetailsView(spireUserDetails);
     assertThat(userDetailsView.getAccountStatus()).isEqualTo(AccountStatus.SUSPENDED);
 
     spireUserDetails = new SpireUserDetails().setAccountStatus("SOMETHING ELSE");
-    userDetailsView = SpireUserDetailsAdapter.adapt(spireUserDetails);
+    userDetailsView = SpireUserDetailsAdapter.adaptToUserDetailsView(spireUserDetails);
     assertThat(userDetailsView.getAccountStatus()).isNull();
+  }
+
+  @Test
+  public void accountTypeTest() throws Exception {
+    SpireUserDetails spireUserDetails = new SpireUserDetails().setAccountType("EXPORTER");
+    UserAccountTypeView userAccountTypeView = SpireUserDetailsAdapter.adaptToUserAccountTypeView(spireUserDetails);
+    assertThat(userAccountTypeView.getAccountType()).isEqualTo(AccountType.EXPORTER);
+
+    spireUserDetails = new SpireUserDetails().setAccountType("CANCELLED");
+    userAccountTypeView = SpireUserDetailsAdapter.adaptToUserAccountTypeView(spireUserDetails);
+    assertThat(userAccountTypeView.getAccountType()).isEqualTo(AccountType.UNKNOWN);
+
+    spireUserDetails = new SpireUserDetails().setAccountType("GOVERNMENT_USER");
+    userAccountTypeView = SpireUserDetailsAdapter.adaptToUserAccountTypeView(spireUserDetails);
+    assertThat(userAccountTypeView.getAccountType()).isEqualTo(AccountType.REGULATOR);
+
+    spireUserDetails = new SpireUserDetails().setAccountType("SOMETHING ELSE");
+    userAccountTypeView = SpireUserDetailsAdapter.adaptToUserAccountTypeView(spireUserDetails);
+    assertThat(userAccountTypeView.getAccountType()).isEqualTo(AccountType.UNKNOWN);
   }
 }
