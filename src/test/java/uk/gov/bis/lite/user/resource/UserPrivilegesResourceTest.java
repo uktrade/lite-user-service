@@ -9,7 +9,7 @@ import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.Rule;
 import org.junit.Test;
 import uk.gov.bis.lite.user.api.view.CustomerView;
-import uk.gov.bis.lite.user.api.view.Role;
+import uk.gov.bis.lite.user.api.view.enums.Role;
 import uk.gov.bis.lite.user.api.view.SiteView;
 import uk.gov.bis.lite.user.api.view.UserPrivilegesView;
 import uk.gov.bis.lite.user.service.UserPrivilegesService;

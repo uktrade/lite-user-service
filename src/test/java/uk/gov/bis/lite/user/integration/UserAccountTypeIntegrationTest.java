@@ -7,7 +7,7 @@ import static uk.gov.bis.lite.user.TestUtils.getMapFromResponse;
 import static uk.gov.bis.lite.user.spire.spireuserdetails.SpireUserDetailsTestUtils.stubForBody;
 
 import org.junit.Test;
-import uk.gov.bis.lite.user.api.view.AccountType;
+import uk.gov.bis.lite.user.api.view.enums.AccountType;
 import uk.gov.bis.lite.user.api.view.UserAccountTypeView;
 
 import java.util.Arrays;

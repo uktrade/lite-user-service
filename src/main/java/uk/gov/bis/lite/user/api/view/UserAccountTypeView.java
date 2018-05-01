@@ -1,5 +1,7 @@
 package uk.gov.bis.lite.user.api.view;
 
+import uk.gov.bis.lite.user.api.view.enums.AccountType;
+
 public class UserAccountTypeView {
   private AccountType accountType;
 

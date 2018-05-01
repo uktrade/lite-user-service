@@ -9,7 +9,6 @@ import uk.gov.bis.lite.user.spire.spireuserdetails.SpireUserDetailsClient;
 
 import java.util.Optional;
 
-
 public class UserDetailsServiceImpl implements UserDetailsService {
 
   private final SpireUserDetailsClient spireUserDetailsClient;

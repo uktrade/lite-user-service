@@ -1,5 +1,7 @@
 package uk.gov.bis.lite.user.api.view;
 
+import uk.gov.bis.lite.user.api.view.enums.AccountStatus;
+
 public class UserDetailsView {
   private String title;
   private String firstName;

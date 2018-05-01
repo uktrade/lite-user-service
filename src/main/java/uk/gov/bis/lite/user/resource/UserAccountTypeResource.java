@@ -34,10 +34,11 @@ public class UserAccountTypeResource {
 
   @RolesAllowed(Roles.SERVICE)
   @GET
-  @Produces({MediaType.APPLICATION_JSON})
+  @Produces(MediaType.APPLICATION_JSON)
   @Path("/{userId}")
   public UserAccountTypeView viewAccountType(@PathParam("userId") String userId, @Auth User user) {
-    Optional<UserAccountTypeView> accountType = userDetailsService.getUserDetails(userId).map(SpireUserDetailsAdapter::adaptToUserAccountTypeView);
+    Optional<UserAccountTypeView> accountType = userDetailsService.getUserDetails(userId)
+        .map(SpireUserDetailsAdapter::adaptToUserAccountTypeView);
     if (accountType.isPresent()) {
       return accountType.get();
     } else {

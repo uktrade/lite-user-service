@@ -3,8 +3,8 @@ package uk.gov.bis.lite.user.spire.spireuserdetails;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
-import uk.gov.bis.lite.user.api.view.AccountStatus;
-import uk.gov.bis.lite.user.api.view.AccountType;
+import uk.gov.bis.lite.user.api.view.enums.AccountStatus;
+import uk.gov.bis.lite.user.api.view.enums.AccountType;
 import uk.gov.bis.lite.user.api.view.UserAccountTypeView;
 import uk.gov.bis.lite.user.api.view.UserDetailsView;
 

@@ -1,5 +1,7 @@
 package uk.gov.bis.lite.user.api.view;
 
+import uk.gov.bis.lite.user.api.view.enums.Role;
+
 public class SiteView {
   private String siteId;
   private Role role;

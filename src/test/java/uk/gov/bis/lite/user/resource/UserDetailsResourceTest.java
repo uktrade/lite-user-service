@@ -22,7 +22,7 @@ import org.junit.Test;
 import uk.gov.bis.lite.common.jwt.LiteJwtAuthFilterHelper;
 import uk.gov.bis.lite.common.jwt.LiteJwtUser;
 import uk.gov.bis.lite.user.TestUtils;
-import uk.gov.bis.lite.user.api.view.AccountStatus;
+import uk.gov.bis.lite.user.api.view.enums.AccountStatus;
 import uk.gov.bis.lite.user.api.view.UserDetailsView;
 import uk.gov.bis.lite.user.service.UserDetailsService;
 import uk.gov.bis.lite.user.spire.spireuserdetails.SpireUserDetails;

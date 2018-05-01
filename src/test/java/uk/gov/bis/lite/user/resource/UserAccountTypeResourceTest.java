@@ -25,7 +25,7 @@ import uk.gov.bis.lite.common.auth.basic.SimpleAuthenticator;
 import uk.gov.bis.lite.common.auth.basic.SimpleAuthorizer;
 import uk.gov.bis.lite.common.auth.basic.User;
 import uk.gov.bis.lite.user.TestUtils;
-import uk.gov.bis.lite.user.api.view.AccountType;
+import uk.gov.bis.lite.user.api.view.enums.AccountType;
 import uk.gov.bis.lite.user.api.view.UserAccountTypeView;
 import uk.gov.bis.lite.user.service.UserDetailsService;
 import uk.gov.bis.lite.user.spire.spireuserdetails.SpireUserDetails;
