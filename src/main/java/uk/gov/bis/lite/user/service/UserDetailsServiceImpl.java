@@ -4,8 +4,8 @@ import com.google.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
 import uk.gov.bis.lite.common.spire.client.SpireRequest;
 import uk.gov.bis.lite.user.spire.SpireUserNotFoundException;
-import uk.gov.bis.lite.user.spire.spireuserdetails.SpireUserDetails;
-import uk.gov.bis.lite.user.spire.spireuserdetails.SpireUserDetailsClient;
+import uk.gov.bis.lite.user.spire.user.details.SpireUserDetails;
+import uk.gov.bis.lite.user.spire.user.details.SpireUserDetailsClient;
 
 import java.util.Optional;
 

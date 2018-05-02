@@ -1,4 +1,4 @@
-package uk.gov.bis.lite.user.spire.spireuserdetails;
+package uk.gov.bis.lite.user.spire.user.details;
 
 public class SpireUserDetails {
   private String title;

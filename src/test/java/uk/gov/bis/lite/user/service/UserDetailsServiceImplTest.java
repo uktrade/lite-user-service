@@ -17,8 +17,8 @@ import static uk.gov.bis.lite.user.spire.spireuserdetails.SpireUserDetailsTestUt
 import org.junit.Test;
 import uk.gov.bis.lite.common.spire.client.SpireRequest;
 import uk.gov.bis.lite.user.spire.SpireUserNotFoundException;
-import uk.gov.bis.lite.user.spire.spireuserdetails.SpireUserDetails;
-import uk.gov.bis.lite.user.spire.spireuserdetails.SpireUserDetailsClient;
+import uk.gov.bis.lite.user.spire.user.details.SpireUserDetails;
+import uk.gov.bis.lite.user.spire.user.details.SpireUserDetailsClient;
 
 import java.util.Optional;
 

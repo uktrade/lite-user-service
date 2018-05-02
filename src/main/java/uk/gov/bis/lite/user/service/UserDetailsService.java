@@ -1,6 +1,6 @@
 package uk.gov.bis.lite.user.service;
 
-import uk.gov.bis.lite.user.spire.spireuserdetails.SpireUserDetails;
+import uk.gov.bis.lite.user.spire.user.details.SpireUserDetails;
 
 import java.util.Optional;
 

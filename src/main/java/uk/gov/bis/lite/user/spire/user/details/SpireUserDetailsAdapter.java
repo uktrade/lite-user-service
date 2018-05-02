@@ -1,4 +1,4 @@
-package uk.gov.bis.lite.user.spire.spireuserdetails;
+package uk.gov.bis.lite.user.spire.user.details;
 
 import uk.gov.bis.lite.user.api.view.UserAccountTypeView;
 import uk.gov.bis.lite.user.api.view.UserDetailsView;

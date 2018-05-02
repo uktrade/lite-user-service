@@ -25,7 +25,7 @@ import uk.gov.bis.lite.user.TestUtils;
 import uk.gov.bis.lite.user.api.view.UserDetailsView;
 import uk.gov.bis.lite.user.api.view.enums.AccountStatus;
 import uk.gov.bis.lite.user.service.UserDetailsService;
-import uk.gov.bis.lite.user.spire.spireuserdetails.SpireUserDetails;
+import uk.gov.bis.lite.user.spire.user.details.SpireUserDetails;
 
 import java.util.Map;
 import java.util.Optional;

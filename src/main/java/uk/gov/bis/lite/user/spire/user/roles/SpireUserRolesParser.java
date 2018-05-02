@@ -1,4 +1,4 @@
-package uk.gov.bis.lite.user.spire.spireuserroles;
+package uk.gov.bis.lite.user.spire.user.roles;
 
 import static uk.gov.bis.lite.user.spire.SpireResponseUtils.getNodeValue;
 

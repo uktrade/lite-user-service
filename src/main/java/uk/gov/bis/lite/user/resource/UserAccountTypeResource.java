@@ -8,7 +8,7 @@ import uk.gov.bis.lite.common.auth.basic.Roles;
 import uk.gov.bis.lite.common.auth.basic.User;
 import uk.gov.bis.lite.user.api.view.UserAccountTypeView;
 import uk.gov.bis.lite.user.service.UserDetailsService;
-import uk.gov.bis.lite.user.spire.spireuserdetails.SpireUserDetailsAdapter;
+import uk.gov.bis.lite.user.spire.user.details.SpireUserDetailsAdapter;
 
 import java.util.Optional;
 

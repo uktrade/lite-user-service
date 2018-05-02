@@ -1,11 +1,11 @@
-package uk.gov.bis.lite.user.spire.spireuserroles;
+package uk.gov.bis.lite.user.spire.user.roles;
 
 import com.google.common.annotations.VisibleForTesting;
 import org.apache.commons.lang3.StringUtils;
 import uk.gov.bis.lite.user.api.view.CustomerView;
-import uk.gov.bis.lite.user.api.view.enums.Role;
 import uk.gov.bis.lite.user.api.view.SiteView;
 import uk.gov.bis.lite.user.api.view.UserPrivilegesView;
+import uk.gov.bis.lite.user.api.view.enums.Role;
 
 import java.util.Comparator;
 import java.util.EnumMap;

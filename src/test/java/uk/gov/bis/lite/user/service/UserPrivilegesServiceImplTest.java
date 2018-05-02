@@ -11,12 +11,12 @@ import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesTestUtils.
 import org.junit.Test;
 import uk.gov.bis.lite.common.spire.client.SpireRequest;
 import uk.gov.bis.lite.user.api.view.CustomerView;
-import uk.gov.bis.lite.user.api.view.enums.Role;
 import uk.gov.bis.lite.user.api.view.SiteView;
 import uk.gov.bis.lite.user.api.view.UserPrivilegesView;
+import uk.gov.bis.lite.user.api.view.enums.Role;
 import uk.gov.bis.lite.user.spire.SpireUserNotFoundException;
-import uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRoles;
-import uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesClient;
+import uk.gov.bis.lite.user.spire.user.roles.SpireUserRoles;
+import uk.gov.bis.lite.user.spire.user.roles.SpireUserRolesClient;
 
 import java.util.Arrays;
 import java.util.Optional;

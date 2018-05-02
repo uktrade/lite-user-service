@@ -6,6 +6,8 @@ import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 
+import uk.gov.bis.lite.user.spire.user.roles.SpireUserRole;
+
 public class SpireUserRolesTestUtils {
   public static String RES_TYPE_SPIRE_SAR_USERS = "SPIRE_SAR_USERS";
   public static String RES_TYPE_SPIRE_SITE_USERS = "SPIRE_SITE_USERS";

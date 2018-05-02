@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import uk.gov.bis.lite.common.jwt.LiteJwtUser;
 import uk.gov.bis.lite.user.api.view.UserDetailsView;
 import uk.gov.bis.lite.user.service.UserDetailsService;
-import uk.gov.bis.lite.user.spire.spireuserdetails.SpireUserDetailsAdapter;
+import uk.gov.bis.lite.user.spire.user.details.SpireUserDetailsAdapter;
 
 import java.util.Optional;
 

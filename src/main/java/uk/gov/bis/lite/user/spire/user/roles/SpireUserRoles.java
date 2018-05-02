@@ -1,4 +1,4 @@
-package uk.gov.bis.lite.user.spire.spireuserroles;
+package uk.gov.bis.lite.user.spire.user.roles;
 
 import java.util.List;
 

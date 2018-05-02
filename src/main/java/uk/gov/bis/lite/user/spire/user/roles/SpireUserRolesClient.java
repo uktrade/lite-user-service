@@ -1,4 +1,4 @@
-package uk.gov.bis.lite.user.spire.spireuserroles;
+package uk.gov.bis.lite.user.spire.user.roles;
 
 import uk.gov.bis.lite.common.spire.client.SpireClient;
 import uk.gov.bis.lite.common.spire.client.SpireClientConfig;

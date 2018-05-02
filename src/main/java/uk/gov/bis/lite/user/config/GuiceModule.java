@@ -11,12 +11,12 @@ import uk.gov.bis.lite.user.service.UserDetailsService;
 import uk.gov.bis.lite.user.service.UserDetailsServiceImpl;
 import uk.gov.bis.lite.user.service.UserPrivilegesService;
 import uk.gov.bis.lite.user.service.UserPrivilegesServiceImpl;
-import uk.gov.bis.lite.user.spire.spireuserdetails.SpireUserDetailsClient;
-import uk.gov.bis.lite.user.spire.spireuserdetails.SpireUserDetailsErrorHandler;
-import uk.gov.bis.lite.user.spire.spireuserdetails.SpireUserDetailsParser;
-import uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesClient;
-import uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesErrorHandler;
-import uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesParser;
+import uk.gov.bis.lite.user.spire.user.details.SpireUserDetailsClient;
+import uk.gov.bis.lite.user.spire.user.details.SpireUserDetailsErrorHandler;
+import uk.gov.bis.lite.user.spire.user.details.SpireUserDetailsParser;
+import uk.gov.bis.lite.user.spire.user.roles.SpireUserRolesClient;
+import uk.gov.bis.lite.user.spire.user.roles.SpireUserRolesErrorHandler;
+import uk.gov.bis.lite.user.spire.user.roles.SpireUserRolesParser;
 
 public class GuiceModule extends AbstractModule implements ConfigurationAwareModule<UserServiceConfiguration> {
 
