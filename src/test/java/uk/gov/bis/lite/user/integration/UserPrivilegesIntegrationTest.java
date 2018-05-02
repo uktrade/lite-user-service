@@ -10,7 +10,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
 import static uk.gov.bis.lite.user.TestUtils.generateJwtAuthorizationHeader;
-import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesTestUtils.stubForBody;
+import static uk.gov.bis.lite.user.spire.user.roles.SpireUserRolesTestUtils.stubForBody;
 
 import org.junit.Test;
 import uk.gov.bis.lite.user.api.view.CustomerView;

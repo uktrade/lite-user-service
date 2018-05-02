@@ -1,4 +1,4 @@
-package uk.gov.bis.lite.user.spire.spireuserdetails;
+package uk.gov.bis.lite.user.spire.user.details;
 
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -8,9 +8,6 @@ import static uk.gov.bis.lite.user.spire.SpireResponseTestUtils.createSpireRespo
 import org.junit.Test;
 import uk.gov.bis.lite.common.spire.client.SpireResponse;
 import uk.gov.bis.lite.common.spire.client.parser.SpireParser;
-import uk.gov.bis.lite.user.spire.user.details.SpireUserDetails;
-import uk.gov.bis.lite.user.spire.user.details.SpireUserDetailsParser;
-import uk.gov.bis.lite.user.spire.user.details.SpireUserDetailsParserException;
 
 public class SpireUserDetailsParserTest {
 

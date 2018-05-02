@@ -1,4 +1,4 @@
-package uk.gov.bis.lite.user.spire.spireuserdetails;
+package uk.gov.bis.lite.user.spire.user.details;
 
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -9,7 +9,6 @@ import uk.gov.bis.lite.common.spire.client.SpireResponse;
 import uk.gov.bis.lite.common.spire.client.errorhandler.ErrorNodeErrorHandler;
 import uk.gov.bis.lite.common.spire.client.exception.SpireClientException;
 import uk.gov.bis.lite.user.spire.SpireUserNotFoundException;
-import uk.gov.bis.lite.user.spire.user.details.SpireUserDetailsErrorHandler;
 
 public class SpireUserDetailsErrorHandlerTest {
 

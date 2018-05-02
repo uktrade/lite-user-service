@@ -1,12 +1,10 @@
-package uk.gov.bis.lite.user.spire.spireuserroles;
+package uk.gov.bis.lite.user.spire.user.roles;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.matchingXPath;
 import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
-
-import uk.gov.bis.lite.user.spire.user.roles.SpireUserRole;
 
 public class SpireUserRolesTestUtils {
   public static String RES_TYPE_SPIRE_SAR_USERS = "SPIRE_SAR_USERS";

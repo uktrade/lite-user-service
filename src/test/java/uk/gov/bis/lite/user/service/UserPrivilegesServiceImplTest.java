@@ -5,8 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesTestUtils.buildCustomerAdmin;
-import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesTestUtils.buildSiteAdmin;
+import static uk.gov.bis.lite.user.spire.user.roles.SpireUserRolesTestUtils.buildCustomerAdmin;
+import static uk.gov.bis.lite.user.spire.user.roles.SpireUserRolesTestUtils.buildSiteAdmin;
 
 import org.junit.Test;
 import uk.gov.bis.lite.common.spire.client.SpireRequest;

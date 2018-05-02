@@ -4,7 +4,7 @@ import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
 import static uk.gov.bis.lite.user.TestUtils.generateBasicAuthorizationHeader;
 import static uk.gov.bis.lite.user.TestUtils.getMapFromResponse;
-import static uk.gov.bis.lite.user.spire.spireuserdetails.SpireUserDetailsTestUtils.stubForBody;
+import static uk.gov.bis.lite.user.spire.user.details.SpireUserDetailsTestUtils.stubForBody;
 
 import org.junit.Test;
 import uk.gov.bis.lite.user.api.view.UserAccountTypeView;
