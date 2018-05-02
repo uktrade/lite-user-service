@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response;
 public class TestUtils {
   public static final String JWT_SHARED_SECRET = "demo-secret-which-is-very-long-so-as-to-hit-the-byte-requirement";
 
-  private static final LiteJwtUserHelper liteJwtUserHelper = new LiteJwtUserHelper(new LiteJwtConfig(JWT_SHARED_SECRET, "some-lite-service"));
+  private static final LiteJwtUserHelper LITE_JWT_USER_HELPER = new LiteJwtUserHelper(new LiteJwtConfig(JWT_SHARED_SECRET, "some-lite-service"));
 
   private TestUtils(){}
 
@@ -22,7 +22,7 @@ public class TestUtils {
         .setEmail(email)
         .setFullName(fullName)
         .setUserId(userId);
-    return "Bearer " + liteJwtUserHelper.generateToken(liteJwtUser);
+    return "Bearer " + LITE_JWT_USER_HELPER.generateToken(liteJwtUser);
   }
 
   public static String generateBasicAuthorizationHeader(String username, String password) {

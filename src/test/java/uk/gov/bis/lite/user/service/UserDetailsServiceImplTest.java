@@ -43,7 +43,7 @@ public class UserDetailsServiceImplTest {
             .setAccountStatus(ACCOUNT_STATUS));
 
     Optional<SpireUserDetails> userDetailsOpt = service.getUserDetails("1");
-    assertThat(userDetailsOpt.isPresent()).isTrue();
+    assertThat(userDetailsOpt).isPresent();
 
     SpireUserDetails spireUserDetails = userDetailsOpt.get();
 
@@ -63,7 +63,7 @@ public class UserDetailsServiceImplTest {
     when(client.sendRequest(any())).thenThrow(new SpireUserNotFoundException("User not found!"));
 
     Optional<SpireUserDetails> userDetailsOpt = service.getUserDetails("1");
-    assertThat(userDetailsOpt.isPresent()).isFalse();
+    assertThat(userDetailsOpt).isNotPresent();
   }
 
   @Test
@@ -85,6 +85,6 @@ public class UserDetailsServiceImplTest {
 
     // Test limit of 10 chars
     Optional<SpireUserDetails> userDetailsOpt = service.getUserDetails("0123456789");
-    assertThat(userDetailsOpt.isPresent()).isFalse();
+    assertThat(userDetailsOpt).isNotPresent();
   }
 }

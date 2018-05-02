@@ -1,6 +1,5 @@
 package uk.gov.bis.lite.user.spire.spireuserdetails;
 
-import org.apache.commons.lang3.StringUtils;
 import uk.gov.bis.lite.user.api.view.UserAccountTypeView;
 import uk.gov.bis.lite.user.api.view.UserDetailsView;
 import uk.gov.bis.lite.user.api.view.enums.AccountStatus;
@@ -10,7 +9,7 @@ import uk.gov.bis.lite.user.util.EnumUtil;
 public class SpireUserDetailsAdapter {
   private SpireUserDetailsAdapter() {}
 
-  public static UserDetailsView adaptToUserDetailsView(SpireUserDetails spireUserDetails) {
+  public static UserDetailsView mapToUserDetailsView(SpireUserDetails spireUserDetails) {
     return new UserDetailsView()
         .setTitle(spireUserDetails.getTitle())
         .setFirstName(spireUserDetails.getFirstName())
@@ -21,17 +20,17 @@ public class SpireUserDetailsAdapter {
         .setAccountStatus(EnumUtil.parse(spireUserDetails.getAccountStatus(), AccountStatus.class));
   }
 
-  public static UserAccountTypeView adaptToUserAccountTypeView(SpireUserDetails spireUserDetails) {
+  public static UserAccountTypeView mapToUserAccountTypeView(SpireUserDetails spireUserDetails) {
     UserAccountTypeView userAccountTypeView = new UserAccountTypeView();
-    AccountType accountType = accountTypeMapper(spireUserDetails.getAccountType());
+    AccountType accountType = mapToAccountType(spireUserDetails.getAccountType());
     userAccountTypeView.setAccountType(accountType);
     return userAccountTypeView;
   }
 
-  private static AccountType accountTypeMapper(String spireAccountType) {
-    if (StringUtils.equals(spireAccountType, "GOVERNMENT_USER")) {
+  private static AccountType mapToAccountType(String spireAccountType) {
+    if ("GOVERNMENT_USER".equals(spireAccountType)) {
       return AccountType.REGULATOR;
-    } else if (StringUtils.equals(spireAccountType, "EXPORTER")) {
+    } else if ("EXPORTER".equals(spireAccountType)) {
       return AccountType.EXPORTER;
     } else {
       return AccountType.UNKNOWN;

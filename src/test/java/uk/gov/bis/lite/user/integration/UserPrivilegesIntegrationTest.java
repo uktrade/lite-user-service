@@ -14,30 +14,19 @@ import static uk.gov.bis.lite.user.spire.spireuserroles.SpireUserRolesTestUtils.
 
 import org.junit.Test;
 import uk.gov.bis.lite.user.api.view.CustomerView;
-import uk.gov.bis.lite.user.api.view.enums.Role;
 import uk.gov.bis.lite.user.api.view.SiteView;
 import uk.gov.bis.lite.user.api.view.UserPrivilegesView;
-
-import java.util.Collections;
+import uk.gov.bis.lite.user.api.view.enums.Role;
 
 import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 public class UserPrivilegesIntegrationTest extends BaseIntegrationTest {
 
-  private final MultivaluedMap<String, Object> authedHeaders;
-
-  public UserPrivilegesIntegrationTest() {
-    authedHeaders = new MultivaluedHashMap<>();
-    authedHeaders.put(HttpHeaders.AUTHORIZATION, Collections.singletonList(generateJwtAuthorizationHeader("123456", "test@example.org", "Mr Test")));
-  }
-
   private Response get(String targetPath) {
     return RULE.client().target(urlTarget(targetPath, RULE.getLocalPort()))
         .request()
-        .headers(authedHeaders)
+        .header(HttpHeaders.AUTHORIZATION, generateJwtAuthorizationHeader("123456", "test@example.org", "Mr Test"))
         .get();
   }
 

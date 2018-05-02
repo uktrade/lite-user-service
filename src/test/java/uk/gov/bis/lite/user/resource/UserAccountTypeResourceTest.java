@@ -25,8 +25,8 @@ import uk.gov.bis.lite.common.auth.basic.SimpleAuthenticator;
 import uk.gov.bis.lite.common.auth.basic.SimpleAuthorizer;
 import uk.gov.bis.lite.common.auth.basic.User;
 import uk.gov.bis.lite.user.TestUtils;
-import uk.gov.bis.lite.user.api.view.enums.AccountType;
 import uk.gov.bis.lite.user.api.view.UserAccountTypeView;
+import uk.gov.bis.lite.user.api.view.enums.AccountType;
 import uk.gov.bis.lite.user.service.UserDetailsService;
 import uk.gov.bis.lite.user.spire.spireuserdetails.SpireUserDetails;
 
@@ -39,15 +39,15 @@ import javax.ws.rs.core.Response;
 
 public class UserAccountTypeResourceTest {
   private static final String ID = "24492";
-  private static final String URL = "/user-account-type";
-  private static final String ADMIN_USER = generateBasicAuthorizationHeader("admin","admin");
-  private static final String SERVICE_USER = generateBasicAuthorizationHeader("service","service");
-  private static final String UNKNOWN_USER = generateBasicAuthorizationHeader("user","user");
+  private static final String USER_ACCOUNT_TYPE_PATH = "/user-account-type";
+  private static final String ADMIN_USER = generateBasicAuthorizationHeader("admin","admin-password");
+  private static final String SERVICE_USER = generateBasicAuthorizationHeader("service","service-password");
+  private static final String UNKNOWN_USER = generateBasicAuthorizationHeader("unknown","unknown-password");
 
   private final UserDetailsService userDetailsService = mock(UserDetailsService.class);
 
   private final BasicCredentialAuthFilter<User> userBasicCredentialAuthFilter = new BasicCredentialAuthFilter.Builder<User>()
-      .setAuthenticator(new SimpleAuthenticator("admin", "admin", "service", "service"))
+      .setAuthenticator(new SimpleAuthenticator("admin", "admin-password", "service", "service-password"))
       .setAuthorizer(new SimpleAuthorizer())
       .setRealm("User Service Authentication")
       .buildAuthFilter();
@@ -76,7 +76,7 @@ public class UserAccountTypeResourceTest {
 
     for(String user: Arrays.asList(ADMIN_USER, SERVICE_USER)) {
       Response response = resources.client()
-          .target(URL + "/" + ID)
+          .target(USER_ACCOUNT_TYPE_PATH + "/" + ID)
           .request()
           .header(HttpHeaders.AUTHORIZATION, user)
           .get();
@@ -94,7 +94,7 @@ public class UserAccountTypeResourceTest {
 
     for(String user: Arrays.asList(ADMIN_USER, SERVICE_USER)) {
       Response response = resources.client()
-          .target(URL + "/" + ID)
+          .target(USER_ACCOUNT_TYPE_PATH + "/" + ID)
           .request()
           .header(HttpHeaders.AUTHORIZATION, user)
           .get();
@@ -113,7 +113,7 @@ public class UserAccountTypeResourceTest {
     when(userDetailsService.getUserDetails(ID)).thenReturn(Optional.empty());
 
     Response response = resources.client()
-        .target(URL + "/" + ID)
+        .target(USER_ACCOUNT_TYPE_PATH + "/" + ID)
         .request()
         .header(HttpHeaders.AUTHORIZATION, UNKNOWN_USER)
         .get();
@@ -126,10 +126,52 @@ public class UserAccountTypeResourceTest {
     when(userDetailsService.getUserDetails(ID)).thenReturn(Optional.empty());
 
     Response response = resources.client()
-        .target(URL + "/" + ID)
+        .target(USER_ACCOUNT_TYPE_PATH + "/" + ID)
         .request()
         .get();
 
     assertThat(response.getStatus()).isEqualTo(401);
   }
+
+
+  @Test
+  public void userDoesNotExistTesttesttest() throws Exception {
+    when(userDetailsService.getUserDetails(ID)).thenReturn(Optional.empty());
+
+    Response response = resources.client()
+        .target(USER_ACCOUNT_TYPE_PATH + "/012345678910")
+        .request()
+        .header(HttpHeaders.AUTHORIZATION, ADMIN_USER)
+        .get();
+
+    System.out.println(response.readEntity(String.class));
+    assertThat(response.getStatus()).isEqualTo(400);
+//    Map<String, String> map = TestUtils.getMapFromResponse(response);
+//    Assertions.assertThat(map).hasSize(2);
+//    Assertions.assertThat(map).containsEntry("code", "404");
+//    Assertions.assertThat(map).containsEntry("message", "User not found");;
+  }
+
+//
+//  @Test
+//  public void invalidUserIdTest() throws Exception {
+//    when(client.createRequest()).thenReturn(mock(SpireRequest.class));
+//    when(client.sendRequest(any())).thenThrow(new SpireUserNotFoundException("User not found!"));
+//
+//    assertThatThrownBy(() -> service.getUserDetails("01234567891"))
+//        .isExactlyInstanceOf(UserDetailsServiceException.class)
+//        .hasMessage("Supplied user id is invalid 01234567891");
+//
+//    assertThatThrownBy(() -> service.getUserDetails(" "))
+//        .isExactlyInstanceOf(UserDetailsServiceException.class)
+//        .hasMessage("Supplied user id is invalid  ");
+//
+//    assertThatThrownBy(() -> service.getUserDetails(""))
+//        .isExactlyInstanceOf(UserDetailsServiceException.class)
+//        .hasMessage("Supplied user id is invalid ");
+//
+//    // Test limit of 10 chars
+//    Optional<SpireUserDetails> userDetailsOpt = service.getUserDetails("0123456789");
+//    Assertions.assertThat(userDetailsOpt.isPresent()).isFalse();
+//  }
 }

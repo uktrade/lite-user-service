@@ -8,7 +8,6 @@ import com.google.inject.Module;
 import io.dropwizard.Application;
 import io.dropwizard.auth.PolymorphicAuthDynamicFeature;
 import io.dropwizard.auth.PolymorphicAuthValueFactoryProvider;
-import io.dropwizard.auth.PrincipalImpl;
 import io.dropwizard.auth.basic.BasicCredentialAuthFilter;
 import io.dropwizard.configuration.ResourceConfigurationSourceProvider;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
@@ -90,7 +89,7 @@ public class UserServiceApplication extends Application<UserServiceConfiguration
     );
     environment.jersey().register(authFeature);
 
-    AbstractBinder authBinder = new PolymorphicAuthValueFactoryProvider.Binder<>(ImmutableSet.of(PrincipalImpl.class, LiteJwtUser.class, User.class));
+    AbstractBinder authBinder = new PolymorphicAuthValueFactoryProvider.Binder<>(ImmutableSet.of(LiteJwtUser.class, User.class));
     environment.jersey().register(authBinder);
 
     environment.jersey().register(RolesAllowedDynamicFeature.class);

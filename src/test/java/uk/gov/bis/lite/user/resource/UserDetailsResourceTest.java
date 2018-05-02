@@ -22,8 +22,8 @@ import org.junit.Test;
 import uk.gov.bis.lite.common.jwt.LiteJwtAuthFilterHelper;
 import uk.gov.bis.lite.common.jwt.LiteJwtUser;
 import uk.gov.bis.lite.user.TestUtils;
-import uk.gov.bis.lite.user.api.view.enums.AccountStatus;
 import uk.gov.bis.lite.user.api.view.UserDetailsView;
+import uk.gov.bis.lite.user.api.view.enums.AccountStatus;
 import uk.gov.bis.lite.user.service.UserDetailsService;
 import uk.gov.bis.lite.user.spire.spireuserdetails.SpireUserDetails;
 
@@ -36,7 +36,7 @@ import javax.ws.rs.core.Response;
 
 public class UserDetailsResourceTest {
   private static final String ID = "24492";
-  private static final String URL = "/user-details";
+  private static final String USER_DETAILS_TYPE_PATH = "/user-details";
 
   private final UserDetailsService userDetailsService = mock(UserDetailsService.class);
 
@@ -62,7 +62,7 @@ public class UserDetailsResourceTest {
     when(userDetailsService.getUserDetails(ID)).thenReturn(Optional.of(userDetails));
 
     Response response = resources.client()
-        .target(URL + "/" + ID)
+        .target(USER_DETAILS_TYPE_PATH + "/" + ID)
         .request()
         .header(HttpHeaders.AUTHORIZATION, generateJwtAuthorizationHeader(ID, CONTACT_EMAIL_ADDRESS, FULL_NAME))
         .get();
@@ -84,7 +84,7 @@ public class UserDetailsResourceTest {
     when(userDetailsService.getUserDetails(ID)).thenReturn(Optional.empty());
 
     Response response = resources.client()
-        .target(URL + "/" + ID)
+        .target(USER_DETAILS_TYPE_PATH + "/" + ID)
         .request()
         .header(HttpHeaders.AUTHORIZATION, generateJwtAuthorizationHeader(ID, CONTACT_EMAIL_ADDRESS, FULL_NAME))
         .get();
@@ -100,7 +100,7 @@ public class UserDetailsResourceTest {
   @Test
   public void userIdTokenDoesNotMatchUrlTest() throws Exception {
     Response response = resources.client()
-        .target(URL + "/" + "1")
+        .target(USER_DETAILS_TYPE_PATH + "/" + "1")
         .request()
         .header(HttpHeaders.AUTHORIZATION, generateJwtAuthorizationHeader("999", CONTACT_EMAIL_ADDRESS, FULL_NAME))
         .get();
@@ -116,7 +116,7 @@ public class UserDetailsResourceTest {
   @Test
   public void tokenNotSuppliedTest() throws Exception {
     Response response = resources.client()
-        .target(URL + "/" + ID)
+        .target(USER_DETAILS_TYPE_PATH + "/" + ID)
         .request()
         .get();
 

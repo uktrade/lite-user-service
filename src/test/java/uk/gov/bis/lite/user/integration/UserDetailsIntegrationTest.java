@@ -7,8 +7,8 @@ import static uk.gov.bis.lite.user.TestUtils.getMapFromResponse;
 import static uk.gov.bis.lite.user.spire.spireuserdetails.SpireUserDetailsTestUtils.stubForBody;
 
 import org.junit.Test;
-import uk.gov.bis.lite.user.api.view.enums.AccountStatus;
 import uk.gov.bis.lite.user.api.view.UserDetailsView;
+import uk.gov.bis.lite.user.api.view.enums.AccountStatus;
 
 import java.util.Collections;
 import java.util.Map;
@@ -44,12 +44,12 @@ public class UserDetailsIntegrationTest extends BaseIntegrationTest {
     assertThat(response.getHeaderString("Content-Type")).isEqualTo("application/json");
 
     UserDetailsView userDetails = response.readEntity(UserDetailsView.class);
-    assertThat(userDetails.getTitle()).isNullOrEmpty();
-    assertThat(userDetails.getFirstName()).isNullOrEmpty();
-    assertThat(userDetails.getLastName()).isNullOrEmpty();
-    assertThat(userDetails.getFullName()).isNullOrEmpty();
-    assertThat(userDetails.getContactEmailAddress()).isNullOrEmpty();
-    assertThat(userDetails.getContactPhoneNumber()).isNullOrEmpty();
+    assertThat(userDetails.getTitle()).isNull();
+    assertThat(userDetails.getFirstName()).isNull();
+    assertThat(userDetails.getLastName()).isNull();
+    assertThat(userDetails.getFullName()).isNull();
+    assertThat(userDetails.getContactEmailAddress()).isNull();
+    assertThat(userDetails.getContactPhoneNumber()).isNull();
     assertThat(userDetails.getAccountStatus()).isNull();
   }
 
@@ -65,11 +65,10 @@ public class UserDetailsIntegrationTest extends BaseIntegrationTest {
     Map<String, String> responseMap = getMapFromResponse(response);
     assertThat(responseMap).hasSize(2);
     assertThat(responseMap.get("code")).isEqualTo("500");
-    assertThat(responseMap.get("message")).isEqualTo("Unexpected number of USER_DETAILS found while parsing the SOAP response body, expected 1 but got 0");
   }
 
   @Test
-  public void MultipleUserDetailsTest() throws Exception {
+  public void multipleUserDetailsTest() throws Exception {
     stubForBody(fixture("fixture/spire/SPIRE_USER_DETAILS/MultipleUserDetails.xml"));
 
     Response response = get("/user-details/24492");
@@ -80,7 +79,6 @@ public class UserDetailsIntegrationTest extends BaseIntegrationTest {
     Map<String, String> responseMap = getMapFromResponse(response);
     assertThat(responseMap).hasSize(2);
     assertThat(responseMap.get("code")).isEqualTo("500");
-    assertThat(responseMap.get("message")).isEqualTo("Unexpected number of USER_DETAILS found while parsing the SOAP response body, expected 1 but got 2");
   }
 
 

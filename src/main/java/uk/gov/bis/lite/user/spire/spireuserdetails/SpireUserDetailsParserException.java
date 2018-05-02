@@ -1,8 +1,8 @@
 package uk.gov.bis.lite.user.spire.spireuserdetails;
 
-import javax.ws.rs.WebApplicationException;
+import uk.gov.bis.lite.common.spire.client.exception.SpireClientException;
 
-public class SpireUserDetailsParserException extends WebApplicationException {
+public class SpireUserDetailsParserException extends SpireClientException {
   public SpireUserDetailsParserException(String message) {
     super(message);
   }

@@ -2,8 +2,8 @@ package uk.gov.bis.lite.user.resource;
 
 import com.google.inject.Inject;
 import io.dropwizard.auth.Auth;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import uk.gov.bis.lite.common.auth.basic.Roles;
 import uk.gov.bis.lite.common.auth.basic.User;
 import uk.gov.bis.lite.user.api.view.UserAccountTypeView;
@@ -23,8 +23,6 @@ import javax.ws.rs.core.Response;
 
 @Path("/user-account-type")
 public class UserAccountTypeResource {
-  private static final Logger LOGGER = LoggerFactory.getLogger(UserAccountTypeResource.class);
-
   private final UserDetailsService userDetailsService;
 
   @Inject
@@ -36,9 +34,9 @@ public class UserAccountTypeResource {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/{userId}")
-  public UserAccountTypeView viewAccountType(@PathParam("userId") String userId, @Auth User user) {
+  public UserAccountTypeView viewAccountType(@PathParam("userId") @NotEmpty @Length(max = 10) String userId, @Auth User user) {
     Optional<UserAccountTypeView> accountType = userDetailsService.getUserDetails(userId)
-        .map(SpireUserDetailsAdapter::adaptToUserAccountTypeView);
+        .map(SpireUserDetailsAdapter::mapToUserAccountTypeView);
     if (accountType.isPresent()) {
       return accountType.get();
     } else {

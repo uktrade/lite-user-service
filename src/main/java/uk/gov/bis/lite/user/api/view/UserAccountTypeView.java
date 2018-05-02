@@ -5,9 +5,6 @@ import uk.gov.bis.lite.user.api.view.enums.AccountType;
 public class UserAccountTypeView {
   private AccountType accountType;
 
-  public UserAccountTypeView() {
-  }
-
   public AccountType getAccountType() {
     return accountType;
   }

@@ -3,8 +3,6 @@ package uk.gov.bis.lite.user.resource;
 import com.google.inject.Inject;
 import io.dropwizard.auth.Auth;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.gov.bis.lite.common.jwt.LiteJwtUser;
 import uk.gov.bis.lite.user.api.view.UserDetailsView;
 import uk.gov.bis.lite.user.service.UserDetailsService;
@@ -22,8 +20,6 @@ import javax.ws.rs.core.Response;
 
 @Path("/user-details")
 public class UserDetailsResource {
-  private static final Logger LOGGER = LoggerFactory.getLogger(UserDetailsResource.class);
-
   private final UserDetailsService userDetailsService;
 
   @Inject
@@ -36,9 +32,11 @@ public class UserDetailsResource {
   @Path("/{userId}")
   public UserDetailsView viewUserDetails(@PathParam("userId") String userId, @Auth LiteJwtUser user) {
     if (!StringUtils.equals(user.getUserId(), userId)) {
-      throw new WebApplicationException(String.format("userId %s does not match value supplied in token %s", userId, user.getUserId()), Response.Status.UNAUTHORIZED);
+      throw new WebApplicationException(String.format("userId %s does not match value supplied in token %s", userId,
+          user.getUserId()), Response.Status.UNAUTHORIZED);
     }
-    Optional<UserDetailsView> userDetails = userDetailsService.getUserDetails(userId).map(SpireUserDetailsAdapter::adaptToUserDetailsView);
+    Optional<UserDetailsView> userDetails = userDetailsService.getUserDetails(userId)
+        .map(SpireUserDetailsAdapter::mapToUserDetailsView);
     if (userDetails.isPresent()) {
       return userDetails.get();
     } else {

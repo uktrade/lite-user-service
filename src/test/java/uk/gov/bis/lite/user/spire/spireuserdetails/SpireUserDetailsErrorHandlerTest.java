@@ -4,7 +4,6 @@ import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static uk.gov.bis.lite.user.spire.SpireResponseTestUtils.createSpireResponse;
 
-import org.junit.Before;
 import org.junit.Test;
 import uk.gov.bis.lite.common.spire.client.SpireResponse;
 import uk.gov.bis.lite.common.spire.client.errorhandler.ErrorNodeErrorHandler;
@@ -13,12 +12,7 @@ import uk.gov.bis.lite.user.spire.SpireUserNotFoundException;
 
 public class SpireUserDetailsErrorHandlerTest {
 
-  private ErrorNodeErrorHandler errorHandler;
-
-  @Before
-  public void setUp() throws Exception {
-    errorHandler = new SpireUserDetailsErrorHandler();
-  }
+  private ErrorNodeErrorHandler errorHandler = new SpireUserDetailsErrorHandler();
 
   @Test
   public void userIdDoesNotExistTest() throws Exception {

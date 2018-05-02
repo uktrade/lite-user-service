@@ -5,19 +5,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static uk.gov.bis.lite.user.spire.SpireResponseTestUtils.createSpireResponse;
 
-import org.junit.Before;
 import org.junit.Test;
 import uk.gov.bis.lite.common.spire.client.SpireResponse;
 import uk.gov.bis.lite.common.spire.client.parser.SpireParser;
 
 public class SpireUserDetailsParserTest {
 
-  private SpireParser<SpireUserDetails> parser;
-
-  @Before
-  public void setUp() throws Exception {
-    parser = new SpireUserDetailsParser();
-  }
+  private SpireParser<SpireUserDetails> parser = new SpireUserDetailsParser();
 
   @Test
   public void emptyUserDetailsTest() throws Exception {
@@ -25,14 +19,14 @@ public class SpireUserDetailsParserTest {
 
     SpireUserDetails spireUserDetails = parser.parseResponse(response);
 
-    assertThat(spireUserDetails.getTitle()).isNullOrEmpty();
-    assertThat(spireUserDetails.getFirstName()).isNullOrEmpty();
-    assertThat(spireUserDetails.getLastName()).isNullOrEmpty();
-    assertThat(spireUserDetails.getFullName()).isNullOrEmpty();
-    assertThat(spireUserDetails.getContactEmailAddress()).isNullOrEmpty();
-    assertThat(spireUserDetails.getContactPhoneNumber()).isNullOrEmpty();
-    assertThat(spireUserDetails.getAccountType()).isNullOrEmpty();
-    assertThat(spireUserDetails.getAccountStatus()).isNullOrEmpty();
+    assertThat(spireUserDetails.getTitle()).isNull();
+    assertThat(spireUserDetails.getFirstName()).isNull();
+    assertThat(spireUserDetails.getLastName()).isNull();
+    assertThat(spireUserDetails.getFullName()).isNull();
+    assertThat(spireUserDetails.getContactEmailAddress()).isNull();
+    assertThat(spireUserDetails.getContactPhoneNumber()).isNull();
+    assertThat(spireUserDetails.getAccountType()).isNull();
+    assertThat(spireUserDetails.getAccountStatus()).isNull();
   }
 
   @Test
@@ -41,16 +35,16 @@ public class SpireUserDetailsParserTest {
 
     assertThatThrownBy(() -> parser.parseResponse(response))
         .isExactlyInstanceOf(SpireUserDetailsParserException.class)
-        .hasMessage("Unexpected number of USER_DETAILS found while parsing the SOAP response body, expected 1 but got 0");
+        .hasMessageContaining("Unexpected number of USER_DETAILS found while parsing the SOAP response body, expected 1 but got: 0");
   }
 
   @Test
-  public void MultipleUserDetailsTest() throws Exception {
+  public void multipleUserDetailsTest() throws Exception {
     SpireResponse response = createSpireResponse(fixture("fixture/spire/SPIRE_USER_DETAILS/MultipleUserDetails.xml"));
 
     assertThatThrownBy(() -> parser.parseResponse(response))
         .isExactlyInstanceOf(SpireUserDetailsParserException.class)
-        .hasMessage("Unexpected number of USER_DETAILS found while parsing the SOAP response body, expected 1 but got 2");
+        .hasMessageContaining("Unexpected number of USER_DETAILS found while parsing the SOAP response body, expected 1 but got: 2");
   }
 
   @Test
@@ -59,16 +53,16 @@ public class SpireUserDetailsParserTest {
 
     assertThatThrownBy(() -> parser.parseResponse(response))
         .isExactlyInstanceOf(SpireUserDetailsParserException.class)
-        .hasMessage("Unexpected number of USER_DETAILS found while parsing the SOAP response body, expected 1 but got 0");
+        .hasMessageContaining("Unexpected element found while parsing the SOAP response body: ERROR");
   }
 
   @Test
-  public void UserIdDoesNotExistTest() throws Exception {
+  public void userIdDoesNotExistTest() throws Exception {
     SpireResponse response = createSpireResponse(fixture("fixture/spire/SPIRE_USER_DETAILS/UserIdDoesNotExist.xml"));
 
     assertThatThrownBy(() -> parser.parseResponse(response))
         .isExactlyInstanceOf(SpireUserDetailsParserException.class)
-        .hasMessage("Unexpected number of USER_DETAILS found while parsing the SOAP response body, expected 1 but got 0");
+        .hasMessageContaining("Unexpected element found while parsing the SOAP response body: ERROR");
   }
 
   @Test
