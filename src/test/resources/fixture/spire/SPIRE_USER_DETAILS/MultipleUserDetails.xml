@@ -1,0 +1,27 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.fivium.co.uk/fox/webservices/espire/SPIRE_USER_DETAILS">
+  <soap:Header/>
+  <soap:Body>
+    <ns:USER_DETAILS_LIST>
+      <USER_DETAILS>
+        <TITLE>mr</TITLE>
+        <FIRST_NAME>applicant1</FIRST_NAME>
+        <LAST_NAME>test</LAST_NAME>
+        <FULL_NAME>mr applicant1 test</FULL_NAME>
+        <CONTACT_EMAIL_ADDRESS>applicant1@test.com</CONTACT_EMAIL_ADDRESS>
+        <CONTACT_PHONE_NUMBER>+44 (0)208 123 4567</CONTACT_PHONE_NUMBER>
+        <ACCOUNT_TYPE>EXPORTER</ACCOUNT_TYPE>
+        <ACCOUNT_STATUS>ACTIVE</ACCOUNT_STATUS>
+      </USER_DETAILS>
+      <USER_DETAILS>
+        <TITLE>mr</TITLE>
+        <FIRST_NAME>applicant1</FIRST_NAME>
+        <LAST_NAME>test</LAST_NAME>
+        <FULL_NAME>mr applicant1 test</FULL_NAME>
+        <CONTACT_EMAIL_ADDRESS>applicant1@test.com</CONTACT_EMAIL_ADDRESS>
+        <CONTACT_PHONE_NUMBER>+44 (0)208 123 4567</CONTACT_PHONE_NUMBER>
+        <ACCOUNT_TYPE>EXPORTER</ACCOUNT_TYPE>
+        <ACCOUNT_STATUS>ACTIVE</ACCOUNT_STATUS>
+      </USER_DETAILS>
+    </ns:USER_DETAILS_LIST>
+  </soap:Body>
+</soap:Envelope>

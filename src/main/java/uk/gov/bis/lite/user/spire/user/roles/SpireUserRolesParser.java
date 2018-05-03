@@ -1,4 +1,6 @@
-package uk.gov.bis.lite.user.spire;
+package uk.gov.bis.lite.user.spire.user.roles;
+
+import static uk.gov.bis.lite.user.spire.SpireResponseUtils.getNodeValue;
 
 import com.google.common.base.Stopwatch;
 import org.apache.commons.lang3.StringUtils;
@@ -6,18 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 import uk.gov.bis.lite.common.spire.client.SpireResponse;
-import uk.gov.bis.lite.common.spire.client.exception.SpireClientException;
 import uk.gov.bis.lite.common.spire.client.parser.SpireParser;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 public class SpireUserRolesParser implements SpireParser<SpireUserRoles> {
@@ -34,7 +32,6 @@ public class SpireUserRolesParser implements SpireParser<SpireUserRoles> {
   }
 
   private SpireUserRoles doResponseParsing(SpireResponse spireResponse) {
-    String userAccountType = "EXPORTER"; // TODO hard coded value pending changes to the SPIRE endpoint
     XPath xpath = XPathFactory.newInstance().newXPath();
     List<SpireUserRole> userRoles = spireResponse.getElementChildNodesForList("//ROLE_LIST")
         .stream()
@@ -57,15 +54,6 @@ public class SpireUserRolesParser implements SpireParser<SpireUserRoles> {
         })
         .filter(Objects::nonNull)
         .collect(Collectors.toList());
-    return new SpireUserRoles(userAccountType, userRoles);
+    return new SpireUserRoles(userRoles);
   }
-
-  private Optional<String> getNodeValue(XPath xpath, Node node, String name){
-    try {
-      return Optional.ofNullable(((Node) xpath.evaluate(name, node, XPathConstants.NODE))).map(Node::getTextContent);
-    } catch (XPathExpressionException e) {
-      throw new SpireClientException("Error occurred while parsing the SOAP response body", e);
-    }
-  }
-
 }

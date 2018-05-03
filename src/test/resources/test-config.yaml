@@ -3,8 +3,11 @@ spireClientPassword: password
 spireClientUrl: http://localhost:9090/
 jwtSharedSecret: demo-secret-which-is-very-long-so-as-to-hit-the-byte-requirement
 
-adminUsername: admin
-adminPassword: admin
+adminLogin: admin
+adminPassword: admin-password
+
+serviceLogin: service
+servicePassword: service-password
 
 server:
   type: default

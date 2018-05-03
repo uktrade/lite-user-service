@@ -50,6 +50,7 @@ dependencies {
   compile 'uk.gov.bis.lite:readiness-metric:1.0'
   compile 'uk.gov.bis.lite:jwt:1.2'
   compile 'uk.gov.bis.lite:paas-utils:1.0'
+  compile 'uk.gov.bis.lite:basic-auth:1.0'
 
   testCompile "io.dropwizard:dropwizard-testing:$dropwizardVersion"
   testCompile 'junit:junit:4.12'
@@ -73,7 +74,7 @@ build {
   dependsOn shadowJar
 }
 
-run { args 'server', 'src/main/resources/config.yaml' }
+run { args 'server', 'config.yaml' }
 
 def nexusUsername = project.hasProperty('nexusUsername') ? project.nexusUsername : ''
 def nexusPassword = project.hasProperty('nexusPassword') ? project.nexusPassword : ''
@@ -122,7 +123,7 @@ publishing {
   publications {
     api(MavenPublication) {
       artifactId 'lite-user-service-api'
-      version '1.0'
+      version '1.2'
       artifact apiJar
       artifact apiJarWithSources {
         classifier "sources"

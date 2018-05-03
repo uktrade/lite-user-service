@@ -1,4 +1,4 @@
-package uk.gov.bis.lite.user;
+package uk.gov.bis.lite.user.integration;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.matchingXPath;
@@ -9,27 +9,24 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.gov.bis.lite.user.spire.SpireUserRolesUtil.stubForBody;
+import static uk.gov.bis.lite.user.TestUtils.generateJwtAuthorizationHeader;
+import static uk.gov.bis.lite.user.spire.user.roles.SpireUserRolesTestUtils.stubForBody;
 
 import org.junit.Test;
 import uk.gov.bis.lite.user.api.view.CustomerView;
-import uk.gov.bis.lite.user.api.view.Role;
 import uk.gov.bis.lite.user.api.view.SiteView;
 import uk.gov.bis.lite.user.api.view.UserPrivilegesView;
-import uk.gov.bis.lite.user.integration.BaseIntegrationTest;
+import uk.gov.bis.lite.user.api.view.enums.Role;
 
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
-public class UserServiceApplicationIntegrationTest extends BaseIntegrationTest {
-
-  private String urlTarget(String targetPath) {
-    return "http://localhost:" + RULE.getLocalPort() + targetPath;
-  }
+public class UserPrivilegesIntegrationTest extends BaseIntegrationTest {
 
   private Response get(String targetPath) {
-    return RULE.client().target(urlTarget(targetPath))
+    return RULE.client().target(urlTarget(targetPath, RULE.getLocalPort()))
         .request()
-        .headers(authedHeaders)
+        .header(HttpHeaders.AUTHORIZATION, generateJwtAuthorizationHeader("123456", "test@example.org", "Mr Test"))
         .get();
   }
 
@@ -141,7 +138,7 @@ public class UserServiceApplicationIntegrationTest extends BaseIntegrationTest {
   public void unauthorisedTest() throws Exception {
     stubForBody(fixture("fixture/spire/SPIRE_USER_ROLES/SingleSarAdmin.xml"));
 
-    Response response = RULE.client().target(urlTarget("/user-privileges/123")).request().get();
+    Response response = RULE.client().target(urlTarget("/user-privileges/123", RULE.getLocalPort())).request().get();
 
     String body = response.readEntity(String.class);
 

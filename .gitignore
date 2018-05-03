@@ -6,3 +6,4 @@ src/main/resources/config.yaml
 *.iml
 out/*
 .scannerwork/
+conf/

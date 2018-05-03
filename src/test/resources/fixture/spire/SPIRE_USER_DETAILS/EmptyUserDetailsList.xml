@@ -1,0 +1,6 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.fivium.co.uk/fox/webservices/espire/SPIRE_USER_DETAILS">
+  <soap:Header/>
+  <soap:Body>
+    <ns:USER_DETAILS_LIST/>
+  </soap:Body>
+</soap:Envelope>
