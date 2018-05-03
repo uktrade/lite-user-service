@@ -1,7 +1,6 @@
 package uk.gov.bis.lite.user.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -63,28 +62,6 @@ public class UserDetailsServiceImplTest {
     when(client.sendRequest(any())).thenThrow(new SpireUserNotFoundException("User not found!"));
 
     Optional<SpireUserDetails> userDetailsOpt = service.getUserDetails("1");
-    assertThat(userDetailsOpt).isNotPresent();
-  }
-
-  @Test
-  public void invalidUserIdTest() throws Exception {
-    when(client.createRequest()).thenReturn(mock(SpireRequest.class));
-    when(client.sendRequest(any())).thenThrow(new SpireUserNotFoundException("User not found!"));
-
-    assertThatThrownBy(() -> service.getUserDetails("01234567891"))
-        .isExactlyInstanceOf(UserDetailsServiceException.class)
-        .hasMessage("Supplied user id is invalid 01234567891");
-
-    assertThatThrownBy(() -> service.getUserDetails(" "))
-        .isExactlyInstanceOf(UserDetailsServiceException.class)
-        .hasMessage("Supplied user id is invalid  ");
-
-    assertThatThrownBy(() -> service.getUserDetails(""))
-        .isExactlyInstanceOf(UserDetailsServiceException.class)
-        .hasMessage("Supplied user id is invalid ");
-
-    // Test limit of 10 chars
-    Optional<SpireUserDetails> userDetailsOpt = service.getUserDetails("0123456789");
     assertThat(userDetailsOpt).isNotPresent();
   }
 }

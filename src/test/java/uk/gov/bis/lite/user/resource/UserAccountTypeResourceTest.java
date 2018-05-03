@@ -104,7 +104,7 @@ public class UserAccountTypeResourceTest {
       Map<String, String> map = TestUtils.getMapFromResponse(response);
       Assertions.assertThat(map).hasSize(2);
       Assertions.assertThat(map).containsEntry("code", "404");
-      Assertions.assertThat(map).containsEntry("message", "User not found");;
+      Assertions.assertThat(map).containsEntry("message", "User not found");
     }
   }
 
@@ -133,45 +133,14 @@ public class UserAccountTypeResourceTest {
     assertThat(response.getStatus()).isEqualTo(401);
   }
 
-
   @Test
-  public void userDoesNotExistTesttesttest() throws Exception {
-    when(userDetailsService.getUserDetails(ID)).thenReturn(Optional.empty());
-
+  public void invalidUserIdTest() throws Exception {
     Response response = resources.client()
-        .target(USER_ACCOUNT_TYPE_PATH + "/012345678910")
+        .target(USER_ACCOUNT_TYPE_PATH + "/01234567891")
         .request()
         .header(HttpHeaders.AUTHORIZATION, ADMIN_USER)
         .get();
 
-    System.out.println(response.readEntity(String.class));
     assertThat(response.getStatus()).isEqualTo(400);
-//    Map<String, String> map = TestUtils.getMapFromResponse(response);
-//    Assertions.assertThat(map).hasSize(2);
-//    Assertions.assertThat(map).containsEntry("code", "404");
-//    Assertions.assertThat(map).containsEntry("message", "User not found");;
   }
-
-//
-//  @Test
-//  public void invalidUserIdTest() throws Exception {
-//    when(client.createRequest()).thenReturn(mock(SpireRequest.class));
-//    when(client.sendRequest(any())).thenThrow(new SpireUserNotFoundException("User not found!"));
-//
-//    assertThatThrownBy(() -> service.getUserDetails("01234567891"))
-//        .isExactlyInstanceOf(UserDetailsServiceException.class)
-//        .hasMessage("Supplied user id is invalid 01234567891");
-//
-//    assertThatThrownBy(() -> service.getUserDetails(" "))
-//        .isExactlyInstanceOf(UserDetailsServiceException.class)
-//        .hasMessage("Supplied user id is invalid  ");
-//
-//    assertThatThrownBy(() -> service.getUserDetails(""))
-//        .isExactlyInstanceOf(UserDetailsServiceException.class)
-//        .hasMessage("Supplied user id is invalid ");
-//
-//    // Test limit of 10 chars
-//    Optional<SpireUserDetails> userDetailsOpt = service.getUserDetails("0123456789");
-//    Assertions.assertThat(userDetailsOpt.isPresent()).isFalse();
-//  }
 }

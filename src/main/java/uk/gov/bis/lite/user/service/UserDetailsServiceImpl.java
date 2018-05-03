@@ -1,7 +1,6 @@
 package uk.gov.bis.lite.user.service;
 
 import com.google.inject.Inject;
-import org.apache.commons.lang3.StringUtils;
 import uk.gov.bis.lite.common.spire.client.SpireRequest;
 import uk.gov.bis.lite.user.spire.SpireUserNotFoundException;
 import uk.gov.bis.lite.user.spire.user.details.SpireUserDetails;
@@ -20,10 +19,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
   @Override
   public Optional<SpireUserDetails> getUserDetails(String userId) {
-    if (StringUtils.isBlank(userId) || StringUtils.length(userId) > 10) {
-      throw new UserDetailsServiceException(String.format("Supplied user id is invalid %s", userId));
-    }
-
     SpireRequest request = spireUserDetailsClient.createRequest();
     request.addChild("VERSION_NO", "1.0");
     request.addChild("WUA_ID", userId);

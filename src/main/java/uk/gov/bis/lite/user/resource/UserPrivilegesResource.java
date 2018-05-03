@@ -31,7 +31,7 @@ public class UserPrivilegesResource {
   }
 
   @GET
-  @Produces({MediaType.APPLICATION_JSON})
+  @Produces(MediaType.APPLICATION_JSON)
   @Path("/{userId}")
   public UserPrivilegesView viewUserPrivileges(@PathParam("userId") String userId, @Auth LiteJwtUser user) {
     Optional<UserPrivilegesView> userPrivs = userPrivilegesService.getUserPrivileges(userId);

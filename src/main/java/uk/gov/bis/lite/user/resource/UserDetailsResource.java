@@ -28,7 +28,7 @@ public class UserDetailsResource {
   }
 
   @GET
-  @Produces({MediaType.APPLICATION_JSON})
+  @Produces(MediaType.APPLICATION_JSON)
   @Path("/{userId}")
   public UserDetailsView viewUserDetails(@PathParam("userId") String userId, @Auth LiteJwtUser user) {
     if (!StringUtils.equals(user.getUserId(), userId)) {
