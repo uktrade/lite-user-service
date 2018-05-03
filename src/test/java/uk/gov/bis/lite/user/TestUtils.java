@@ -3,6 +3,7 @@ package uk.gov.bis.lite.user;
 import uk.gov.bis.lite.common.jwt.LiteJwtConfig;
 import uk.gov.bis.lite.common.jwt.LiteJwtUser;
 import uk.gov.bis.lite.common.jwt.LiteJwtUserHelper;
+import uk.gov.bis.lite.user.api.view.enums.AccountType;
 
 import java.util.Base64;
 import java.util.Map;
@@ -21,7 +22,8 @@ public class TestUtils {
     LiteJwtUser liteJwtUser = new LiteJwtUser()
         .setEmail(email)
         .setFullName(fullName)
-        .setUserId(userId);
+        .setUserId(userId)
+        .setAccountType(AccountType.EXPORTER);
     return "Bearer " + LITE_JWT_USER_HELPER.generateToken(liteJwtUser);
   }
 
