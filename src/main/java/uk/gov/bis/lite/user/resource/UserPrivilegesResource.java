@@ -2,8 +2,6 @@ package uk.gov.bis.lite.user.resource;
 
 import com.google.inject.Inject;
 import io.dropwizard.auth.Auth;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.gov.bis.lite.common.jwt.LiteJwtUser;
 import uk.gov.bis.lite.user.api.view.UserPrivilegesView;
 import uk.gov.bis.lite.user.service.UserPrivilegesService;
@@ -20,8 +18,6 @@ import javax.ws.rs.core.Response;
 
 @Path("/user-privileges")
 public class UserPrivilegesResource {
-
-  private static final Logger LOGGER = LoggerFactory.getLogger(UserPrivilegesResource.class);
 
   private final UserPrivilegesService userPrivilegesService;
 

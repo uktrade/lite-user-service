@@ -2,7 +2,6 @@ package uk.gov.bis.lite.user.config;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
-import ru.vyarus.dropwizard.guice.module.support.ConfigurationAwareModule;
 import uk.gov.bis.lite.common.metrics.readiness.DefaultReadinessService;
 import uk.gov.bis.lite.common.metrics.readiness.ReadinessService;
 import uk.gov.bis.lite.common.spire.client.SpireClientConfig;
@@ -18,20 +17,13 @@ import uk.gov.bis.lite.user.spire.user.roles.SpireUserRolesClient;
 import uk.gov.bis.lite.user.spire.user.roles.SpireUserRolesErrorHandler;
 import uk.gov.bis.lite.user.spire.user.roles.SpireUserRolesParser;
 
-public class GuiceModule extends AbstractModule implements ConfigurationAwareModule<UserServiceConfiguration> {
-
-  private UserServiceConfiguration config;
+public class GuiceModule extends AbstractModule {
 
   @Override
   protected void configure() {
     bind(ReadinessService.class).to(DefaultReadinessService.class);
     bind(UserPrivilegesService.class).to(UserPrivilegesServiceImpl.class);
     bind(UserDetailsService.class).to(UserDetailsServiceImpl.class);
-  }
-
-  @Override
-  public void setConfiguration(UserServiceConfiguration config) {
-    this.config = config;
   }
 
   @Provides

@@ -7,13 +7,13 @@ import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 
 public class SpireUserRolesTestUtils {
-  public static String RES_TYPE_SPIRE_SAR_USERS = "SPIRE_SAR_USERS";
-  public static String RES_TYPE_SPIRE_SITE_USERS = "SPIRE_SITE_USERS";
-  public static String ROLE_SAR_ADMINISTRATOR = "SAR_ADMINISTRATOR";
-  public static String ROLE_SITE_ADMINISTRATOR = "SITE_ADMINISTRATOR";
-  public static String ROLE_APPLICATION_SUBMITTER = "APPLICATION_SUBMITTER";
-  public static String ROLE_APPLICATION_PREPARER = "APPLICATION_PREPARER";
-  public static String FULL_NAME = "Mr Test";
+  public static final String RES_TYPE_SPIRE_SAR_USERS = "SPIRE_SAR_USERS";
+  public static final String RES_TYPE_SPIRE_SITE_USERS = "SPIRE_SITE_USERS";
+  public static final String ROLE_SAR_ADMINISTRATOR = "SAR_ADMINISTRATOR";
+  public static final String ROLE_SITE_ADMINISTRATOR = "SITE_ADMINISTRATOR";
+  public static final String ROLE_APPLICATION_SUBMITTER = "APPLICATION_SUBMITTER";
+  public static final String ROLE_APPLICATION_PREPARER = "APPLICATION_PREPARER";
+  public static final String FULL_NAME = "Mr Test";
 
   public static SpireUserRole buildCustomerAdmin(String sarRef) {
     return new SpireUserRole()

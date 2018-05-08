@@ -17,20 +17,20 @@ import java.util.stream.Collectors;
 
 public class SpireUserRolesAdapter {
 
-  private static final Map<Role, Integer> rolePriorityMap;
+  private static final Map<Role, Integer> ROLE_PRIORITY_MAP;
 
   static {
-    rolePriorityMap = new EnumMap<>(Role.class);
-    rolePriorityMap.put(Role.ADMIN, 2);
-    rolePriorityMap.put(Role.SUBMITTER, 1);
-    rolePriorityMap.put(Role.PREPARER, 0);
+    ROLE_PRIORITY_MAP = new EnumMap<>(Role.class);
+    ROLE_PRIORITY_MAP.put(Role.ADMIN, 2);
+    ROLE_PRIORITY_MAP.put(Role.SUBMITTER, 1);
+    ROLE_PRIORITY_MAP.put(Role.PREPARER, 0);
   }
 
   public static UserPrivilegesView adapt(SpireUserRoles spireUserRoles) {
     Map<String, CustomerView> customerMap = new HashMap<>();
     Map<String, SiteView> siteMap = new HashMap<>();
 
-    for (SpireUserRole sur: spireUserRoles.getUserRoles()) {
+    for (SpireUserRole sur : spireUserRoles.getUserRoles()) {
       if (StringUtils.equals(sur.getResType(), "SPIRE_SAR_USERS")) {
         String customerId = sur.getSarRef();
         Optional<Role> role = mapSpireRole(sur.getRoleName());
@@ -40,8 +40,8 @@ public class SpireUserRolesAdapter {
               .setRole(role.get());
 
           customerMap.merge(customerId, customer, (existingView, newView) -> {
-            int existingRolePriority = rolePriorityMap.getOrDefault(existingView.getRole(), -1);
-            int newRolePriority = rolePriorityMap.get(newView.getRole());
+            int existingRolePriority = ROLE_PRIORITY_MAP.getOrDefault(existingView.getRole(), -1);
+            int newRolePriority = ROLE_PRIORITY_MAP.get(newView.getRole());
             return newRolePriority > existingRolePriority ? newView : existingView;
           });
         }
@@ -54,8 +54,8 @@ public class SpireUserRolesAdapter {
               .setRole(role.get());
 
           siteMap.merge(siteId, site, (existingView, newView) -> {
-            int existingRolePriority = rolePriorityMap.getOrDefault(existingView.getRole(), -1);
-            int newRolePriority = rolePriorityMap.get(newView.getRole());
+            int existingRolePriority = ROLE_PRIORITY_MAP.getOrDefault(existingView.getRole(), -1);
+            int newRolePriority = ROLE_PRIORITY_MAP.get(newView.getRole());
             return newRolePriority > existingRolePriority ? newView : existingView;
           });
         }
