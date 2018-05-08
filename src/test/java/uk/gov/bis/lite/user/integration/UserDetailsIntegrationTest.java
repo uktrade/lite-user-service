@@ -10,27 +10,17 @@ import org.junit.Test;
 import uk.gov.bis.lite.user.api.view.UserDetailsView;
 import uk.gov.bis.lite.user.api.view.enums.AccountStatus;
 
-import java.util.Collections;
 import java.util.Map;
 
 import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 public class UserDetailsIntegrationTest extends BaseIntegrationTest {
 
-  private final MultivaluedMap<String, Object> authedHeaders;
-
-  public UserDetailsIntegrationTest() {
-    authedHeaders = new MultivaluedHashMap<>();
-    authedHeaders.put(HttpHeaders.AUTHORIZATION, Collections.singletonList(generateJwtAuthorizationHeader("24492", "test@example.org", "Mr Test")));
-  }
-
   private Response get(String targetPath) {
     return RULE.client().target(urlTarget(targetPath, RULE.getLocalPort()))
         .request()
-        .headers(authedHeaders)
+        .header(HttpHeaders.AUTHORIZATION, generateJwtAuthorizationHeader("24492", "test@example.org", "Mr Test"))
         .get();
   }
 

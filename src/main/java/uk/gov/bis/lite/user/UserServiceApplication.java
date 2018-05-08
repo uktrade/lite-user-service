@@ -46,10 +46,6 @@ public class UserServiceApplication extends Application<UserServiceConfiguration
     this.module = module;
   }
 
-  public <T> T getInstance(Class<T> type) {
-    return getGuiceBundle().getInjector().getInstance(type);
-  }
-
   @Override
   public void initialize(Bootstrap<UserServiceConfiguration> bootstrap) {
     bootstrap.setConfigurationSourceProvider(new SubstitutingSourceProvider(
@@ -84,9 +80,8 @@ public class UserServiceApplication extends Application<UserServiceConfiguration
         .setRealm("User Service Authentication")
         .buildAuthFilter();
 
-    PolymorphicAuthDynamicFeature authFeature = new PolymorphicAuthDynamicFeature(
-        ImmutableMap.of(LiteJwtUser.class, liteJwtUserJwtAuthFilter, User.class, userBasicCredentialAuthFilter)
-    );
+    PolymorphicAuthDynamicFeature authFeature = new PolymorphicAuthDynamicFeature<>(ImmutableMap.of(
+        LiteJwtUser.class, liteJwtUserJwtAuthFilter, User.class, userBasicCredentialAuthFilter));
     environment.jersey().register(authFeature);
 
     AbstractBinder authBinder = new PolymorphicAuthValueFactoryProvider.Binder<>(ImmutableSet.of(LiteJwtUser.class, User.class));
@@ -95,10 +90,6 @@ public class UserServiceApplication extends Application<UserServiceConfiguration
     environment.jersey().register(RolesAllowedDynamicFeature.class);
 
     environment.jersey().register(ContainerCorrelationIdFilter.class);
-  }
-
-  public GuiceBundle<UserServiceConfiguration> getGuiceBundle() {
-    return guiceBundle;
   }
 
   public static void main(String[] args) throws Exception {

@@ -23,21 +23,21 @@ import java.util.Optional;
 
 public class UserPrivilegesServiceImplTest {
 
-  private SpireUserRolesClient client = mock(SpireUserRolesClient.class);
+  private final SpireUserRolesClient client = mock(SpireUserRolesClient.class);
 
-  private UserPrivilegesService service = new UserPrivilegesServiceImpl(client);
+  private final UserPrivilegesService service = new UserPrivilegesServiceImpl(client);
 
   @Test
   public void userHasCustomersAndSitesTest() throws Exception {
     when(client.createRequest()).thenReturn(mock(SpireRequest.class));
     when(client.sendRequest(any()))
         .thenReturn(
-                new SpireUserRoles(Arrays.asList(
-                  buildCustomerAdmin("SAR123"),
-                  buildSiteAdmin("SITE123"))));
+            new SpireUserRoles(Arrays.asList(
+                buildCustomerAdmin("SAR123"),
+                buildSiteAdmin("SITE123"))));
 
     Optional<UserPrivilegesView> userPrivsOpt = service.getUserPrivileges("123");
-    assertThat(userPrivsOpt.isPresent()).isTrue();
+    assertThat(userPrivsOpt).isPresent();
 
     UserPrivilegesView userPrivs = userPrivsOpt.get();
     assertThat(userPrivs.getCustomers().size()).isEqualTo(1);
@@ -59,7 +59,7 @@ public class UserPrivilegesServiceImplTest {
         .thenReturn(new SpireUserRoles(emptyList()));
 
     Optional<UserPrivilegesView> userPrivsOpt = service.getUserPrivileges("123");
-    assertThat(userPrivsOpt.isPresent()).isTrue();
+    assertThat(userPrivsOpt).isPresent();
 
     UserPrivilegesView userPrivs = userPrivsOpt.get();
     assertThat(userPrivs.getCustomers().isEmpty()).isTrue();

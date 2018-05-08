@@ -11,7 +11,7 @@ import uk.gov.bis.lite.common.spire.client.parser.SpireParser;
 
 public class SpireUserDetailsParserTest {
 
-  private SpireParser<SpireUserDetails> parser = new SpireUserDetailsParser();
+  private final SpireParser<SpireUserDetails> parser = new SpireUserDetailsParser();
 
   @Test
   public void emptyUserDetailsTest() throws Exception {

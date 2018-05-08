@@ -18,7 +18,7 @@ public class BaseIntegrationTest {
   public static final WireMockClassRule wireMockClassRule = new WireMockClassRule(options().dynamicPort());
 
   @Rule
-  public DropwizardAppRule<UserServiceConfiguration> RULE = new DropwizardAppRule<>(
+  public final DropwizardAppRule<UserServiceConfiguration> RULE = new DropwizardAppRule<>(
       UserServiceApplication.class, "test-config.yaml",
       ConfigOverride.config("spireClientUrl", "http://localhost:" + wireMockClassRule.port() + "/spire/fox/ispire/"));
 

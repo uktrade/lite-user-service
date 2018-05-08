@@ -23,9 +23,9 @@ import java.util.Optional;
 
 public class UserDetailsServiceImplTest {
 
-  private SpireUserDetailsClient client = mock(SpireUserDetailsClient.class);
+  private final SpireUserDetailsClient client = mock(SpireUserDetailsClient.class);
 
-  private UserDetailsService service = new UserDetailsServiceImpl(client);
+  private final UserDetailsService service = new UserDetailsServiceImpl(client);
 
   @Test
   public void userExistsTest() throws Exception {

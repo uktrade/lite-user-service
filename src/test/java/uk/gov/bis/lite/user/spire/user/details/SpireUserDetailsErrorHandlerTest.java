@@ -12,7 +12,7 @@ import uk.gov.bis.lite.user.spire.SpireUserNotFoundException;
 
 public class SpireUserDetailsErrorHandlerTest {
 
-  private ErrorNodeErrorHandler errorHandler = new SpireUserDetailsErrorHandler();
+  private final ErrorNodeErrorHandler errorHandler = new SpireUserDetailsErrorHandler();
 
   @Test
   public void userIdDoesNotExistTest() throws Exception {
