@@ -10,11 +10,16 @@ adminPassword: "${ADMIN_PASSWORD}"
 serviceLogin: "${SERVICE_LOGIN}"
 servicePassword: "${SERVICE_PASSWORD}"
 
+login: "${BASIC_AUTH_USER}"
+password: "${BASIC_AUTH_PASSWORD}"
+
 server:
-  type: default
-  applicationConnectors:
-    - type: http
-      port: ${PORT}
+  type: simple
+  applicationContextPath: /
+  adminContextPath: /admin
+  connector:
+    type: http
+    port: ${PORT}
   requestLog:
     appenders:
       - type: json-console-access
