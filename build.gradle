@@ -50,7 +50,7 @@ dependencies {
   compile 'uk.gov.bis.lite:readiness-metric:1.0'
   compile 'uk.gov.bis.lite:jwt:1.3'
   compile 'uk.gov.bis.lite:paas-utils:1.0'
-  compile 'uk.gov.bis.lite:basic-auth:1.0'
+  compile 'uk.gov.bis.lite:basic-auth:1.1'
 
   testCompile "io.dropwizard:dropwizard-testing:$dropwizardVersion"
   testCompile 'junit:junit:4.12'

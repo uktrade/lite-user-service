@@ -9,14 +9,16 @@ adminPassword: admin
 serviceLogin: service
 servicePassword: service
 
+login: user
+password: pass
+
 server:
-  type: default
-  applicationConnectors:
-    - type: http
-      port: 8080
-  adminConnectors:
-    - type: http
-      port: 8081
+  type: simple
+  applicationContextPath: /
+  adminContextPath: /admin
+  connector:
+    type: http
+    port: 8080
 
 logging:
   level: INFO

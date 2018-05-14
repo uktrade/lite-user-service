@@ -1,5 +1,6 @@
 package uk.gov.bis.lite.user;
 
+import com.codahale.metrics.servlets.AdminServlet;
 import com.github.toastshaman.dropwizard.auth.jwt.JwtAuthFilter;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -18,6 +19,7 @@ import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import ru.vyarus.dropwizard.guice.GuiceBundle;
 import ru.vyarus.dropwizard.guice.module.installer.feature.ManagedInstaller;
 import ru.vyarus.dropwizard.guice.module.installer.feature.jersey.ResourceInstaller;
+import uk.gov.bis.lite.common.auth.admin.AdminConstraintSecurityHandler;
 import uk.gov.bis.lite.common.auth.basic.SimpleAuthenticator;
 import uk.gov.bis.lite.common.auth.basic.SimpleAuthorizer;
 import uk.gov.bis.lite.common.auth.basic.User;
@@ -90,6 +92,9 @@ public class UserServiceApplication extends Application<UserServiceConfiguration
     environment.jersey().register(RolesAllowedDynamicFeature.class);
 
     environment.jersey().register(ContainerCorrelationIdFilter.class);
+
+    environment.admin().addServlet("admin", new AdminServlet()).addMapping("/admin");
+    environment.admin().setSecurityHandler(new AdminConstraintSecurityHandler(configuration.getLogin(), configuration.getPassword()));
   }
 
   public static void main(String[] args) throws Exception {
