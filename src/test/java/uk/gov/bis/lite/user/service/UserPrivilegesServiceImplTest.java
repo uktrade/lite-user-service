@@ -25,7 +25,7 @@ public class UserPrivilegesServiceImplTest {
 
   private final SpireUserRolesClient client = mock(SpireUserRolesClient.class);
 
-  private final UserPrivilegesService service = new UserPrivilegesServiceImpl(client);
+  private final UserPrivilegesService service = new UserPrivilegesServiceImpl(client, redissonCache); //TODO: fix tests
 
   @Test
   public void userHasCustomersAndSitesTest() throws Exception {

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.NotNull;
+
 public class UserServiceConfiguration extends Configuration {
 
   @NotEmpty
@@ -46,6 +48,10 @@ public class UserServiceConfiguration extends Configuration {
   @JsonProperty
   private String password;
 
+  @NotNull
+  @JsonProperty("redis")
+  private RedisConfiguration redisConfiguration;
+
   public String getSpireClientUsername() {
     return spireClientUsername;
   }
@@ -84,5 +90,9 @@ public class UserServiceConfiguration extends Configuration {
 
   public String getPassword() {
     return password;
+  }
+
+  public RedisConfiguration getRedisConfiguration() {
+    return redisConfiguration;
   }
 }

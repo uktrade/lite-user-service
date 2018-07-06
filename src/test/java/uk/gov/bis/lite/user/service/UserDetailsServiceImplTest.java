@@ -25,7 +25,7 @@ public class UserDetailsServiceImplTest {
 
   private final SpireUserDetailsClient client = mock(SpireUserDetailsClient.class);
 
-  private final UserDetailsService service = new UserDetailsServiceImpl(client);
+  private final UserDetailsService service = new UserDetailsServiceImpl(client, redissonClient); //TODO: fix tests
 
   @Test
   public void userExistsTest() throws Exception {

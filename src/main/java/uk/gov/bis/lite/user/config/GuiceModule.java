@@ -21,6 +21,7 @@ public class GuiceModule extends AbstractModule {
 
   @Override
   protected void configure() {
+    install(new RedisModule());
     bind(ReadinessService.class).to(DefaultReadinessService.class);
     bind(UserPrivilegesService.class).to(UserPrivilegesServiceImpl.class);
     bind(UserDetailsService.class).to(UserDetailsServiceImpl.class);
