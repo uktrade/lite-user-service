@@ -38,13 +38,6 @@ public class UserServiceConfiguration extends Configuration {
   @JsonProperty
   private String servicePassword;
 
-  @NotEmpty
-  @JsonProperty
-  private String login;
-
-  @NotEmpty
-  @JsonProperty
-  private String password;
 
   public String getSpireClientUsername() {
     return spireClientUsername;
@@ -78,11 +71,4 @@ public class UserServiceConfiguration extends Configuration {
     return servicePassword;
   }
 
-  public String getLogin() {
-    return login;
-  }
-
-  public String getPassword() {
-    return password;
-  }
 }

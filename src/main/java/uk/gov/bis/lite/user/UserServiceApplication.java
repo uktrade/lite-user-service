@@ -30,6 +30,7 @@ import uk.gov.bis.lite.common.metrics.readiness.ReadinessServlet;
 import uk.gov.bis.lite.common.paas.db.CloudFoundryEnvironmentSubstitutor;
 import uk.gov.bis.lite.user.config.GuiceModule;
 import uk.gov.bis.lite.user.config.UserServiceConfiguration;
+import uk.gov.bis.lite.user.resource.AdminResource;
 import uk.gov.bis.lite.user.resource.UserAccountTypeResource;
 import uk.gov.bis.lite.user.resource.UserDetailsResource;
 import uk.gov.bis.lite.user.resource.UserPrivilegesResource;
@@ -56,7 +57,7 @@ public class UserServiceApplication extends Application<UserServiceConfiguration
     guiceBundle = new GuiceBundle.Builder<UserServiceConfiguration>()
         .modules(module)
         .installers(ResourceInstaller.class, ManagedInstaller.class)
-        .extensions(UserPrivilegesResource.class, UserDetailsResource.class, UserAccountTypeResource.class)
+        .extensions(UserPrivilegesResource.class, UserDetailsResource.class, UserAccountTypeResource.class, AdminResource.class)
         .build();
     bootstrap.addBundle(guiceBundle);
   }
@@ -94,7 +95,8 @@ public class UserServiceApplication extends Application<UserServiceConfiguration
     environment.jersey().register(ContainerCorrelationIdFilter.class);
 
     environment.admin().addServlet("admin", new AdminServlet()).addMapping("/admin");
-    environment.admin().setSecurityHandler(new AdminConstraintSecurityHandler(configuration.getLogin(), configuration.getPassword()));
+    environment.admin().setSecurityHandler(new AdminConstraintSecurityHandler(configuration.getServiceLogin(), configuration.getServicePassword()));
+    //environment.admin().setSecurityHandler(new AdminConstraintSecurityHandler(configuration.getLogin(), configuration.getPassword()));
   }
 
   public static void main(String[] args) throws Exception {
