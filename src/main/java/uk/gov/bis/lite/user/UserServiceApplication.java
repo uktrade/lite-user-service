@@ -91,12 +91,10 @@ public class UserServiceApplication extends Application<UserServiceConfiguration
     environment.jersey().register(authBinder);
 
     environment.jersey().register(RolesAllowedDynamicFeature.class);
-
     environment.jersey().register(ContainerCorrelationIdFilter.class);
 
     environment.admin().addServlet("admin", new AdminServlet()).addMapping("/admin");
     environment.admin().setSecurityHandler(new AdminConstraintSecurityHandler(configuration.getServiceLogin(), configuration.getServicePassword()));
-    //environment.admin().setSecurityHandler(new AdminConstraintSecurityHandler(configuration.getLogin(), configuration.getPassword()));
   }
 
   public static void main(String[] args) throws Exception {
