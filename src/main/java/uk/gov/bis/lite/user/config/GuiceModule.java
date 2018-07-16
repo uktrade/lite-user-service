@@ -6,10 +6,6 @@ import uk.gov.bis.lite.common.metrics.readiness.DefaultReadinessService;
 import uk.gov.bis.lite.common.metrics.readiness.ReadinessService;
 import uk.gov.bis.lite.common.spire.client.SpireClientConfig;
 import uk.gov.bis.lite.common.spire.client.SpireRequestConfig;
-import uk.gov.bis.lite.user.service.UserDetailsService;
-import uk.gov.bis.lite.user.service.UserDetailsServiceImpl;
-import uk.gov.bis.lite.user.service.UserPrivilegesService;
-import uk.gov.bis.lite.user.service.UserPrivilegesServiceImpl;
 import uk.gov.bis.lite.user.spire.user.details.SpireUserDetailsClient;
 import uk.gov.bis.lite.user.spire.user.details.SpireUserDetailsErrorHandler;
 import uk.gov.bis.lite.user.spire.user.details.SpireUserDetailsParser;
@@ -21,10 +17,7 @@ public class GuiceModule extends AbstractModule {
 
   @Override
   protected void configure() {
-    install(new RedisModule());
     bind(ReadinessService.class).to(DefaultReadinessService.class);
-    bind(UserPrivilegesService.class).to(UserPrivilegesServiceImpl.class);
-    bind(UserDetailsService.class).to(UserDetailsServiceImpl.class);
   }
 
   @Provides
@@ -46,4 +39,5 @@ public class GuiceModule extends AbstractModule {
   public SpireClientConfig provideSpireClientConfig(UserServiceConfiguration config) {
     return new SpireClientConfig(config.getSpireClientUsername(), config.getSpireClientPassword(), config.getSpireClientUrl());
   }
+
 }

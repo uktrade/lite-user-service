@@ -28,3 +28,18 @@ logging:
       logFormat: "[%mdc{corrID}] %d [%p] %marker %logger %m%n"
   loggers:
     uk.gov.bis.lite.common.spire.client: TRACE
+
+redis:
+  host: localhost
+  password: ""
+  port: 6379
+  timeout: 2000
+  database: 0
+  ssl: false
+  poolMinIdle: 1
+  poolMaxTotal: 5
+  keyPrefix: local
+  key: lite-user-service
+  ttl:
+    getUserDetails: "2 minutes"
+    getUserPrivileges: "2 minutes"

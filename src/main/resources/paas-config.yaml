@@ -28,3 +28,18 @@ logging:
   level: INFO
   appenders:
     - type: json-console
+
+redis:
+  host: "${REDIS_HOST}"
+  password: "${REDIS_PASSWORD}"
+  port: "${REDIS_PORT}"
+  timeout: "${REDIS_TIMEOUT}"
+  database: 0
+  ssl: "${REDIS_SSL}"
+  poolMinIdle: "${REDIS_POOL_MIN_IDLE}"
+  poolMaxTotal: "${REDIS_POOL_MAX_TOTAL}"
+  keyPrefix: "${REDIS_KEY_PREFIX}"
+  key: "${REDIS_KEY}"
+  ttl:
+    getUserDetails: "${REDIS_TTL_GET_USER_DETAILS}"
+    getUserPrivileges: "${REDIS_TTL_GET_USER_PRIVILEGES}"
