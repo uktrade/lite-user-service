@@ -10,6 +10,9 @@ adminPassword: "ENTER_PASSWORD_HERE"
 serviceLogin: "ENTER_USERNAME_HERE"
 servicePassword: "ENTER_PASSWORD_HERE"
 
+login: "ENTER_USERNAME_HERE"
+password: "ENTER_PASSWORD_HERE"
+
 server:
   type: simple
   applicationContextPath: /
