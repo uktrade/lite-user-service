@@ -2,7 +2,7 @@ package uk.gov.bis.lite.user.config;
 
 import com.google.inject.AbstractModule;
 import ru.vyarus.dropwizard.guice.module.support.ConfigurationAwareModule;
-import uk.gov.bis.lite.common.redis.RedisModule;
+import uk.gov.bis.lite.common.redis.RedisCacheModule;
 import uk.gov.bis.lite.user.service.RedisUserDetailsServiceImpl;
 import uk.gov.bis.lite.user.service.RedisUserPrivilegesServiceImpl;
 import uk.gov.bis.lite.user.service.UserDetailsService;
@@ -14,7 +14,7 @@ public class RedisServiceModule extends AbstractModule implements ConfigurationA
 
   @Override
   protected void configure() {
-    install(new RedisModule(userServiceConfiguration.getRedisConfiguration()));
+    install(new RedisCacheModule(userServiceConfiguration.getRedisConfiguration()));
     bind(UserPrivilegesService.class).to(RedisUserPrivilegesServiceImpl.class);
     bind(UserDetailsService.class).to(RedisUserDetailsServiceImpl.class);
   }

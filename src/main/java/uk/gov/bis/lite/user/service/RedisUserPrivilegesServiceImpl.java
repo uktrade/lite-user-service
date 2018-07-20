@@ -12,22 +12,22 @@ public class RedisUserPrivilegesServiceImpl implements UserPrivilegesService {
 
   private final UserPrivilegesServiceImpl userPrivilegesServiceImpl;
   private final RedissonCache redissonCache;
-  private final Ttl getUserPrivileges;
+  private final Ttl getUserPrivilegesTtl;
 
   @Inject
   public RedisUserPrivilegesServiceImpl(UserPrivilegesServiceImpl userPrivilegesServiceImpl,
                                         RedissonCache redissonCache,
-                                        @Named("getUserPrivileges") Ttl getUserPrivileges) {
+                                        @Named("getUserPrivilegesTtl") Ttl getUserPrivilegesTtl) {
     this.userPrivilegesServiceImpl = userPrivilegesServiceImpl;
     this.redissonCache = redissonCache;
-    this.getUserPrivileges = getUserPrivileges;
+    this.getUserPrivilegesTtl = getUserPrivilegesTtl;
   }
 
   @Override
   public Optional<UserPrivilegesView> getUserPrivileges(String userId) {
     return redissonCache.getOptional(() -> userPrivilegesServiceImpl.getUserPrivileges(userId),
         "getUserPrivileges",
-        getUserPrivileges,
+        getUserPrivilegesTtl,
         userId);
   }
 

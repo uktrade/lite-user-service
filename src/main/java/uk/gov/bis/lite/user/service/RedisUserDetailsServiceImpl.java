@@ -12,22 +12,22 @@ public class RedisUserDetailsServiceImpl implements UserDetailsService {
 
   private final UserDetailsServiceImpl userDetailsServiceImpl;
   private final RedissonCache redissonCache;
-  private final Ttl getUserDetails;
+  private final Ttl getUserDetailsTtl;
 
   @Inject
   public RedisUserDetailsServiceImpl(UserDetailsServiceImpl userDetailsServiceImpl,
                                      RedissonCache redissonCache,
-                                     @Named("getUserDetails") Ttl getUserDetails) {
+                                     @Named("getUserDetailsTtl") Ttl getUserDetailsTtl) {
     this.userDetailsServiceImpl = userDetailsServiceImpl;
     this.redissonCache = redissonCache;
-    this.getUserDetails = getUserDetails;
+    this.getUserDetailsTtl = getUserDetailsTtl;
   }
 
   @Override
   public Optional<SpireUserDetails> getUserDetails(String userId) {
     return redissonCache.getOptional(() -> userDetailsServiceImpl.getUserDetails(userId),
         "getUserDetails",
-        getUserDetails,
+        getUserDetailsTtl,
         userId);
   }
 
