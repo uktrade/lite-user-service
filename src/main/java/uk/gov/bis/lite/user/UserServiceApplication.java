@@ -29,6 +29,7 @@ import uk.gov.bis.lite.common.jwt.LiteJwtUser;
 import uk.gov.bis.lite.common.metrics.readiness.ReadinessServlet;
 import uk.gov.bis.lite.common.paas.db.CloudFoundryEnvironmentSubstitutor;
 import uk.gov.bis.lite.user.config.GuiceModule;
+import uk.gov.bis.lite.user.config.RedisServiceModule;
 import uk.gov.bis.lite.user.config.UserServiceConfiguration;
 import uk.gov.bis.lite.user.resource.UserAccountTypeResource;
 import uk.gov.bis.lite.user.resource.UserDetailsResource;
@@ -37,15 +38,11 @@ import uk.gov.bis.lite.user.resource.UserPrivilegesResource;
 public class UserServiceApplication extends Application<UserServiceConfiguration> {
 
   private GuiceBundle<UserServiceConfiguration> guiceBundle;
-  private final Module module;
+  private final Module[] modules;
 
-  public UserServiceApplication() {
-    this(new GuiceModule());
-  }
-
-  public UserServiceApplication(Module module) {
+  public UserServiceApplication(Module[] modules) {
     super();
-    this.module = module;
+    this.modules = modules;
   }
 
   @Override
@@ -54,7 +51,7 @@ public class UserServiceApplication extends Application<UserServiceConfiguration
         new ResourceConfigurationSourceProvider(), new CloudFoundryEnvironmentSubstitutor()));
 
     guiceBundle = new GuiceBundle.Builder<UserServiceConfiguration>()
-        .modules(module)
+        .modules(modules)
         .installers(ResourceInstaller.class, ManagedInstaller.class)
         .extensions(UserPrivilegesResource.class, UserDetailsResource.class, UserAccountTypeResource.class)
         .build();
@@ -98,7 +95,7 @@ public class UserServiceApplication extends Application<UserServiceConfiguration
   }
 
   public static void main(String[] args) throws Exception {
-    new UserServiceApplication().run(args);
+    new UserServiceApplication(new Module[]{new GuiceModule(), new RedisServiceModule()}).run(args);
   }
 
 }
