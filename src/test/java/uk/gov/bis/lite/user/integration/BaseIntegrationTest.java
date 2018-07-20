@@ -9,7 +9,7 @@ import io.dropwizard.testing.junit.DropwizardAppRule;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
-import uk.gov.bis.lite.user.UserServiceApplication;
+import uk.gov.bis.lite.user.TestUserServiceApplication;
 import uk.gov.bis.lite.user.config.UserServiceConfiguration;
 
 public class BaseIntegrationTest {
@@ -19,7 +19,7 @@ public class BaseIntegrationTest {
 
   @Rule
   public final DropwizardAppRule<UserServiceConfiguration> RULE = new DropwizardAppRule<>(
-      UserServiceApplication.class, "test-config.yaml",
+      TestUserServiceApplication.class, "test-config.yaml",
       ConfigOverride.config("spireClientUrl", "http://localhost:" + wireMockClassRule.port() + "/spire/fox/ispire/"));
 
   @BeforeClass
