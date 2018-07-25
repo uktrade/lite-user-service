@@ -42,14 +42,6 @@ public class UserServiceConfiguration extends Configuration {
   @JsonProperty
   private String servicePassword;
 
-  @NotEmpty
-  @JsonProperty
-  private String login;
-
-  @NotEmpty
-  @JsonProperty
-  private String password;
-
   @NotNull
   @Valid
   @JsonProperty("redis")
@@ -85,14 +77,6 @@ public class UserServiceConfiguration extends Configuration {
 
   public String getServicePassword() {
     return servicePassword;
-  }
-
-  public String getLogin() {
-    return login;
-  }
-
-  public String getPassword() {
-    return password;
   }
 
   public RedisConfiguration getRedisConfiguration() {

@@ -9,9 +9,6 @@ adminPassword: admin-password
 serviceLogin: service
 servicePassword: service-password
 
-login: user
-password: pass
-
 server:
   type: simple
   applicationContextPath: /
