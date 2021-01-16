@@ -5,7 +5,7 @@ Interface for retrieving user account details from SPIRE via SOAP.
 ## Running locally
 
 * `git clone git@github.com:uktrade/lite-user-service.git`
-* `cd lite-user-service` 
+* `cd lite-user-service`
 * `cp src/main/resources/sample-config.yaml src/main/resources/config.yaml`
 * `./gradlew run`
 
@@ -41,3 +41,19 @@ curl -X GET -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc
 ```
 
 See [lite-dropwizard-common](https://github.com/uktrade/lite-dropwizard-common) JWT for more information.
+
+### GDS PaaS Deployment
+
+This repo contains a pre-packed deployment file, lite-user-service-xxxx.jar.  This can be used to deploy this service manually from the CF cli.  Using the following command:
+
+* cf push [app_name] -p lite-user-service-xxxx.jar
+
+For this application to work the following dependencies need to be met:
+
+* Bound PG DB (all services share the same backend db)
+* Bound REDIS
+* Env VARs will need to be set
+
+### Archive state
+
+This repo is now archived. If you need to deploy this application, you can find a copy of the DB and VARs in the DIT AWS account.
